@@ -39,17 +39,23 @@ export async function POST(request: NextRequest) {
   const ok =
     a.length === b.length && timingSafeEqual(a, b);
 
-  if (!ok) {
+   if (!ok) {
     const url = request.nextUrl.clone();
     url.pathname = "/gate";
     url.search = "";
     url.searchParams.set("error", "1");
     url.searchParams.set("from", from);
-    return NextResponse.redirect(url);
+    // 303: after POST, follow-up must be GET (307 would re-POST and break `/`).
+    return NextResponse.redirect(url, 303);
   }
 
   const token = await signRoadmapSession(secret);
-  const res = NextResponse.redirect(new URL(from, request.url));
+  const destination = new URL(from, request.nextUrl.origin);
+  if (destination.origin !== request.nextUrl.origin) {
+    destination.pathname = "/";
+    destination.search = "";
+  }
+  const res = NextResponse.redirect(destination, 303);
   res.cookies.set(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
