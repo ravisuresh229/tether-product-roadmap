@@ -1,10 +1,43 @@
 @import "tailwindcss";
 
+:root {
+  --memo-bg: #fafaf6;
+  --memo-warm: #f5f3ee;
+  --memo-teal: #0d7377;
+  --memo-teal-dark: #095456;
+  --memo-teal-light: #e8f4f4;
+  --memo-coral: #d4613e;
+  --memo-coral-dark: #bf5535;
+  --memo-navy: #151f2b;
+  --memo-navy-deep: #1e2a3a;
+  --memo-text: #2d2d2d;
+  --memo-text-secondary: #6b6b6b;
+  --memo-text-tertiary: #9a9a9a;
+  --memo-border: #e0ddd5;
+  --memo-border-light: #edeadf;
+  --memo-shadow: 0 1px 3px rgba(45, 45, 45, 0.06);
+}
+
 @theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --color-memo-bg: var(--memo-bg);
+  --color-memo-warm: var(--memo-warm);
+  --color-memo-teal: var(--memo-teal);
+  --color-memo-teal-dark: var(--memo-teal-dark);
+  --color-memo-teal-light: var(--memo-teal-light);
+  --color-memo-coral: var(--memo-coral);
+  --color-memo-coral-dark: var(--memo-coral-dark);
+  --color-memo-navy: var(--memo-navy);
+  --color-memo-navy-deep: var(--memo-navy-deep);
+  --color-memo-text: var(--memo-text);
+  --color-memo-text-secondary: var(--memo-text-secondary);
+  --color-memo-text-tertiary: var(--memo-text-tertiary);
+  --color-memo-border: var(--memo-border);
+  --color-memo-border-light: var(--memo-border-light);
+  --shadow-memo: var(--memo-shadow);
 }
 
 body {
-  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
 }
