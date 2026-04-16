@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   title: "Tether Health: Product roadmap and capital plan",
   description:
     "Investment memo: referrals as wedge, network intelligence as moat, headless EHR coordination as platform.",
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({
