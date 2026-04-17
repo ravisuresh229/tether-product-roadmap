@@ -1337,7 +1337,7 @@ export default function TetherInvestmentMemo() {
                         timeline: "Year 5+",
                         practices: "1,000+",
                         drivers:
-                          "Multi-specialty network effects, payer/pharma data partnerships, geographic expansion beyond DMV",
+                          "Multi-specialty network effects, payer/pharma data partnerships, geographic density in 5-10 metro markets",
                         arr: "$75-150M",
                         muted: true,
                       },
@@ -1390,8 +1390,8 @@ export default function TetherInvestmentMemo() {
                   creates an entirely new revenue surface (analytics, routing
                   optimization, quality scoring) that does not exist in Year 1 but
                   becomes the primary expansion driver by Year 3. The $75-150M
-                  range at Year 5 assumes Tether has expanded beyond the DMV wedge
-                  into 3-5 metro markets, added 2-3 new specialty verticals beyond
+                  range at Year 5 assumes Tether has built referral density in 5-10
+                  metro markets, added 2-3 new specialty verticals beyond
                   dermatology, and begun licensing network intelligence to payers
                   and health systems. These are not baked into the 18-month capital
                   plan. They are where the architecture leads if the wedge works.
