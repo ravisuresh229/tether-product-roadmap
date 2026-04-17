@@ -18,6 +18,7 @@ const NAV: { id: string; label: string }[] = [
   { id: "write-back", label: "Write-back requirement" },
   { id: "product", label: "Product architecture" },
   { id: "pricing", label: "Pricing model" },
+  { id: "path-to-scale", label: "Path to scale" },
   { id: "ehr", label: "EHR integration" },
   { id: "capital-plan", label: "Capital plan" },
   { id: "team", label: "Who ships it" },
@@ -1223,6 +1224,185 @@ export default function TetherInvestmentMemo() {
                   temporary promotion.
                 </p>
               </Prose>
+            </section>
+
+            {/* Path to scale */}
+            <section className="mt-[80px] space-y-6 md:mt-[100px]">
+              <SectionTitle
+                id="path-to-scale"
+                kicker="GROWTH"
+                title="Path to scale"
+              />
+              <Prose>
+                <p>
+                  The pricing model above describes what one practice pays. This
+                  section shows what happens when the network compounds across
+                  segments. The math below is built from the unit economics already
+                  described, not from top-down TAM assumptions.
+                </p>
+              </Prose>
+              <div className="grid gap-3 md:grid-cols-3">
+                {[
+                  {
+                    title: "Single specialist location",
+                    lines: [
+                      "$99-$999/mo depending on referral volume",
+                      "Starter to Network tier in 18 months = up to 10x ACV expansion",
+                      "Zero incremental sales cost on tier upgrades",
+                    ],
+                  },
+                  {
+                    title: "PE network contract (30 locations)",
+                    lines: [
+                      "30 locations averaging Growth tier ($299/mo) = ~$108K ARR",
+                      "One contract, one signer, one onboarding",
+                      "Portfolio analytics module adds $2-5K/mo at the network level",
+                    ],
+                  },
+                  {
+                    title: "Concierge network contract (300+ physicians)",
+                    lines: [
+                      "Enterprise flat fee at the operator level ($150-250K/yr)",
+                      "Unlocks 300-1,100 PCPs as demand-side network",
+                      "Every PCP referral feeds specialist-side revenue",
+                    ],
+                  },
+                ].map((c) => (
+                  <div
+                    key={c.title}
+                    className="rounded-lg border border-memo-border bg-memo-warm p-4 md:p-5"
+                    style={{ boxShadow: "var(--memo-shadow)" }}
+                  >
+                    <p className="font-sans text-sm font-semibold text-memo-navy">
+                      {c.title}
+                    </p>
+                    <ul className="mt-3 space-y-2 text-sm leading-snug text-memo-text">
+                      {c.lines.map((line) => (
+                        <li key={line}>{line}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <div className="overflow-x-auto rounded-lg border border-memo-border">
+                <div className="min-w-[44rem]">
+                  <div
+                    className="grid grid-cols-[1fr_0.85fr_0.65fr_1.35fr_0.95fr] gap-2 border-b border-memo-border bg-memo-warm px-3 py-2.5 font-sans text-[10px] font-semibold uppercase tracking-[0.08em] text-memo-text-secondary"
+                  >
+                    <div>Phase</div>
+                    <div>Timeline</div>
+                    <div>Practices</div>
+                    <div>Revenue drivers</div>
+                    <div>ARR range</div>
+                  </div>
+                  {(
+                    [
+                      {
+                        phase: "F&F exit",
+                        timeline: "Month 6",
+                        practices: "3-5",
+                        drivers: "Pilot pricing, first enterprise converts",
+                        arr: "$36-60K",
+                        muted: false,
+                      },
+                      {
+                        phase: "Pre-seed exit",
+                        timeline: "Month 18",
+                        practices: "15-20",
+                        drivers:
+                          "Enterprise contracts across 3 segments, specialist tiers scaling",
+                        arr: "$800K-$1M",
+                        muted: false,
+                      },
+                      {
+                        phase: "Series A target",
+                        timeline: "Month 30",
+                        practices: "50-75",
+                        drivers:
+                          "Layer 2 analytics revenue, PE portfolio deals, 3 EHRs at scale",
+                        arr: "$3-5M",
+                        muted: false,
+                      },
+                      {
+                        phase: "Growth phase",
+                        timeline: "Year 3-4",
+                        practices: "200-500",
+                        drivers:
+                          "Specialist tier compounding, network intelligence licensing, new segment entry (ortho, GI, cardiology)",
+                        arr: "$15-30M",
+                        muted: true,
+                      },
+                      {
+                        phase: "Platform scale",
+                        timeline: "Year 5+",
+                        practices: "1,000+",
+                        drivers:
+                          "Multi-specialty network effects, payer/pharma data partnerships, geographic expansion beyond DMV",
+                        arr: "$75-150M",
+                        muted: true,
+                      },
+                    ] as const
+                  ).map((row, idx) => (
+                    <div
+                      key={row.phase}
+                      className={cn(
+                        "grid grid-cols-[1fr_0.85fr_0.65fr_1.35fr_0.95fr] gap-2 border-b border-memo-border px-3 py-2.5 text-sm last:border-b-0",
+                        idx % 2 === 0 ? "bg-memo-bg" : "bg-memo-warm",
+                        row.muted ? "text-memo-text-secondary" : "text-memo-text"
+                      )}
+                    >
+                      <div
+                        className={cn(
+                          "font-medium",
+                          row.muted
+                            ? "text-memo-text-secondary"
+                            : "text-memo-text"
+                        )}
+                      >
+                        {row.phase}
+                      </div>
+                      <div>{row.timeline}</div>
+                      <div>{row.practices}</div>
+                      <div className="min-w-0 leading-snug">{row.drivers}</div>
+                      <div
+                        className={cn(
+                          "font-semibold",
+                          row.muted
+                            ? "text-memo-text-secondary"
+                            : "text-memo-text"
+                        )}
+                      >
+                        {row.arr}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <Prose>
+                <p>
+                  Three mechanisms drive non-linear growth after Month 18. First,
+                  specialist tiers auto-upgrade as referral volume increases, so
+                  existing customers generate more revenue without new sales
+                  activity. Second, every PCP added to the network increases
+                  referral flow to every specialist already on it, which means
+                  each new PCP contract simultaneously increases revenue from the
+                  existing specialist base. Third, Layer 2 network intelligence
+                  creates an entirely new revenue surface (analytics, routing
+                  optimization, quality scoring) that does not exist in Year 1 but
+                  becomes the primary expansion driver by Year 3. The $75-150M
+                  range at Year 5 assumes Tether has expanded beyond the DMV wedge
+                  into 3-5 metro markets, added 2-3 new specialty verticals beyond
+                  dermatology, and begun licensing network intelligence to payers
+                  and health systems. These are not baked into the 18-month capital
+                  plan. They are where the architecture leads if the wedge works.
+                </p>
+              </Prose>
+              <p className="text-xs leading-relaxed text-memo-text-tertiary">
+                Projections are illustrative and derived from the unit economics and
+                segment sizes described in this document. They are not financial
+                commitments. The 18-month capital plan funds through the Pre-seed
+                exit milestone only.
+              </p>
             </section>
 
             {/* EHR */}
