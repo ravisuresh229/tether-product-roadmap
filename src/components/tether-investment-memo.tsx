@@ -5,12 +5,12 @@ import {
   useEffect,
   useMemo,
   useState,
-  useSyncExternalStore,
 } from "react";
 import { ArrowRight, ChevronRight, Layers, Network } from "lucide-react";
 
 const NAV: { id: string; label: string }[] = [
   { id: "executive-summary", label: "Executive summary" },
+  { id: "mvp-definition", label: "MVP definition" },
   { id: "architecture", label: "Three-layer architecture" },
   { id: "capital-ask", label: "Capital ask" },
   { id: "core-thesis", label: "Core thesis" },
@@ -19,11 +19,14 @@ const NAV: { id: string; label: string }[] = [
   { id: "product", label: "Product architecture" },
   { id: "pricing", label: "Pricing model" },
   { id: "path-to-scale", label: "Path to scale" },
+  { id: "retention-strategy", label: "Retention strategy" },
   { id: "ehr", label: "EHR integration" },
   { id: "capital-plan", label: "Capital plan" },
   { id: "team", label: "Who ships it" },
   { id: "competition", label: "Competitive landscape" },
   { id: "execution", label: "Next 180 days" },
+  { id: "discovery-work", label: "Discovery & research" },
+  { id: "deferred-scope", label: "Deferred scope" },
   { id: "risks", label: "Risks & open questions" },
 ];
 
@@ -214,25 +217,9 @@ function matrixCellTone(cell: string): string {
   return "";
 }
 
-function useMinWidth768() {
-  return useSyncExternalStore(
-    (onChange) => {
-      const mq = window.matchMedia("(min-width: 768px)");
-      mq.addEventListener("change", onChange);
-      return () => mq.removeEventListener("change", onChange);
-    },
-    () => window.matchMedia("(min-width: 768px)").matches,
-    () => false
-  );
-}
 
 export default function TetherInvestmentMemo() {
   const [active, setActive] = useState(NAV[0]?.id ?? "");
-  const min768 = useMinWidth768();
-  const [patientPortalUserOpen, setPatientPortalUserOpen] = useState<
-    boolean | null
-  >(null);
-  const patientPortalOpen = patientPortalUserOpen ?? min768;
 
   const ids = useMemo(() => NAV.map((n) => n.id), []);
 
@@ -399,6 +386,42 @@ export default function TetherInvestmentMemo() {
                 title="Executive summary"
               />
               <Prose>
+                <p className="mt-2 font-semibold text-memo-navy">
+                  Traction milestones
+                </p>
+                <ul className="m-0 list-disc space-y-2 pl-5 text-memo-text">
+                  <li>
+                    Athena Marketplace partnership signed (April 2026;
+                    discovery path into{" "}
+                    <span className="whitespace-nowrap">162,000+</span>{" "}
+                    athenaOne providers).
+                  </li>
+                  <li>
+                    Live pilot with concierge MDVIP physician (Dr.
+                    Lefevre,&nbsp;DC).
+                  </li>
+                  <li>
+                    Loudoun Medical Group (~100 clinics) eCW rollout in active
+                    IT&nbsp;security review.
+                  </li>
+                  <li>
+                    Forefront Dermatology (~170&nbsp;locations on ModMed):
+                    physician advisor testing product alongside platform build.
+                  </li>
+                  <li>
+                    ModMed adapter built;&nbsp;synapSYS partnership meeting in
+                    motion.
+                  </li>
+                  <li>
+                    Organic ChatGPT-driven inbound signup from a Kentucky
+                    practice evaluating deployment.
+                  </li>
+                  <li>
+                    Live specialist directory spanning{" "}
+                    <span className="whitespace-nowrap">1,200+</span> DMV
+                    providers across 13 specialties.
+                  </li>
+                </ul>
                 <p>
                   Tether is the data and coordination layer between primary care
                   and specialty care. When a PCP writes a referral, we capture
@@ -439,6 +462,35 @@ export default function TetherInvestmentMemo() {
                   is the moat.
                 </p>
               </Prose>
+
+              <div id="mvp-definition" className="scroll-mt-28">
+                <CalloutPanel variant="teal">
+                  <p className="m-0 text-base font-sans leading-[1.7] text-memo-text">
+                    <span className="font-semibold text-memo-navy">
+                      MVP definition.&nbsp;
+                    </span>
+                    The MVP is the closed-loop referral. The PCP creates a
+                    referral order in Tether, structured data assembles from the
+                    EHR automatically, routing lands on the correct specialist,
+                    the specialist receives structured intake context, patients
+                    are contacted by Tether&apos;s agent for scheduling, the visit
+                    completes, the consult note is parsed and written back to the
+                    PCP chart, and the loop closes without manual intervention.
+                    Steps&nbsp;1-4 stay live today. The&nbsp;F&amp;F
+                    six&nbsp;months ships steps&nbsp;5-7. MVP is declared when
+                    this loop executes reliably across three or more paying
+                    practices in production. Multi-EHR breadth, Layer&nbsp;2
+                    intelligence, and ranking are expansions riding on top of this
+                    core loop, never blockers.&nbsp;
+                    <span className="italic text-memo-text-secondary">
+                      We believe that framing concentrates scope because Loudoun,
+                      concierge expansion, and Forefront diligence all bottleneck
+                      on proving consult note write-back versus inventing ancillary
+                      product surface area.
+                    </span>
+                  </p>
+                </CalloutPanel>
+              </div>
             </section>
             </div>
 
@@ -774,35 +826,72 @@ export default function TetherInvestmentMemo() {
               </Prose>
 
               <div className="space-y-6">
-                {[
-                  {
-                    tag: "Segment A",
-                    title: "Concierge-affiliated independent PCPs",
-                    ex: "MDVIP (1,100+ physicians), SignatureMD, Castle Connolly PHP, Specialdocs, PartnerMD.",
-                    pain: "Concierge physicians charge patients $2,000-$5,000 per year. Coordinated specialist access is one of the explicit promises. Reality: MAs spend 15-30 minutes per referral on manual coordination, and the loop almost never closes cleanly. This is existential brand risk for the network.",
-                    gap: "Concierge has exactly one feature its patients pay for (coordination) and the feature is broken. No incumbent. Pure greenfield.",
-                    access:
-                      "Warm. MDVIP engaged through current pilot in Washington DC. SignatureMD demoed to executive leadership. Single network contracts unlock 300-1,100+ physicians.",
-                  },
-                  {
-                    tag: "Segment B",
-                    title: "Independent multi-specialty groups",
-                    ex: "Loudoun Medical Group (100 clinics, 300 providers), Inova-affiliated independents, Privia partner groups.",
-                    pain: "Internal referrals across dozens of specialties/locations without unified visibility. Fax workflows; leakage invisible until quarterly finance.",
-                    gap: "Leakage recovery + internal referral optimization. Physician-owner boards buy ROI.",
-                    access:
-                      "Warm: Loudoun in IT security review; one contract deploys 100 clinics / 300 providers.",
-                  },
-                  {
-                    tag: "Segment C",
-                    title: "PE-backed specialty networks",
-                    ex: "Forefront Dermatology (170+ locations), USDP, Schweiger, EyeCare Partners, ortho/GI rollups.",
-                    pain: "50-200+ locations per network with no unified inbound referral processing. Each location handles referrals manually with no PCP context. Portfolio COO has no cross-location analytics, no leakage visibility, no acquisition intelligence.",
-                    gap: "Tennr/Valerie are single-sided at the specialist. Tether adds referring-side context + portfolio intelligence.",
-                    access:
-                      "Warm via Forefront; broader PE network via investor/operator intros.",
-                  },
-                ].map((s) => (
+                {(
+                  [
+                    {
+                      tag: "Segment A",
+                      title: "Concierge-affiliated independent PCPs",
+                      ex: "MDVIP (1,100+ physicians), SignatureMD, Castle Connolly PHP, Specialdocs, PartnerMD.",
+                      pain: "Concierge physicians charge patients $2,000-$5,000 per year. Coordinated specialist access is one of the explicit promises. Reality: MAs spend 15-30 minutes per referral on manual coordination, and the loop almost never closes cleanly. This is existential brand risk for the network.",
+                      gap: "Concierge has exactly one feature its patients pay for (coordination) and the feature is broken. No incumbent. Pure greenfield.",
+                      access:
+                        "Warm. MDVIP engaged through current pilot in Washington DC. SignatureMD demoed to executive leadership. Single network contracts unlock 300-1,100+ physicians.",
+                      userStories: {
+                        mustHave: [
+                          "As a concierge-affiliated PCP, I want to send a structured referral to a specialist and have the consult note return to my chart automatically, so that I fulfill the coordination promise patients pay annual fees to receive.",
+                          "As a concierge PCP, I want to verify insurance eligibility at referral creation, so that I avoid sending patients to specialists who ultimately cannot bill their plans.",
+                        ],
+                        niceHave: [
+                          "As a concierge PCP, I want routing suggestions informed by referrals that historically completed with similar demographics, so that outbound placement improves cohort over cohort.",
+                        ],
+                      },
+                    },
+                    {
+                      tag: "Segment B",
+                      title: "Independent multi-specialty groups",
+                      ex: "Loudoun Medical Group (100 clinics, 300 providers), Inova-affiliated independents, Privia partner groups.",
+                      pain: "Internal referrals across dozens of specialties/locations without unified visibility. Fax workflows; leakage invisible until quarterly finance.",
+                      gap: "Leakage recovery + internal referral optimization. Physician-owner boards buy ROI.",
+                      access:
+                        "Warm: Loudoun in IT security review; one contract deploys 100 clinics / 300 providers.",
+                      userStories: {
+                        mustHave: [
+                          "As a multi-specialty practice manager, I want visibility into completed versus leaked internal referrals, so that I quantify revenue left on the table and coach routing.",
+                          "As a primary care physician embedded in a specialty-heavy group, I want one-click internal routing that distinguishes in-house specialties from external partners, so that I stop memorizing labyrinth org charts mid-visit.",
+                        ],
+                        niceHave: [
+                          "As a physician-owner, I want a quarterly referral cohort report packaged for governance, so that I frame ROI narratives for board stewardship meetings.",
+                        ],
+                      },
+                    },
+                    {
+                      tag: "Segment C",
+                      title: "PE-backed specialty networks",
+                      ex: "Forefront Dermatology (170+ locations), USDP, Schweiger, EyeCare Partners, ortho/GI rollups.",
+                      pain: "50-200+ locations per network with no unified inbound referral processing. Each location handles referrals manually with no PCP context. Portfolio COO has no cross-location analytics, no leakage visibility, no acquisition intelligence.",
+                      gap: "Tennr/Valerie are single-sided at the specialist. Tether adds referring-side context + portfolio intelligence.",
+                      access:
+                        "Warm via Forefront; broader PE network via investor/operator intros.",
+                      userStories: {
+                        mustHave: [
+                          "As a specialist, I want inbound referrals annotated with deterministic PCP context, so that I enter the visit without scavenging the chart for breadcrumbs.",
+                          "As a PE portfolio COO, I want cross-location referral analytics that tie leakage to EBITDA, so bolt-on diligence leans on data instead of anecdotes.",
+                        ],
+                        niceHave: [
+                          "As a specialist office manager, I want outbound patient outreach sequencing automatically after inbound packets arrive, so clerical staffing focuses on escalations instead of repetitive cold outreach.",
+                        ],
+                      },
+                    },
+                  ] satisfies ReadonlyArray<{
+                    tag: string;
+                    title: string;
+                    ex: string;
+                    pain: string;
+                    gap: string;
+                    access: string;
+                    userStories: { mustHave: string[]; niceHave: string[] };
+                  }>
+                ).map((s) => (
                   <div
                     key={s.tag}
                     className={cn(
@@ -859,6 +948,31 @@ export default function TetherInvestmentMemo() {
                           {s.access}
                         </p>
                       </div>
+                    </div>
+                    <div className="mt-6 border-t border-memo-border pt-5">
+                      <p className="text-xs font-semibold uppercase tracking-[0.08em] text-memo-teal-dark">
+                        Core user stories
+                      </p>
+                      <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-memo-text-secondary">
+                        Must-have
+                      </p>
+                      <ul className="mt-2 space-y-2 text-sm leading-relaxed text-memo-text">
+                        {s.userStories.mustHave.map((story) => (
+                          <li key={story} className="list-disc pl-4">
+                            {story}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.12em] text-memo-text-secondary">
+                        Nice-to-have
+                      </p>
+                      <ul className="mt-2 space-y-2 text-sm leading-relaxed text-memo-text">
+                        {s.userStories.niceHave.map((story) => (
+                          <li key={story} className="list-disc pl-4">
+                            {story}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 ))}
@@ -956,32 +1070,166 @@ export default function TetherInvestmentMemo() {
                   closes without anyone touching it on either side.
                 </ProseField>
                 <ProseField label="Production status">
-                  Athena read-only FHIR live with BAA; write-back via Platform
-                  Services in negotiation; specialist directory 1,200+ providers /
-                  13+ specialties (DMV); Ask Tether operational; structured
-                  referral assembly end-to-end; second pilot (eCW, 100 clinics)
-                  in IT review.
+                  Athena FHIR&nbsp;R4 read live with Marketplace partnership
+                  signed April&nbsp;2026; certified FHIR workloads reduce variable
+                  API spend versus Platform&nbsp;Services polling; Athena
+                  write-back via Marketplace Platform&nbsp;Services in close;
+                  ModMed&nbsp;EMA connector built awaiting synapSYS production
+                  approvals; specialty directory spanning 1,200+ DMV providers /
+                  13 specialties; Ask&nbsp;Tether operational end-to-end;
+                  Loudoun eCW rollout (~100 clinics) in IT&nbsp;security
+                  review.
                 </ProseField>
               </Prose>
-              <CalloutPanel variant="warm" className="mt-6">
-                <p className="text-sm font-medium text-memo-text-secondary">
-                  Build items to complete Layer 1
+              <Subhead>Roadmap bucketing lens</Subhead>
+              <Prose>
+                <p>
+                  Layer&nbsp;2 and Layer&nbsp;3 backlog work maps to explicit
+                  product outcomes. Anything after MVP nests into one bucket:
+                  <span className="font-semibold"> Foundational </span>(core rails
+                  to stay production safe),
+                  <span className="font-semibold"> Growth </span>(new logos or
+                  locations),
+                  <span className="font-semibold"> Engagement </span>(more
+                  actions per enrolled provider),
+                  <span className="font-semibold"> Retention </span>(reasons to
+                  stay month six),
+                  <span className="font-semibold"> Monetization </span>(pricing
+                  tier unlocks).
                 </p>
-                <ul className="mt-3 space-y-2 text-sm text-memo-text">
-                  {[
-                    "Athena write-back via Platform Services",
-                    "ModMed EMA via synapSYS (derm PE)",
-                    "eCW write-back via partner program",
-                    "Multi-location deployment tooling (5-300 providers / operator)",
-                    "Document parsing agent for inbound clinical notes with structured EHR push",
-                    "Loop closure agent that triggers on visit completion and writes consult notes back without human action",
-                  ].map((x) => (
-                    <li key={x} className="flex gap-2">
-                      <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-memo-teal" />
-                      <span>{x}</span>
-                    </li>
-                  ))}
-                </ul>
+              </Prose>
+
+              <CalloutPanel variant="warm" className="mt-4">
+                <p className="text-sm font-medium text-memo-text-secondary">
+                  Layer&nbsp;1 build items tagged by bucket + unlock thesis
+                </p>
+                <div className="mt-4 -mx-2 overflow-x-auto md:mx-0">
+                  <table className="min-w-[640px] w-full border-collapse border border-memo-border text-left text-xs text-memo-text md:text-sm">
+                    <thead className="bg-memo-bg font-semibold uppercase tracking-[0.05em] text-memo-text-secondary">
+                      <tr>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Feature
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Bucket
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Unlocks
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Estimated impact
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(
+                        [
+                          {
+                            feature: "Athena Marketplace Platform Services write-back",
+                            bucket: "Foundational",
+                            unlocks: "Closes Loudoun-ready loop for Athena-only pilots",
+                            impact:
+                              "Converts MDVIP concierge cohort once contract covers network pricing",
+                          },
+                          {
+                            feature:
+                              "Athena Marketplace seller listing & distribution",
+                            bucket: "Growth",
+                            unlocks:
+                              "Discovery channel into ~162k athenaOne providers",
+                            impact:
+                              "Target 1-3 credible inbound evaluations per month at steady state listing ops",
+                          },
+                          {
+                            feature: "ModMed EMA connector via synapSYS",
+                            bucket: "Foundational",
+                            unlocks:
+                              "Forefront Dermatology (170+) warm PE diligence path",
+                            impact:
+                              "Demonstrates repeatable specialist density per signed operator",
+                          },
+                          {
+                            feature: "eCW write-back via partner envelope",
+                            bucket: "Foundational",
+                            unlocks:
+                              "Loudoun Medical Group gated security review payoff",
+                            impact:
+                              "100 clinics / 300 providers on one enterprise agreement",
+                          },
+                          {
+                            feature: "Structured referral orchestration rails (live increment)",
+                            bucket: "Engagement",
+                            unlocks:
+                              "Expands concierge promise without doubling MA headcount",
+                            impact:
+                              "Daily active referral creation inside pilot cohort proves habit formation",
+                          },
+                          {
+                            feature: "Loop closure + consult note parsing agent",
+                            bucket: "Engagement + Retention",
+                            unlocks:
+                              "Ends manual chart filing for outbound referrals",
+                            impact:
+                              "We believe churn risk collapses once write-back survives 60 days straight because Loudoun admins already named manual QA as disqualifier.",
+                          },
+                          {
+                            feature: "Stedi-backed eligibility probes",
+                            bucket: "Foundational + Engagement",
+                            unlocks: "Fails referrals before leakage begins",
+                            impact:
+                              "Anchors concierge must-have pairing with routing accuracy",
+                          },
+                          {
+                            feature: "Document parsing v1 (specialist ingest)",
+                            bucket: "Engagement",
+                            unlocks: "Inbound packet completeness for PE desks",
+                            impact:
+                              "Required before Forefront locations accept volume SLAs",
+                          },
+                          {
+                            feature: "Multi-location deployment playbook",
+                            bucket: "Growth",
+                            unlocks:
+                              "Lets one procurement vehicle cover dozens of sites",
+                            impact:
+                              "Scales Concierge expansion + PE rollups without linear services cost",
+                          },
+                          {
+                            feature: "Manager dashboard (completion + leakage KPIs)",
+                            bucket: "Engagement + Monetization",
+                            unlocks:
+                              "Elevates Loudoun admins from anecdotes to governed metrics",
+                            impact:
+                              "Differentiates bundled $249 practice SKU from $99 specialist pilot",
+                          },
+                          {
+                            feature: "Ask Tether clinician copilot v2",
+                            bucket: "Engagement",
+                            unlocks:
+                              "Answers protocol questions anchored on structured referral payloads",
+                            impact:
+                              "Raises weekly actions per clinician without widening scope creep",
+                          },
+                        ] as const
+                      ).map((row) => (
+                        <tr key={row.feature} className="align-top">
+                          <td className="border border-memo-border px-3 py-3 font-semibold md:px-4">
+                            {row.feature}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.bucket}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.unlocks}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.impact}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </CalloutPanel>
               <ExitCallout className="mt-6">
                 <p className="m-0">
@@ -997,7 +1245,10 @@ export default function TetherInvestmentMemo() {
                   more concierge-affiliated PCPs at Small-to-Mid enterprise
                   pricing. Athena, ModMed, and eCW live in production. Closure data
                   from real referrals proves the wedge across three segments and
-                  grounds the seed round.
+                  grounds the seed round. We believe institutional diligence will
+                  treat this cohort as repeatable because Loudoun procurement and
+                  Forefront advisor workflows already surfaced identical blockers:
+                  deterministic write-back and eligibility before scheduling.
                 </p>
               </ExitCallout>
 
@@ -1029,67 +1280,123 @@ export default function TetherInvestmentMemo() {
               </Prose>
               <CalloutPanel variant="warm" className="mt-6">
                 <p className="text-sm font-medium text-memo-text-secondary">
-                  Build items
+                  Layer&nbsp;2 build items tagged by bucket + unlock thesis
                 </p>
-                <ul className="mt-3 space-y-2 text-sm text-memo-text">
-                  {[
-                    "Historical referral analysis engine with cross-practice benchmarking",
-                    "Specialist quality scoring model based on completion rates, time to schedule, and patient outcomes",
-                    "PE portfolio analytics dashboard with leakage detection and acquisition targeting",
-                    "Predictive routing engine recommending optimal specialist by insurance, distance, and historical performance",
-                    "Insurance compatibility prediction and prior authorization automation via Stedi integration",
-                    "Network referral graph with provider relationship strength scoring",
-                    "Patient portal v1 (read-only): patient view of referral history, consult notes from completed visits, and upcoming appointments",
-                  ].map((x) => (
-                    <li key={x} className="flex gap-2">
-                      <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-memo-teal" />
-                      <span>{x}</span>
-                    </li>
-                  ))}
-                </ul>
-              </CalloutPanel>
-              <details
-                className="mt-12 scroll-mt-28"
-                open={patientPortalOpen}
-                suppressHydrationWarning
-                onToggle={(e) =>
-                  setPatientPortalUserOpen(
-                    (e.target as HTMLDetailsElement).open
-                  )
-                }
-              >
-                <summary className="cursor-pointer list-none font-sans text-[20px] font-semibold leading-snug tracking-tight text-memo-text md:text-[22px] [&::-webkit-details-marker]:hidden [&::marker]:hidden">
-                  Patient portal v1 scope (intentionally narrow)
-                </summary>
-                <div className="mt-4">
-                  <Prose>
-                    <p>
-                      Patient portal v1 is intentionally narrow in scope. v1 is
-                      read-only: patients see their own referral history, consult
-                      notes from completed visits, and upcoming appointments. There
-                      is no patient-initiated messaging, no patient-side scheduling,
-                      and no patient-to-provider communication in v1. The reason is
-                      sequencing: a fuller patient surface introduces regulatory
-                      exposure (patient-facing health apps are scrutinized
-                      differently than B2B clinical tools), customer support load,
-                      and identity verification infrastructure that would compete
-                      with the Layer 2 intelligence build for engineering time.
-                    </p>
-                    <p>
-                      The v1 scope still produces meaningful value. Patients with
-                      concierge primary care expect transparency into their own care,
-                      and giving them a single place to see their referral history
-                      across multiple specialists is a feature concierge networks
-                      will use as a sales differentiator. It also strengthens the
-                      lock-in mechanism described in Part 1: every patient using
-                      the portal becomes an additional retention force on the
-                      practice, because patients who have their referral history in
-                      one place become advocates for keeping Tether installed at
-                      their PCP.
-                    </p>
-                  </Prose>
+                <div className="mt-4 -mx-2 overflow-x-auto md:mx-0">
+                  <table className="min-w-[640px] w-full border-collapse border border-memo-border text-left text-xs text-memo-text md:text-sm">
+                    <thead className="bg-memo-bg font-semibold uppercase tracking-[0.05em] text-memo-text-secondary">
+                      <tr>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Feature
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Bucket
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Unlocks
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Estimated impact
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(
+                        [
+                          {
+                            feature:
+                              "Historical referral analysis + benchmarking cohorts",
+                            bucket: "Engagement + Monetization",
+                            unlocks:
+                              "Up-levels Concierge CFO conversations into quantified leakage",
+                            impact:
+                              "Supports $249 network analytics upsell anchored to MDVIP KPI reviews",
+                          },
+                          {
+                            feature:
+                              "Specialist quality scoring sourced from completions + cycle times",
+                            bucket: "Monetization + Engagement",
+                            unlocks:
+                              "Feeds directory ranking tiers specialists already pay into",
+                            impact:
+                              "Creates defensible uplift versus static directories Valerie-style teams maintain",
+                          },
+                          {
+                            feature:
+                              "PE portfolio leakage + acquisition diagnostics console",
+                            bucket: "Monetization",
+                            unlocks:
+                              "Gives bolt-on diligence teams EBITDA tied routing math",
+                            impact:
+                              "Forefront diligence explicitly asked whether portfolio-level charts could ingest referral edges; this answers that question with production data.",
+                          },
+                          {
+                            feature:
+                              "Predictive routing (insurance, distance, performance priors)",
+                            bucket: "Engagement + Monetization",
+                            unlocks:
+                              "Shrinks Loudoun concierge leakage by defaulting in-network specialists",
+                            impact:
+                              "We pilot this once the referral graph crests roughly 5k monthly transactions so cohort sizes stay statistically honest.",
+                          },
+                          {
+                            feature:
+                              "Prior authorization acceleration via matured Stedi rail",
+                            bucket: "Foundational + Retention",
+                            unlocks:
+                              "Keeps coordinators inside Tether for adjacent workflows",
+                            impact:
+                              "Adds non-referral ARR hooks without breaking thesis focus on outbound specialty edges",
+                          },
+                          {
+                            feature:
+                              "Directed graph service for intra-network relationship strength",
+                            bucket: "Foundational + Engagement",
+                            unlocks:
+                              "Feeds personalization without bespoke SQL per tenant",
+                            impact:
+                              "Required substrate before ranking fees feel legitimate to operators",
+                          },
+                          {
+                            feature:
+                              "Orchestrated patient outreach playbook expansion",
+                            bucket: "Engagement + Retention",
+                            unlocks:
+                              "Sequences SMS plus voice confirmations without portals",
+                            impact:
+                              "We believe concierge leaders accept this path because concierge MDVIP demos already prioritized agent-led reminders over another login surface.",
+                          },
+                        ] as const
+                      ).map((row) => (
+                        <tr key={row.feature} className="align-top">
+                          <td className="border border-memo-border px-3 py-3 font-semibold md:px-4">
+                            {row.feature}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.bucket}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.unlocks}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.impact}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              </details>
+              </CalloutPanel>
+              <Prose>
+                <p>
+                  Dedicated patient portals stay off the Layer&nbsp;2 critical
+                  path for now because outreach agents already authenticate
+                  patients over SMS plus voice flows. Regulatory load for a gated
+                  patient web surface competes directly with predictive routing work
+                  and is captured explicitly under Deferred scope rather than buried
+                  in 'coming soon' copy.
+                </p>
+              </Prose>
               <div className="mt-6">
                 <ExitCallout>
                   <p className="m-0">
@@ -1097,10 +1404,11 @@ export default function TetherInvestmentMemo() {
                       Exit (end of 2027):
                     </span>{" "}
                     50+ practices live, approximately $2.5M ARR. Network
-                    intelligence visible in product. PE customers paying for
-                    portfolio analytics. Provider quality scores becoming the
-                    directory standard. Patient portal v1 shipped to concierge
-                    networks. Series A closed.
+                    intelligence visible in production workflows. PE customers
+                    paying for portfolio analytics. Provider quality rankings
+                    become the default concierge directory standard. Agents cover
+                    patient-side coordination loops without standalone portals at
+                    this milestone. Series A closed.
                   </p>
                 </ExitCallout>
               </div>
@@ -1127,20 +1435,76 @@ export default function TetherInvestmentMemo() {
               </Prose>
               <CalloutPanel variant="warm" className="mt-6">
                 <p className="text-sm font-medium text-memo-text-secondary">
-                  Build items
+                  Layer&nbsp;3 build items tagged by bucket + unlock thesis
                 </p>
-                <ul className="mt-3 space-y-2 text-sm text-memo-text">
-                  {[
-                    "Event subscription infrastructure across integrated EHRs, detecting referral orders, prior auth requests, scheduling events, and care gap signals",
-                    "Autonomous agent orchestration across referrals, prior auth, scheduling, patient outreach, and care gap closure: detect, assemble, decide, execute, write back",
-                    "Cross-EHR patient identity resolution (the fourth thesis constraint, productionized)",
-                  ].map((x) => (
-                    <li key={x} className="flex gap-2">
-                      <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-memo-teal" />
-                      <span>{x}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="mt-4 -mx-2 overflow-x-auto md:mx-0">
+                  <table className="min-w-[640px] w-full border-collapse border border-memo-border text-left text-xs text-memo-text md:text-sm">
+                    <thead className="bg-memo-bg font-semibold uppercase tracking-[0.05em] text-memo-text-secondary">
+                      <tr>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Feature
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Bucket
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Unlocks
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 align-top font-sans tracking-normal normal-case md:px-4">
+                          Estimated impact
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(
+                        [
+                          {
+                            feature:
+                              "Event subscription fabric across integrated EHRs",
+                            bucket: "Foundational",
+                            unlocks:
+                              "Detects referral orders, auth requests, scheduling hooks",
+                            impact:
+                              "We believe event capture is the only architecture that scales past hourly polling fees without breaking compliance.",
+                          },
+                          {
+                            feature:
+                              "Autonomous orchestration across referral + adjacent workflows",
+                            bucket: "Engagement + Retention",
+                            unlocks:
+                              "Runs detect, assemble, decide, execute, write-back loops",
+                            impact:
+                              "Differentiates from Tennr-style document clearinghouses that never own both chart endpoints simultaneously.",
+                          },
+                          {
+                            feature:
+                              "Production-grade cross-EHR patient identity graph",
+                            bucket: "Foundational + Monetization",
+                            unlocks:
+                              "Turns Layer&nbsp;2 priors into closed-loop automation",
+                            impact:
+                              "Required before health systems trust automation on money flows like auth and scheduling.",
+                          },
+                        ] as const
+                      ).map((row) => (
+                        <tr key={row.feature} className="align-top">
+                          <td className="border border-memo-border px-3 py-3 font-semibold md:px-4">
+                            {row.feature}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.bucket}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.unlocks}
+                          </td>
+                          <td className="border border-memo-border px-3 py-3 md:px-4">
+                            {row.impact}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </CalloutPanel>
             </section>
 
@@ -1198,6 +1562,62 @@ export default function TetherInvestmentMemo() {
                     </div>
                   );
                 })}
+              </div>
+              <Subhead>Pricing and feature bundles</Subhead>
+              <div className="overflow-x-auto rounded-lg border border-memo-border">
+                <table className="min-w-[640px] w-full border-collapse text-left text-sm text-memo-text">
+                  <thead className="bg-memo-warm text-xs font-semibold uppercase tracking-[0.08em] text-memo-text-secondary">
+                    <tr>
+                      <th className="border border-memo-border px-4 py-3 font-sans tracking-normal normal-case">
+                        Tier
+                      </th>
+                      <th className="border border-memo-border px-4 py-3 font-sans tracking-normal normal-case">
+                        Price
+                      </th>
+                      <th className="border border-memo-border px-4 py-3 font-sans tracking-normal normal-case">
+                        Features
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(
+                      [
+                        [
+                          "Pilot",
+                          "Free or $99/mo",
+                          "Outbound referrals, specialist directory, basic loop closure capped at 1-2 providers",
+                        ],
+                        [
+                          "Practice",
+                          "$249-$299/mo per location",
+                          "Full bidirectional EHR integration, eligibility verification, document parsing, manager dashboard",
+                        ],
+                        [
+                          "Network enterprise",
+                          "$60K-$150K ACV",
+                          "Custom routing rules, network analytics, white-label surfaces, priority support, dedicated CSM",
+                        ],
+                        [
+                          "Specialist network",
+                          "$99-$999/mo per office (volume-tiered)",
+                          "Inbound referral management, ranking visibility, completion analytics, structured intake",
+                        ],
+                      ] as const
+                    ).map(([tier, price, features]) => (
+                      <tr key={tier}>
+                        <td className="border border-memo-border px-4 py-3 align-top font-semibold">
+                          {tier}
+                        </td>
+                        <td className="border border-memo-border px-4 py-3 align-top">
+                          {price}
+                        </td>
+                        <td className="border border-memo-border px-4 py-3 align-top">
+                          {features}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
               <Prose>
                 <p>
@@ -1285,13 +1705,19 @@ export default function TetherInvestmentMemo() {
                 ))}
               </div>
               <div className="overflow-x-auto rounded-lg border border-memo-border">
-                <div className="min-w-[44rem]">
+                <div className="min-w-[72rem]">
                   <div
-                    className="grid grid-cols-[1fr_0.85fr_0.65fr_1.35fr_0.95fr] gap-2 border-b border-memo-border bg-memo-warm px-3 py-2.5 font-sans text-[10px] font-semibold uppercase tracking-[0.08em] text-memo-text-secondary"
+                    className="grid gap-2 border-b border-memo-border bg-memo-warm px-3 py-2.5 font-sans text-[10px] font-semibold uppercase tracking-[0.06em] text-memo-text-secondary"
+                    style={{
+                      gridTemplateColumns:
+                        "0.92fr 0.72fr 0.6fr 1.45fr 1.05fr 1.55fr 0.92fr",
+                    }}
                   >
                     <div>Phase</div>
                     <div>Timeline</div>
                     <div>Practices</div>
+                    <div>Key features shipped</div>
+                    <div>Bucket mix</div>
                     <div>Revenue drivers</div>
                     <div>ARR range</div>
                   </div>
@@ -1301,7 +1727,11 @@ export default function TetherInvestmentMemo() {
                         phase: "F&F exit",
                         timeline: "Month 6",
                         practices: "3-5",
-                        drivers: "Pilot pricing, first enterprise converts",
+                        features:
+                          "Athena Marketplace write-back live, loop closure agent, Stedi eligibility, Ask&nbsp;Tether memory v2 ships to pilots",
+                        buckets: "Foundational + Engagement-heavy",
+                        drivers:
+                          "$99 pilot ladders, concierge conversion to practice tier, Loudoun contingency launch window",
                         arr: "$36-60K",
                         muted: false,
                       },
@@ -1309,8 +1739,11 @@ export default function TetherInvestmentMemo() {
                         phase: "Pre-seed exit",
                         timeline: "Month 18",
                         practices: "15-20",
+                        features:
+                          "ModMed + eCW adapters in prod, SOC&nbsp;2 Type&nbsp;I, Layer&nbsp;2 data plane groundwork, manager analytics dashboard bundles",
+                        buckets: "Foundational + Growth + Engagement",
                         drivers:
-                          "Enterprise contracts across 3 segments, specialist tiers scaling",
+                          "Enterprise packages across concierge, MSG, and PE simultaneously",
                         arr: "$800K-$1M",
                         muted: false,
                       },
@@ -1318,8 +1751,11 @@ export default function TetherInvestmentMemo() {
                         phase: "Series A target",
                         timeline: "Month 30",
                         practices: "50-75",
+                        features:
+                          "Predictive routing, PE portfolio cockpit, embedded clinician surfaces, hardened agent-mediated patient confirmations",
+                        buckets: "Engagement + Monetization",
                         drivers:
-                          "Layer 2 analytics revenue, PE portfolio deals, 3 EHRs at scale",
+                          "Tiered analytics uplift, sponsor-backed portfolio KPIs",
                         arr: "$3-5M",
                         muted: false,
                       },
@@ -1327,8 +1763,12 @@ export default function TetherInvestmentMemo() {
                         phase: "Growth phase",
                         timeline: "Year 3-4",
                         practices: "200-500",
+                        features:
+                          "Depth in ortho/GI/cardiology adapters, payer-grade export APIs, playbooked multi-metro onboarding",
+                        buckets:
+                          "Growth + Monetization parity with foundational maintenance",
                         drivers:
-                          "Specialist tier compounding, network intelligence licensing, new segment entry (ortho, GI, cardiology)",
+                          "Specialist tiers compounding plus intelligence licensing proofs",
                         arr: "$15-30M",
                         muted: true,
                       },
@@ -1336,8 +1776,12 @@ export default function TetherInvestmentMemo() {
                         phase: "Platform scale",
                         timeline: "Year 5+",
                         practices: "1,000+",
+                        features:
+                          "Metro-density automation (Layer&nbsp;3), regulated data collaborations",
+                        buckets:
+                          "Retention + Monetization with heavy foundational compliance",
                         drivers:
-                          "Multi-specialty network effects, payer/pharma data partnerships, geographic density in 5-10 metro markets",
+                          "Network effects across five or more metros plus adjacency modules",
                         arr: "$75-150M",
                         muted: true,
                       },
@@ -1346,30 +1790,32 @@ export default function TetherInvestmentMemo() {
                     <div
                       key={row.phase}
                       className={cn(
-                        "grid grid-cols-[1fr_0.85fr_0.65fr_1.35fr_0.95fr] gap-2 border-b border-memo-border px-3 py-2.5 text-sm last:border-b-0",
+                        "grid gap-2 border-b border-memo-border px-3 py-2.5 text-sm last:border-b-0 leading-snug",
                         idx % 2 === 0 ? "bg-memo-bg" : "bg-memo-warm",
                         row.muted ? "text-memo-text-secondary" : "text-memo-text"
                       )}
+                      style={{
+                        gridTemplateColumns:
+                          "0.92fr 0.72fr 0.6fr 1.45fr 1.05fr 1.55fr 0.92fr",
+                      }}
                     >
                       <div
                         className={cn(
                           "font-medium",
-                          row.muted
-                            ? "text-memo-text-secondary"
-                            : "text-memo-text"
+                          row.muted ? "text-memo-text-secondary" : "text-memo-text"
                         )}
                       >
                         {row.phase}
                       </div>
                       <div>{row.timeline}</div>
                       <div>{row.practices}</div>
-                      <div className="min-w-0 leading-snug">{row.drivers}</div>
+                      <div className="min-w-0">{row.features}</div>
+                      <div className="min-w-0">{row.buckets}</div>
+                      <div className="min-w-0">{row.drivers}</div>
                       <div
                         className={cn(
                           "font-semibold",
-                          row.muted
-                            ? "text-memo-text-secondary"
-                            : "text-memo-text"
+                          row.muted ? "text-memo-text-secondary" : "text-memo-text"
                         )}
                       >
                         {row.arr}
@@ -1403,6 +1849,56 @@ export default function TetherInvestmentMemo() {
                 commitments. The 18-month capital plan funds through the Pre-seed
                 exit milestone only.
               </p>
+            </section>
+
+            <section className="mt-[80px] space-y-8 md:mt-[100px]">
+              <SectionTitle
+                id="retention-strategy"
+                kicker="GROWTH"
+                title="Retention strategy"
+              />
+              <Prose>
+                <p>
+                  <span className="font-semibold text-memo-text">
+                    Loop closure locks workflow.
+                  </span>{" "}
+                  Consult notes flowing back erase the clipboard task MAs tolerated
+                  for decades. Faxing again forces manual filings and duplicate QA.
+                  Operators report habit formation inside 30&nbsp;days once
+                  write-back survives nightly audits unchanged.
+                </p>
+                <p>
+                  <span className="font-semibold text-memo-text">
+                    Network recall compounds quarterly.
+                  </span>{" "}
+                  Routing suggestions draw on payer acceptance, turnaround, and
+                  completion velocity already observed inside Tether. Leaving the
+                  platform discards calibrated priors Loudoun admins cannot recreate
+                  in spreadsheets.
+                </p>
+                <p>
+                  <span className="font-semibold text-memo-text">
+                    Embedded observability reinforces ownership.
+                  </span>{" "}
+                  Automated monthly dossiers quantify referral volume, completion
+                  percentages, leakage, and specialist response SLA adherence. Few
+                  practice managers historically receive that fidelity without paying
+                  consultants.
+                </p>
+              </Prose>
+              <CalloutPanel variant="teal">
+                <p className="m-0 text-sm leading-relaxed text-memo-text md:text-base">
+                  <span className="font-semibold text-memo-navy">
+                    Retention KPI for Friends & Family cohort:&nbsp;
+                  </span>
+                  Target gross retention over 90&nbsp;percent at month six after
+                  go-live.&nbsp;
+                  <span className="italic text-memo-text-secondary">
+                    We believe that benchmark is attainable because concierge pilot
+                    feedback already cites manual consult filing as weekly churn bait.
+                  </span>
+                </p>
+              </CalloutPanel>
             </section>
 
             {/* EHR */}
@@ -1464,13 +1960,13 @@ export default function TetherInvestmentMemo() {
                   integration does.
                 </p>
                 <p>
-                  <span className="font-semibold text-memo-text">Redox:</span> scoped; seed
-                  window cost $0 (not activated). Illustrative later-year costs:
-                  ~$50K Y2 (2-4 production connections), ~$135K Y3 (Epic +
-                  long-tail, 8-15 connections), ~$160K cumulative over 3 years when
-                  activated post-raise. Connection definition (per-practice vs
-                  per-EHR-type) is the key commercial term, negotiated in writing
-                  before any production contract is signed.
+                  <span className="font-semibold text-memo-text">Redox:</span> deferred
+                  for now with $0 cash out in this tranche window. Activation at
+                  pre-seed earmarks roughly $15K annual sandbox pricing plus roughly
+                  $1K per production connection per diligence notes from April&nbsp;2026 scoping whenever Epic breadth or stalled direct integrations require a parallel path.
+                  Connection economics (practice vs&nbsp;tenant vs&nbsp;environment)
+                  must be nailed in contract language before powering anything in
+                  production.
                 </p>
               </Prose>
             </section>
@@ -1570,6 +2066,73 @@ export default function TetherInvestmentMemo() {
                   protects Layer 2 routing/intelligence moat.
                 </p>
               </div>
+              <Subhead>EHR integration unit economics</Subhead>
+              <ExitCallout className="space-y-4 text-sm leading-relaxed">
+                <p>
+                  <span className="font-semibold text-memo-text">
+                    Athena Marketplace Platform Services (Essential posture):
+                  </span>
+                </p>
+                <ul className="m-0 list-disc space-y-2 pl-5">
+                  <li>
+                    Flat connection economics at roughly $30 per practice monthly
+                    with no discretionary discount modeled today.
+                  </li>
+                  <li>
+                    Variable usage bills against Athena&apos;s published rate card.
+                    Tier&nbsp;1 currently floors at roughly $900 monthly when
+                    throughput stays beneath 18,750 billable Platform Services calls
+                    in a billing period.
+                  </li>
+                  <li>
+                    Certified FHIR workloads sit outside Platform Services metering,
+                    anchoring noisy read traffic away from punitive polling charges.
+                  </li>
+                </ul>
+                <p>
+                  Modeled Athena cash under two integration postures:&nbsp;(1)&nbsp;a
+                  lean architecture that minimizes redundant /changed polling and
+                  (2)&nbsp;default hourly polling telemetry. Estimated totals:&nbsp;
+                  roughly $13K in Year&nbsp;one at roughly five average practices;&nbsp;
+                  Year&nbsp;two spans roughly $20K (lean) vs roughly $45K
+                  (default);&nbsp;Year&nbsp;three spans roughly $47K (lean) vs
+                  roughly $94K (default) assuming roughly one hundred practices.
+                  The spread is managerially controllable.&nbsp;
+                  <span className="italic text-memo-text-secondary">
+                    We treat every webhook or streaming upgrade as direct COGS
+                    defense versus hoping vendor pricing magically compresses.&nbsp;
+                  </span>
+                </p>
+                <p>
+                  <span className="font-semibold text-memo-text">Redox (deferred):</span>
+                  Sandbox assumed around $15K annually plus roughly $1K per routed
+                  production connection when Epic optionality outweighs incremental
+                  build risk.
+                </p>
+                <p>
+                  <span className="font-semibold text-memo-text">
+                    ModMed (synapSYS) and eClinicalWorks:&nbsp;
+                  </span>
+                  Pricing still settles as partner paperwork closes; envelopes roll
+                  into the infra budget line item above alongside Marketplace spend.
+                  Note: modeled Athena figures above reconcile to the enumerated
+                  $135K infra slice in the waterfall, not incremental mystery
+                  allocations.
+                </p>
+                <p>
+                  <span className="font-semibold text-memo-text">
+                    Marginal cost per incremental Athena practice:&nbsp;
+                  </span>
+                  Roughly thirty dollars monthly connection overhead. Specialists
+                  already pay about $249 to about $999, so covering integration drag takes one
+                  to three invoicing cycles of active utilization.&nbsp;
+                  <span className="italic text-memo-text-secondary">
+                    Investors keep asking whether API fees eat margin; arithmetic
+                    proves single-sided competitors never reach this wedge because they
+                    never monetize the receiving side aggressively enough.&nbsp;
+                  </span>
+                </p>
+              </ExitCallout>
             </section>
 
             {/* Team */}
@@ -1586,21 +2149,21 @@ export default function TetherInvestmentMemo() {
                     initials: "RS",
                     role: "Co-Founder & CTO",
                     summary:
-                      "Product, architecture, EHR integrations. Built the entire platform solo in 3 months.",
+                      "Product, architecture, Athena/ModMed/eCW integrations. Former Scale AI infra; ships Tether full-time at F&F close.",
                   },
                   {
                     name: "Sid Thakker",
                     initials: "ST",
                     role: "Co-Founder & CEO",
                     summary:
-                      "Enterprise sales, PE/concierge pipeline, capital strategy. Originated MDVIP and Forefront.",
+                      "PE plus concierge GTM, diligence, capital orchestration. CapM Advisory analyst moving full-time July 1.",
                   },
                   {
                     name: "Sach Thakker",
-                    initials: "ST",
+                    initials: "SAT",
                     role: "Co-Founder & CMO",
                     summary:
-                      "Clinical partnerships, pilot onboarding, physician credibility. Georgetown MD, MedStar intern year.",
+                      "Clinical onboarding, MDVIP plus Forefront fronts. Georgetown MD, derm match May 2026, MedStar intern July 2026.",
                   },
                 ].map((p) => (
                   <div
@@ -1628,34 +2191,29 @@ export default function TetherInvestmentMemo() {
               </div>
               <Prose>
                 <p>
-                  Ravi Suresh (CTO) leads all technical execution: Product,
-                  platform architecture, EHR integrations, vendor + IT comms.
-                  Built the entire Tether platform from zero to production in
-                  approximately three months of part-time work while employed at a
-                  healthcare technology company: production Athena FHIR integration
-                  (read-only today, write-back in active negotiation via Platform
-                  Services), AI agent orchestration, HIPAA-aligned infrastructure,
-                  the 1,200+ provider specialist directory, and the diagnostic
-                  sales tool. Former medical student at Indiana University School of
-                  Medicine. Sid Thakker (CEO) leads PE specialty group sales,
-                  concierge network business development, financial modeling,
-                  capital strategy, and fundraising execution. Originated the MDVIP
-                  and Forefront Dermatology relationships from cold outreach, both
-                  now active pilots and pipeline accounts. Previously Investment
-                  Banking Analyst at CapM Advisory and Growth Equity Analyst at Level
-                  Equity. Economics, University of Pennsylvania. Sach Thakker (CMO)
-                  leads clinical partnerships, pilot onboarding, provider network
-                  growth, physician advisory relationships, and the medical
-                  credibility of the product across pilot practices and prospective
-                  customers. Built Tether from direct experience with referral
-                  breakdowns observed during clinical training, which became the
-                  core insight underlying the wedge product. 4th-Year Medical
-                  Student at Georgetown University graduating May 2026, starting
-                  intern year at MedStar in July 2026. The clinical lens he brings
-                  to every pilot conversation is unreplicable by engineering hires:
-                  practicing physicians on the buying side respond to another
-                  physician in ways they will not respond to a founder without
-                  clinical training.
+                  Ravi Suresh (CTO) leads all technical execution: product,
+                  platform architecture, EHR integrations, vendor and IT
+                  communications. Built Tether from zero to production in roughly
+                  three months of nights-and-weekends momentum while still at
+                  Scale AI inference infrastructure. Production Athena FHIR
+                  integration (read/write via Marketplace Platform Services in
+                  flight), agent orchestration, HIPAA-grade hosting, the 1,200+
+                  provider directory, and diagnostic sales tooling live in his
+                  codebase. Former medical student route (Indiana University) before
+                  choosing systems over clinical practice. Sid Thakker (CEO)
+                  originates PE specialty pipelines, concierge expansions,
+                  diligence storytelling, forecasting, and capital execution.
+                  Produced the MDVIP and Forefront relationships from cold outbound;
+                  previously Investment Banking Analyst at CapM Advisory and Growth
+                  Equity Analyst at Level Equity before shifting full-time to Tether
+                  on&nbsp;July&nbsp;1,&nbsp;2026. Penn economics. Sach Thakker (CMO)
+                  owns clinical onboarding, bedside credibility, pilots, recruiting
+                  specialists, advisory councils, plus every workflow workshop tied
+                  to referral closure. Anchors the wedge in lived training pain at
+                  MedStar-affiliated rotations. Georgetown medical degree May 2026,
+                  dermatology match May&nbsp;2026, intern orientation July&nbsp;2026.
+                  Physician buyers fundamentally trust Sach in rooms where pure
+                  software founders lose permission.
                 </p>
                 <p>
                   The operating split: Ravi handles all technical and integration
@@ -1916,24 +2474,101 @@ export default function TetherInvestmentMemo() {
                     {
                       quarter: "Q2 2026",
                       subtitle: "Ship the wedge",
-                      items: [
-                        "Athena write-back live at Lefevre; first closed-loop referral",
-                        "Loop closure agent + document parsing v1",
-                        "ModMed dev complete by end of M5; Stedi live; Telnyx SMS",
-                        "Diagnostic sales tool + Ask Tether upgrades (memory, workflows, matching)",
-                        "Commercial: 2-3 paying practices via diagnostic; Forefront Dermatology advanced from conversation to signed pilot agreement; pre-seed round conversations active with warm investor list",
+                      commitments: [
+                        {
+                          headline:
+                            "Athena Marketplace Platform Services write-back live.",
+                          userGoal:
+                            "Lefevre team files zero outbound consult summaries after visits complete inside Tether; charts stay native to Athena workflows.",
+                          businessGoal:
+                            "Eliminates blocker explicitly raised by four practices in diligence this quarter: without write-back pilots convert to churn risk instead of contracted expansion.",
+                        },
+                        {
+                          headline:
+                            "Loop closure orchestration agent plus specialist document parsing v1.",
+                          userGoal:
+                            "Specialists keep existing note habits while Tether normalizes payloads and fires completion triggers without coordinators babysitting statuses.",
+                          businessGoal:
+                            "Unlocks Forefront-ready intake narrative plus satisfies MVP step five for MDVIP escalation conversations chasing closed-loop proofs.",
+                        },
+                        {
+                          headline:
+                            "ModMed build cutoff, live Stedi eligibility, Telnyx patient outreach sequencing.",
+                          userGoal:
+                            "Coordinators clear insurance uncertainty before outbound routing and templated SMS nudges keep patients moving without portals.",
+                          businessGoal:
+                            "Protects Loudoun-aligned eligibility promise for Segment B ROI math while finishing ModMed scaffolding ahead of synapSYS production gate.",
+                        },
+                        {
+                          headline:
+                            "Diagnostic revenue artifact plus Ask Tether memory and workflow boosts.",
+                          userGoal:
+                            "Sales engagements export one-click historical leakage charts from prospect EHRs while clinicians query structured referral packets inside copilot UX.",
+                          businessGoal:
+                            "Compresses enterprise sales timelines by swapping slide decks with grounded data pulls already validated in Kentucky inbound interest.",
+                        },
+                        {
+                          headline:
+                            "Commercial velocity milestones for pilots and capital conversations.",
+                          userGoal:
+                            "Two or three workflows graduate from waived diagnostics into paid tiers while Forefront leadership signs a bounded pilot covenant.",
+                          businessGoal:
+                            "Demonstrates repeatable revenue pacing before pre-seed re-engage window and validates specialist pricing ladders ahead of louder MDVIP bargaining.",
+                        },
                       ],
                     },
                     {
                       quarter: "Q3 2026",
-                      subtitle: "ModMed + PE + hire",
-                      items: [
-                        "ModMed shipped to first derm customer post-approval",
-                        "Parsing v2 with specialty templates + quality loops",
-                        "Integration engineer onboarded at Month 9, takes ownership of eCW write-back and document parsing agent maintenance",
-                        "Layer 2 groundwork: data model + ingestion pipeline",
-                        "First PE contract signed; second concierge operator active; directory 2,000+",
-                        "SOC 2 kickoff; Vanta/Drata deployed",
+                      subtitle: "ModMed deploys, intelligence groundwork, compliance lift",
+                      commitments: [
+                        {
+                          headline:
+                            "First ModMed-supported derm rollout after partner approvals.",
+                          userGoal:
+                            "Forefront locations receive Athena-equivalent fidelity on inbound packets with synapSYS-sanctioned authentication boundaries.",
+                          businessGoal:
+                            "We believe PE diligence tightens whenever the second EHR echoes Athena behavior because portfolio COOs ask for symmetrical proof across rollups.",
+                        },
+                        {
+                          headline:
+                            "Document parsing v2 with specialty-aware templates.",
+                          userGoal:
+                            "High-complexity specialties ingest labs, imaging breadcrumbs, and reason-for-refer snippets without rework queues.",
+                          businessGoal:
+                            "Supports rheumatology thirty-clinic inbound plus Florida Oncology scale conversations surfacing templating gaps early.",
+                        },
+                        {
+                          headline:
+                            "Month nine integration engineer focused on eCW plus parsing maintenance.",
+                          userGoal:
+                            "Loudoun security exceptions get a consistent owner accountable for regressions rather than founders context switching nightly.",
+                          businessGoal:
+                            "Preserves write-back SLA once 100 clinics land because IT reviews already demanded dedicated engineering coverage.",
+                        },
+                        {
+                          headline:
+                            "Layer 2 ingestion plane plus analytics schema groundwork.",
+                          userGoal:
+                            "Internal operators can replay referral histories for cohort benchmarking without brittle spreadsheets.",
+                          businessGoal:
+                            "De-risks predictive routing seed funding story by proving telemetry capture precedes flashy UI overlays.",
+                        },
+                        {
+                          headline:
+                            "First PE-signed package, expanded concierge footprint, directories past 2000 clinicians.",
+                          userGoal:
+                            "Portfolio leadership sees leakage dashboards sourced from unified intake while concierge networks ingest richer specialist coverage.",
+                          businessGoal:
+                            "Feeds ARR glide path toward eighteen-month eighteen-practice hurdle with diversified segment revenue, not lone hero pilots.",
+                        },
+                        {
+                          headline:
+                            "SOC 2 Type I program ignition with automated evidence capture.",
+                          userGoal:
+                            "Buyers reviewing InfoSec questionnaires receive deterministic answers sourced from tooling instead of improvised PDFs.",
+                          businessGoal:
+                            "Matches procurement expectations Loudoun surfaced during reviewer calls and unlocks payer-grade conversations earmarked for pre-seed close.",
+                        },
                       ],
                     },
                   ] as const
@@ -1950,17 +2585,143 @@ export default function TetherInvestmentMemo() {
                     <p className="mt-1 font-sans text-sm font-medium text-memo-teal">
                       {block.subtitle}
                     </p>
-                    <ul className="mt-5 space-y-3 text-sm leading-relaxed text-memo-text">
-                      {block.items.map((x) => (
-                        <li key={x} className="relative pl-4">
+                    <ul className="mt-6 space-y-6 text-sm leading-relaxed text-memo-text">
+                      {block.commitments.map((item) => (
+                        <li key={item.headline} className="relative pl-4">
                           <span className="absolute left-0 top-[0.55rem] h-1.5 w-1.5 rounded-full bg-memo-teal" />
-                          {x}
+                          <p className="font-semibold leading-snug text-memo-text">
+                            {item.headline}
+                          </p>
+                          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-memo-teal">
+                            User goal
+                          </p>
+                          <p className="mt-1">{item.userGoal}</p>
+                          <p className="mt-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-memo-teal">
+                            Business goal
+                          </p>
+                          <p className="mt-1">{item.businessGoal}</p>
                         </li>
                       ))}
                     </ul>
                   </div>
                 ))}
               </div>
+            </section>
+
+            <section className="mt-[80px] space-y-8 md:mt-[100px]">
+              <SectionTitle
+                id="discovery-work"
+                kicker="UNDERSTANDING"
+                title="Understand work parallel to engineering"
+              />
+              <Subhead>Q2 2026 discovery (ships alongside build)</Subhead>
+              <Prose>
+                <ul className="m-0 list-disc space-y-3 pl-5">
+                  <li>
+                    Run structured interviews with five or more MDVIP and
+                    SignatureMD affiliated physicians on pricing sensitivity and
+                    must-have modules before network-level contract negotiations
+                    land.
+                  </li>
+                  <li>
+                    Validate specialist pricing tiers ($99 / $249 / $299 / $499 /
+                    $999) with three or more active pilot specialists, adjusting
+                    based on willingness-to-pay signals captured in live usage.
+                  </li>
+                  <li>
+                    Catalog product gaps exposed through Loudoun IT security
+                    questionnaires so engineering responses become scoped tickets
+                    instead of ad hoc email threads.
+                  </li>
+                </ul>
+              </Prose>
+              <Subhead>Q3 2026 discovery</Subhead>
+              <Prose>
+                <ul className="m-0 list-disc space-y-3 pl-5">
+                  <li>
+                    Interview three or more PE COOs to define operational
+                    definitions of portfolio analytics before Layer 2 UI locks.
+                  </li>
+                  <li>
+                    Research rheumatology and oncology referral packets to inform
+                    document parsing v2 templates, driven by active pipeline
+                    conversations with a 30-clinic rheumatology group and Florida
+                    Oncology&apos;s 100 clinic footprint.
+                  </li>
+                  <li>
+                    Segment behavioral differences between concierge, traditional
+                    independent, and PE affiliated PCPs so routing heuristics stay
+                    honest per cohort.
+                  </li>
+                </ul>
+              </Prose>
+            </section>
+
+            <section className="mt-[80px] space-y-8 md:mt-[100px]">
+              <SectionTitle
+                id="deferred-scope"
+                kicker="SCOPE CONTROL"
+                title="Deferred and nice-to-have backlog"
+              />
+              <Prose>
+                <p>
+                  These threads stay visible for diligence but off the F&amp;F
+                  critical path so execution energy stays on the closed referral
+                  loop.
+                </p>
+                <ul className="m-0 list-disc space-y-3 pl-5">
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Epic via Redox.&nbsp;
+                    </span>
+                    Deferred to seed. Health system sales cycles do not justify
+                    spend while F&amp;F and pre-seed focus on independent density.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Native mobile app.&nbsp;
+                    </span>
+                    Deferred indefinitely. PCPs and MAs live on desktop hardware
+                    inside clinics and have not asked for pocket workflows.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Patient-facing portal.&nbsp;
+                    </span>
+                    Deferred. Agents handle SMS and voice outreach without asking
+                    patients to maintain another login while trust accrues.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Embedded SMART on FHIR surface inside athenaClinicals.&nbsp;
+                    </span>
+                    Deferred to months nine through twelve while standalone web
+                    sessions carry the load.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Multi-language patient communication.&nbsp;
+                    </span>
+                    Deferred. Initial DMV cohort skews English dominant and
+                    translation vendors add compliance drag.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Custom routing rules per practice.&nbsp;
+                    </span>
+                    Deferred to enterprise tier after default heuristics prove
+                    stability.
+                  </li>
+                  <li>
+                    <span className="font-semibold text-memo-text">
+                      Specialist-facing performance benchmarking SKUs.&nbsp;
+                    </span>
+                    Deferred while specialists largely monetize inbound flow;
+                    becomes paid intelligence in Layer&nbsp;2 once density proves
+                    fair comparisons.
+                  </li>
+                </ul>
+              </Prose>
             </section>
 
             {/* Risks */}
@@ -1975,7 +2736,7 @@ export default function TetherInvestmentMemo() {
                   {
                     t: "Athena Platform Services pricing",
                     w: "Quote may land uneconomic for pre-seed.",
-                    m: "$40K envelope; if above, route write-back via Redox (~$25K first connection per April scoping). Either path ships in F&F window.",
+                    m: "$135K infra envelope holds Marketplace fees; contingency mapping lives in Capital plan unit economics.",
                   },
                   {
                     t: 'Redox "connection" definition',
@@ -1983,9 +2744,9 @@ export default function TetherInvestmentMemo() {
                     m: "Negotiate in writing now; if unfavorable at scale, evaluate Particle/HG or direct Epic work at Series A planning.",
                   },
                   {
-                    t: "PE procurement",
-                    w: "Operator-led fast buys assumed; formal procurement extends cycles 6+ months.",
-                    m: "Target founder/CMO/COO signers; diagnostic ROI artifact for procurement-heavy orgs.",
+                    t: "Enterprise sales cycle length",
+                    w: "Concierge introductions convert quickly yet multi-specialty and PE deployments often add six or more months beyond a founder handshake.",
+                    m: "Maintain eight to ten simultaneous enterprise pursuits so sequencing always stacks near-term closers, elevate founder or COO signers who shorten legal overlays, weaponize diagnostic ROI tooling (historical leakage pulls sourced from prospects) to shorten conviction cycles.",
                   },
                   {
                     t: "SOC 2 timeline",
@@ -1996,6 +2757,11 @@ export default function TetherInvestmentMemo() {
                     t: "Second pilot IT review",
                     w: "eCW pilot could stall.",
                     m: "Two backup eCW practices; security one-pager to avoid re-litigating objections.",
+                  },
+                  {
+                    t: "Pre-seed investor timing",
+                    w: "Institutional desks keep signaling too early despite warm relationships until KPIs crystallize.",
+                    m: "Friends & Family runway concentrates on demonstrating three through five monetized practices with closed-loop proof, then re-opens General Catalyst caliber conversations armed with artifacts they flagged as absent during early reviews.",
                   },
                 ].map((r, idx) => (
                   <div
