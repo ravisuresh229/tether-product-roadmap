@@ -200,9 +200,21 @@ function StatCard({
   );
 }
 
-function Subhead({ children }: { children: React.ReactNode }) {
+function Subhead({
+  children,
+  id,
+}: {
+  children: React.ReactNode;
+  id?: string;
+}) {
   return (
-    <h3 className="mt-12 font-sans text-[20px] font-semibold leading-snug tracking-tight text-memo-text md:text-[22px]">
+    <h3
+      id={id}
+      className={cn(
+        "mt-12 font-sans text-[20px] font-semibold leading-snug tracking-tight text-memo-text md:text-[22px]",
+        id && "scroll-mt-28"
+      )}
+    >
       {children}
     </h3>
   );
@@ -213,6 +225,7 @@ function matrixCellTone(cell: string): string {
   if (v === "Yes") return "bg-memo-teal-light text-memo-text";
   if (v === "No") return "bg-memo-warm text-memo-text-secondary";
   if (v === "Partial") return "bg-memo-border-light text-memo-text";
+  if (v.startsWith("Partial")) return "bg-memo-border-light text-memo-text";
   if (v === "Attempting") return "bg-memo-bg text-memo-text";
   return "";
 }
@@ -391,10 +404,11 @@ export default function TetherInvestmentMemo() {
                 </p>
                 <ul className="m-0 list-disc space-y-2 pl-5 text-memo-text">
                   <li>
-                    Athena Marketplace partnership signed (April 2026;
-                    discovery path into{" "}
+                    Athena Marketplace partnership executed in April&nbsp;2026
+                    (same month as this document revision), with distribution
+                    upside into{" "}
                     <span className="whitespace-nowrap">162,000+</span>{" "}
-                    athenaOne providers).
+                    athenaOne providers.
                   </li>
                   <li>
                     Live pilot with concierge MDVIP physician (Dr.
@@ -405,7 +419,7 @@ export default function TetherInvestmentMemo() {
                     IT&nbsp;security review.
                   </li>
                   <li>
-                    Forefront Dermatology (~170&nbsp;locations on ModMed):
+                    Forefront Dermatology (170 locations on ModMed):
                     physician advisor testing product alongside platform build.
                   </li>
                   <li>
@@ -508,7 +522,8 @@ export default function TetherInvestmentMemo() {
                         layer: "Layer 1",
                         accent: "#0D7377",
                         title: "Referral coordination network",
-                        timeline: "Live now through end of 2026",
+                        timeline:
+                          "MVP through F&F (calendar 2026); scale through pre-seed (Month ~18)",
                         value:
                           "Two-sided referrals with EHR integration on both ends: structured handoff out and consult notes written back in, without the manual loop.",
                       },
@@ -609,6 +624,64 @@ export default function TetherInvestmentMemo() {
                 </span>{" "}
                 ~11.2% across both tranches for $985K total
               </div>
+              <ExitCallout className="mt-6 text-sm leading-relaxed">
+                <p className="m-0 font-semibold text-memo-text">
+                  EHR infra + data ($135K total) split by tranche
+                </p>
+                <p className="m-0 mt-3 text-memo-text-secondary">
+                  The consolidated $135K EHR infra row in Part&nbsp;6 is not the
+                  Friends &amp; Family round; it spans both tranches. About $40K is
+                  earmarked inside the F&amp;F window for Athena Marketplace
+                  activation, ModMed synapSYS partner fees, eClinicalWorks partner
+                  fees, Stedi eligibility, cloud and AI infrastructure, and referral
+                  pipeline tooling. About $95K is earmarked inside the pre-seed
+                  window for additional EHR connections, scaled Marketplace and
+                  infrastructure spend as practice count climbs, and Layer&nbsp;2
+                  data plane groundwork.
+                </p>
+                <div className="mt-4 overflow-x-auto rounded border border-memo-border bg-memo-bg">
+                  <table className="min-w-[280px] w-full border-collapse text-left text-xs text-memo-text md:text-sm">
+                    <thead className="bg-memo-warm">
+                      <tr>
+                        <th className="border border-memo-border px-3 py-2 font-sans font-semibold">
+                          Window
+                        </th>
+                        <th className="border border-memo-border px-3 py-2 font-sans font-semibold">
+                          EHR infra allocation
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="border border-memo-border px-3 py-2">
+                          F&amp;F
+                        </td>
+                        <td className="border border-memo-border px-3 py-2">
+                          ~$40K (Athena activation, synapSYS + eCW partner
+                          envelopes, Stedi eligibility, infra, tooling)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-memo-border px-3 py-2">
+                          Pre-seed
+                        </td>
+                        <td className="border border-memo-border px-3 py-2">
+                          ~$95K (scaled connections + API throughput + Layer&nbsp;2
+                          ingest foundations)
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="border border-memo-border px-3 py-2 font-semibold">
+                          Total
+                        </td>
+                        <td className="border border-memo-border px-3 py-2 font-semibold">
+                          $135K (matches waterfall line item)
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </ExitCallout>
             </section>
 
             {/* Core thesis */}
@@ -718,19 +791,19 @@ export default function TetherInvestmentMemo() {
                   {[
                     {
                       t: "Moment of creation",
-                      d: "Capture at the workflow point where the referral is born. The only clean window is when the PCP decides to refer.",
+                      d: "Capture at the workflow point where the referral is born. The only clean window is when the PCP decides to refer. Waiting until documents arrive at the specialist means structure is gone and every downstream automation step guesses. Without this constraint parsing costs explode and Tennr-class incumbents stay relevant indefinitely.",
                     },
                     {
                       t: "Structured data",
-                      d: "Fields at creation, not documents parsed later. Extraction degrades; structure from the start is what makes the graph meaningful.",
+                      d: "Fields at creation, not documents parsed later. Extraction degrades; structure from the start is what makes the graph meaningful. If we skip this step the platform becomes another OCR layer chasing faxes plus scans and we never obtain reliable joins.",
                     },
                     {
                       t: "Both sides",
-                      d: 'Referring and receiving. Half the data is worthless because the joins answer "did this complete?"',
+                      d: 'Referring and receiving simultaneously. Half the data is worthless because the joins answer "did this complete?" Single-sided ingestion cannot falsify stalled referrals or payer-specific outcomes Pe operators ask for.',
                     },
                     {
                       t: "Persistent patient identity",
-                      d: "Same human across EHRs. Cross-EHR identity resolution turns edges into a coherent graph.",
+                      d: "Same human across EHRs so edges connect instead of fracturing into duplicate phantom patients. Missing identity collapses longitudinal analytics Layer 2 needs and destroys trust with compliance teams auditing chart write-backs.",
                     },
                   ].map((x) => (
                     <div key={x.t} className="min-w-0">
@@ -867,7 +940,7 @@ export default function TetherInvestmentMemo() {
                     {
                       tag: "Segment C",
                       title: "PE-backed specialty networks",
-                      ex: "Forefront Dermatology (170+ locations), USDP, Schweiger, EyeCare Partners, ortho/GI rollups.",
+                      ex: "Forefront Dermatology (170 locations), USDP, Schweiger, EyeCare Partners, ortho/GI rollups.",
                       pain: "50-200+ locations per network with no unified inbound referral processing. Each location handles referrals manually with no PCP context. Portfolio COO has no cross-location analytics, no leakage visibility, no acquisition intelligence.",
                       gap: "Tennr/Valerie are single-sided at the specialist. Tether adds referring-side context + portfolio intelligence.",
                       access:
@@ -1060,7 +1133,13 @@ export default function TetherInvestmentMemo() {
               </Subhead>
               <Prose>
                 <ProseField label="Timeline">
-                  Live now to end of 2026.
+                  Layer&nbsp;1 MVP and closed-loop proof points ship through the
+                  Friends &amp; Family window (calendar 2026, 3-5 paying
+                  practices). Layer&nbsp;1 breadth, three live EHR adapters, and the
+                  Month&nbsp;18 economics target (15-20 practices) extend through the
+                  pre-seed window (~October 2027 from an April 2026 baseline). Early
+                  Layer&nbsp;2 ingestion and analytics groundwork run in parallel once
+                  telemetry volume from pre-seed deployments justifies the build.
                 </ProseField>
                 <ProseField label="Value proposition">
                   Two-sided referrals with EHR integration on both ends. The PCP
@@ -1071,14 +1150,16 @@ export default function TetherInvestmentMemo() {
                 </ProseField>
                 <ProseField label="Production status">
                   Athena FHIR&nbsp;R4 read live with Marketplace partnership
-                  signed April&nbsp;2026; certified FHIR workloads reduce variable
-                  API spend versus Platform&nbsp;Services polling; Athena
-                  write-back via Marketplace Platform&nbsp;Services in close;
-                  ModMed&nbsp;EMA connector built awaiting synapSYS production
-                  approvals; specialty directory spanning 1,200+ DMV providers /
-                  13 specialties; Ask&nbsp;Tether operational end-to-end;
-                  Loudoun eCW rollout (~100 clinics) in IT&nbsp;security
-                  review.
+                  executed April&nbsp;2026. Platform&nbsp;Services access will
+                  deliver write-back once contracts close; the bulk of read
+                  traffic intentionally routes through Certified FHIR (CAPI), which
+                  Athena excludes from Variable Monthly Service Fee metering under the
+                  Marketplace agreement even though calls still flow via the
+                  Platform&nbsp;Services pathway. ModMed&nbsp;EMA connector built
+                  awaiting synapSYS production approvals; specialty directory
+                  spanning 1,200+ DMV providers / 13 specialties; Ask&nbsp;Tether
+                  operational end-to-end; Loudoun eCW rollout (~100 clinics) in
+                  IT&nbsp;security review.
                 </ProseField>
               </Prose>
               <Subhead>Roadmap bucketing lens</Subhead>
@@ -1144,7 +1225,7 @@ export default function TetherInvestmentMemo() {
                             feature: "ModMed EMA connector via synapSYS",
                             bucket: "Foundational",
                             unlocks:
-                              "Forefront Dermatology (170+) warm PE diligence path",
+                              "Forefront Dermatology (170 locations) warm PE diligence path",
                             impact:
                               "Demonstrates repeatable specialist density per signed operator",
                           },
@@ -1234,27 +1315,41 @@ export default function TetherInvestmentMemo() {
               <ExitCallout className="mt-6">
                 <p className="m-0">
                   <span className="font-semibold text-memo-text">
-                    Exit state (end of 2026):
-                  </span>{" "}
-                  15-20 paying practices on the platform, split across all three
-                  wedge segments. Approximately $800K-$1M ARR run-rate in the
-                  default case, or approximately $300K in the downside case where
-                  Athena pricing stalls, the second pilot slips, and Forefront
-                  delays. The default assumes at least 1 PE specialty contract at
-                  30+ providers, the Loudoun deployment at 100 clinics, and 5 or
-                  more concierge-affiliated PCPs at Small-to-Mid enterprise
-                  pricing. Athena, ModMed, and eCW live in production. Closure data
-                  from real referrals proves the wedge across three segments and
-                  grounds the seed round. We believe institutional diligence will
-                  treat this cohort as repeatable because Loudoun procurement and
-                  Forefront advisor workflows already surfaced identical blockers:
-                  deterministic write-back and eligibility before scheduling.
+                    Layer&nbsp;1 MVP milestone (F&amp;F window, calendar 2026):{" "}
+                  </span>
+                  Closed-loop referrals reliable for 3-5 paying practices with
+                  Athena write-back, eligibility, and concierge plus pilot
+                  deployments on course. This is the proof investors asked for in
+                  diligence, not the final commercial ceiling.
+                </p>
+                <p className="m-0 mt-4">
+                  <span className="font-semibold text-memo-text">
+                    Layer&nbsp;1 scale milestone (pre-seed exit, Month ~18):{" "}
+                  </span>
+                  Athena, ModMed, and eClinicalWorks live in production with
+                  15-20 paying practices spanning all three wedge segments. Default
+                  economics at that checkpoint target approximately $800K-$1M ARR
+                  run-rate when at least one PE specialty contract covers 30+
+                  providers, Loudoun covers 100 clinics, and five or more
+                  concierge-aligned sites convert to practice-tier pricing. If
+                  Marketplace pricing slips, Loudoun security review drags, or
+                  Forefront onboarding stalls, the outcome is materially lower ARR
+                  inside the same timeframe rather than a reshuffled milestone date.
+                  Closure data from real referrals proves repeatability and feeds
+                  seed conversations. Loudoun procurement and Forefront advisor
+                  workflows already surfaced identical blockers,
+                  deterministic write-back and eligibility ahead of scheduling,
+                  which is why we prioritize those rails first.
                 </p>
               </ExitCallout>
 
               <Subhead>3.2 Layer 2: Network intelligence</Subhead>
               <Prose>
-                <ProseField label="Timeline">Q4 2026 to 2027.</ProseField>
+                <ProseField label="Timeline">
+                  Product development from Q4&nbsp;2026 through calendar 2027; first
+                  monetized intelligence features align with the Layer&nbsp;2 exit
+                  callout below.
+                </ProseField>
                 <ProseField label="Value proposition">
                   The data accumulating from Layer 1 becomes product. Predictive
                   specialist routing for PCPs (which specialist takes this
@@ -1337,7 +1432,7 @@ export default function TetherInvestmentMemo() {
                             unlocks:
                               "Shrinks Loudoun concierge leakage by defaulting in-network specialists",
                             impact:
-                              "We pilot this once the referral graph crests roughly 5k monthly transactions so cohort sizes stay statistically honest.",
+                              "We pilot this once monthly referral volume exceeds approximately 5,000 transactions so cohort sizes support meaningful inference.",
                           },
                           {
                             feature:
@@ -1917,9 +2012,15 @@ export default function TetherInvestmentMemo() {
                   integration preserves. Redox enters the architecture at Series A
                   as the primary path for Epic, Cerner, and long-tail EHRs where
                   direct partnership is either unavailable or prohibitively slow.
-                  The seed window deliberately targets three EHRs, not four. Epic is
-                  explicitly deferred to the Series A window as a market
-                  segmentation choice; see Part 9.2 for the reasoning.
+                  The seed window deliberately targets three EHRs, not four. Epic stays
+                  out of this financing window;&nbsp;
+                  <a
+                    href="#why-epic-deferred-series-a"
+                    className="font-semibold text-memo-teal underline decoration-memo-teal/40 underline-offset-2 hover:text-memo-teal-dark"
+                  >
+                    Why Epic is deferred to Series A
+                  </a>{" "}
+                  in Part&nbsp;9 documents the sequencing decision.
                 </p>
               </Prose>
               <div className="grid gap-3 md:grid-cols-3">
@@ -1962,8 +2063,10 @@ export default function TetherInvestmentMemo() {
                 <p>
                   <span className="font-semibold text-memo-text">Redox:</span> deferred
                   for now with $0 cash out in this tranche window. Activation at
-                  pre-seed earmarks roughly $15K annual sandbox pricing plus roughly
-                  $1K per production connection per diligence notes from April&nbsp;2026 scoping whenever Epic breadth or stalled direct integrations require a parallel path.
+                  pre-seed budgets about $15K annual sandbox pricing plus about
+                  $1K per production connection per April&nbsp;2026 diligence notes
+                  whenever Epic breadth or stalled direct integrations require a
+                  parallel path.
                   Connection economics (practice vs&nbsp;tenant vs&nbsp;environment)
                   must be nailed in contract language before powering anything in
                   production.
@@ -1983,11 +2086,13 @@ export default function TetherInvestmentMemo() {
                   The capital ask comes out of the roadmap, not the other way
                   around. Every line item below is justified by a capability the
                   money ships, the cost of not shipping it on time, and the revenue
-                  or deal flow that capability unlocks. The total is what it
-                  actually costs to execute Layer 1 to the point where Tether has
-                  closed-loop referrals working across three EHRs, SOC 2 Type I
-                  attestation, and 15-20 paying practices split across all three
-                  wedge segments.
+                  or deal flow that capability unlocks. Spend through F&amp;F
+                  establishes Layer&nbsp;1 MVP credibility (closed loops for a 3-5
+                  practice cohort). The combined $985K plan funds Layer&nbsp;1 scale:
+                  three production EHR integrations, SOC&nbsp;2 Type&nbsp;I,
+                  15-20 contracted practices at Month&nbsp;18, plus Layer&nbsp;2
+                  ingestion foundations once referral telemetry crosses useful
+                  density.
                 </p>
                 <p>
                   Target investors: mid-Atlantic healthcare-savvy angels,
@@ -2057,8 +2162,9 @@ export default function TetherInvestmentMemo() {
                 </p>
                 <p>
                   <span className="font-semibold text-memo-coral">$135K</span> EHR +
-                  infra: direct programs + inference + cloud + Stedi; Redox
-                  deferred until Series A economics match Epic/Cerner expansion.
+                  infra spanning both tranches (see F&amp;F callout for ~$40K vs
+                  ~$95K split): direct programs + inference + cloud + Stedi; Redox
+                  deferred until Epic scale economics justify activation.
                 </p>
                 <p>
                   <span className="font-semibold text-memo-coral">$120K</span>{" "}
@@ -2075,37 +2181,39 @@ export default function TetherInvestmentMemo() {
                 </p>
                 <ul className="m-0 list-disc space-y-2 pl-5">
                   <li>
-                    Flat connection economics at roughly $30 per practice monthly
-                    with no discretionary discount modeled today.
+                    Flat connection economics at $30 per practice monthly with no
+                    pooled discount modeled today.
                   </li>
                   <li>
                     Variable usage bills against Athena&apos;s published rate card.
-                    Tier&nbsp;1 currently floors at roughly $900 monthly when
-                    throughput stays beneath 18,750 billable Platform Services calls
-                    in a billing period.
+                    Tier&nbsp;1 floors at $900 monthly while throughput stays beneath
+                    18,750 billable Platform Services calls per billing period.
                   </li>
                   <li>
-                    Certified FHIR workloads sit outside Platform Services metering,
-                    anchoring noisy read traffic away from punitive polling charges.
+                    Certified FHIR (CAPI) traffic is metered outside Variable
+                    Monthly Service Fee calculations per the Marketplace agreement,
+                    which lets us bias high-volume reads toward lower-cost call
+                    mixes while still relying on Platform&nbsp;Services rails.
                   </li>
                 </ul>
                 <p>
-                  Modeled Athena cash under two integration postures:&nbsp;(1)&nbsp;a
-                  lean architecture that minimizes redundant /changed polling and
-                  (2)&nbsp;default hourly polling telemetry. Estimated totals:&nbsp;
-                  roughly $13K in Year&nbsp;one at roughly five average practices;&nbsp;
-                  Year&nbsp;two spans roughly $20K (lean) vs roughly $45K
-                  (default);&nbsp;Year&nbsp;three spans roughly $47K (lean) vs
-                  roughly $94K (default) assuming roughly one hundred practices.
-                  The spread is managerially controllable.&nbsp;
-                  <span className="italic text-memo-text-secondary">
-                    We treat every webhook or streaming upgrade as direct COGS
-                    defense versus hoping vendor pricing magically compresses.&nbsp;
-                  </span>
+                  Modeled spend assumes two architectural postures: (1) lean
+                  event-driven design that minimizes /changed polling, and (2)
+                  default hourly polling telemetry. Estimated Marketplace Services
+                  totals: $13K in Year&nbsp;1 at 5 average practices; $20K (lean)
+                  versus $45K (default polling) in Year&nbsp;2 at 25 average practices;
+                  $47K (lean) versus $94K (default) in Year&nbsp;3 at 100 average
+                  practices. The variance is architecturally controllable. Webhook and
+                  streaming upgrades function as direct COGS defense instead of
+                  waiting for vendor pricing to compress on its own. Year&nbsp;1
+                  Athena cash fits inside the roughly $40K Friends&nbsp;&amp;
+                  Family EHR infra carve-out under the consolidated EHR infra line,
+                  not across the full $135K figure that also funds pre-seed
+                  expansion.
                 </p>
                 <p>
                   <span className="font-semibold text-memo-text">Redox (deferred):</span>
-                  Sandbox assumed around $15K annually plus roughly $1K per routed
+                  Sandbox budgeted at about $15K annually plus about $1K per routed
                   production connection when Epic optionality outweighs incremental
                   build risk.
                 </p>
@@ -2113,24 +2221,22 @@ export default function TetherInvestmentMemo() {
                   <span className="font-semibold text-memo-text">
                     ModMed (synapSYS) and eClinicalWorks:&nbsp;
                   </span>
-                  Pricing still settles as partner paperwork closes; envelopes roll
-                  into the infra budget line item above alongside Marketplace spend.
-                  Note: modeled Athena figures above reconcile to the enumerated
-                  $135K infra slice in the waterfall, not incremental mystery
-                  allocations.
+                  Commercial pricing finalizes with partner paperwork and draws from
+                  the same pre-seed-heavy half of the consolidated EHR infra envelope
+                  summarized in the Part&nbsp;6 table and the F&amp;F callout
+                  above.
                 </p>
                 <p>
                   <span className="font-semibold text-memo-text">
                     Marginal cost per incremental Athena practice:&nbsp;
                   </span>
-                  Roughly thirty dollars monthly connection overhead. Specialists
-                  already pay about $249 to about $999, so covering integration drag takes one
-                  to three invoicing cycles of active utilization.&nbsp;
-                  <span className="italic text-memo-text-secondary">
-                    Investors keep asking whether API fees eat margin; arithmetic
-                    proves single-sided competitors never reach this wedge because they
-                    never monetize the receiving side aggressively enough.&nbsp;
-                  </span>
+                  About $30 monthly for the connection fee alone. Even the $99
+                  specialist entry tier exceeds that barrier, so one active
+                  specialist covers integration drag in one to three invoicing
+                  cycles. Single-sided peers cannot spread the same expense across
+                  monetized receiving-side volume, which structurally raises their
+                  per-customer integration burden when they lack specialist ARR tied
+                  to the same referrals.
                 </p>
               </ExitCallout>
             </section>
@@ -2273,10 +2379,10 @@ export default function TetherInvestmentMemo() {
                       [
                         "Bidirectional EHR sync",
                         "Yes",
-                        "Yes",
+                        "Partial (specialist intake only)",
                         "Partial",
-                        "Partial",
-                        "Partial",
+                        "No",
+                        "No",
                       ],
                       [
                         "Automated loop closure",
@@ -2357,14 +2463,14 @@ export default function TetherInvestmentMemo() {
                 <p>
                   Built a specialist-side document processing product. Their moat
                   is a vision-language model trained on inbound referral faxes.
-                  Tennr Network launched in 2025 as a bolt-on attempt at two-sided
-                  visibility, but their architecture is fundamentally single-sided
-                  and document-first. To actually become two-sided, they need to
-                  acquire PCPs as customers, which requires a different GTM, a
-                  different sales motion, a different product surface, and a
-                  rearchitected data model. Their revenue depends on document chaos
-                  continuing. The more we succeed at structured referrals, the
-                  less their revenue engine runs.
+                  Tennr has signaled interest in broadening upstream visibility, but the
+                  live stack remains specialist anchored and document first. Becoming
+                  two-sided implies acquiring PCPs as customers inside a rebuilt data
+                  model, not bolting dashboards onto OCR flows. Without capture at
+                  referral creation on the referring side, Tennr lacks native access to
+                  the structured fields closed-loop referrals require. Their economics still
+                  expand when inbound paperwork stays chaotic, which misaligns with a
+                  world where structured outbound referrals remove that chaos.
                 </p>
                 <p>
                   Tennr also charges specialists for intake, which creates an
@@ -2438,7 +2544,11 @@ export default function TetherInvestmentMemo() {
                   CareLink is sometimes named alongside these competitors but is not
                   a meaningful threat to Tether&apos;s wedge: it is a single-EHR
                   walled garden that excludes the 60%+ of independent and
-                  concierge practices not on Epic.
+                  concierge practices not on Epic. Across Tennr, Valerie, Locata, and
+                  Saffron, the shared pattern stays constant: none can natively bind
+                  referring workflows to receiving workflows without revisiting core
+                  architecture. The asymmetric posture is structural, which means rivals
+                  cannot close the gap incrementally inside their current roadmaps.
                 </p>
               </Prose>
               <Subhead>Why now</Subhead>
@@ -2513,7 +2623,7 @@ export default function TetherInvestmentMemo() {
                           userGoal:
                             "Two or three workflows graduate from waived diagnostics into paid tiers while Forefront leadership signs a bounded pilot covenant.",
                           businessGoal:
-                            "Demonstrates repeatable revenue pacing before pre-seed re-engage window and validates specialist pricing ladders ahead of louder MDVIP bargaining.",
+                            "Demonstrates repeatable revenue pacing before pre-seed re-engage window and aligns specialist pricing ladders with imminent MDVIP enterprise contract negotiation.",
                         },
                       ],
                     },
@@ -2746,7 +2856,7 @@ export default function TetherInvestmentMemo() {
                   {
                     t: "Enterprise sales cycle length",
                     w: "Concierge introductions convert quickly yet multi-specialty and PE deployments often add six or more months beyond a founder handshake.",
-                    m: "Maintain eight to ten simultaneous enterprise pursuits so sequencing always stacks near-term closers, elevate founder or COO signers who shorten legal overlays, weaponize diagnostic ROI tooling (historical leakage pulls sourced from prospects) to shorten conviction cycles.",
+                    m: "Maintain eight to ten simultaneous enterprise pursuits so sequencing always stacks near-term closers, elevate founder or COO signers who shorten legal overlays, leverage the diagnostic ROI tooling (historical leakage pulls sourced from prospects) to compress sales conviction cycles.",
                   },
                   {
                     t: "SOC 2 timeline",
@@ -2808,7 +2918,9 @@ export default function TetherInvestmentMemo() {
                   hint="Loudoun activation post-IT clearance."
                 />
               </div>
-              <Subhead>Why Epic is deferred to Series A</Subhead>
+              <Subhead id="why-epic-deferred-series-a">
+                Why Epic is deferred to Series A
+              </Subhead>
               <Prose>
                 <p>
                   Epic customer onboarding runs 6-12 months on the customer side.
