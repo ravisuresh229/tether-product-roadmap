@@ -404,9 +404,9 @@ export default function TetherInvestmentMemo() {
                 </p>
                 <ul className="m-0 list-disc space-y-2 pl-5 text-memo-text">
                   <li>
-                    Athena Marketplace partnership executed in April&nbsp;2026
-                    (same month as this document revision), with distribution
-                    upside into{" "}
+                    Athena Marketplace partnership signed in April&nbsp;2026 (this
+                    document was revised the same month), with distribution upside
+                    into{" "}
                     <span className="whitespace-nowrap">162,000+</span>{" "}
                     athenaOne providers.
                   </li>
@@ -497,10 +497,9 @@ export default function TetherInvestmentMemo() {
                     intelligence, and ranking are expansions riding on top of this
                     core loop, never blockers.&nbsp;
                     <span className="italic text-memo-text-secondary">
-                      We believe that framing concentrates scope because Loudoun,
-                      concierge expansion, and Forefront diligence all bottleneck
-                      on proving consult note write-back versus inventing ancillary
-                      product surface area.
+                      Every prospect conversation has bottlenecked on consult note
+                      write-back; we are concentrating scope where the actual demand
+                      signal sits.
                     </span>
                   </p>
                 </CalloutPanel>
@@ -1208,9 +1207,9 @@ export default function TetherInvestmentMemo() {
                           {
                             feature: "Athena Marketplace Platform Services write-back",
                             bucket: "Foundational",
-                            unlocks: "Closes Loudoun-ready loop for Athena-only pilots",
+                            unlocks: "Closes enterprise referral loop for Athena-first pilots",
                             impact:
-                              "Converts MDVIP concierge cohort once contract covers network pricing",
+                              "Converts concierge network cohorts once enterprise contract covers network pricing",
                           },
                           {
                             feature:
@@ -1251,7 +1250,7 @@ export default function TetherInvestmentMemo() {
                             unlocks:
                               "Ends manual chart filing for outbound referrals",
                             impact:
-                              "We believe churn risk collapses once write-back survives 60 days straight because Loudoun admins already named manual QA as disqualifier.",
+                              "Churn risk drops once write-back survives 60 consecutive days; enterprise IT questionnaires consistently treat manual consult QA as a disqualifier without automation.",
                           },
                           {
                             feature: "Stedi-backed eligibility probes",
@@ -1265,7 +1264,7 @@ export default function TetherInvestmentMemo() {
                             bucket: "Engagement",
                             unlocks: "Inbound packet completeness for PE desks",
                             impact:
-                              "Required before Forefront locations accept volume SLAs",
+                              "Required before PE specialty rollouts accept volume SLAs",
                           },
                           {
                             feature: "Multi-location deployment playbook",
@@ -1279,7 +1278,7 @@ export default function TetherInvestmentMemo() {
                             feature: "Manager dashboard (completion + leakage KPIs)",
                             bucket: "Engagement + Monetization",
                             unlocks:
-                              "Elevates Loudoun admins from anecdotes to governed metrics",
+                              "Elevates operations leaders from anecdotes to governed metrics",
                             impact:
                               "Differentiates bundled $249 practice SKU from $99 specialist pilot",
                           },
@@ -1330,16 +1329,17 @@ export default function TetherInvestmentMemo() {
                   15-20 paying practices spanning all three wedge segments. Default
                   economics at that checkpoint target approximately $800K-$1M ARR
                   run-rate when at least one PE specialty contract covers 30+
-                  providers, Loudoun covers 100 clinics, and five or more
-                  concierge-aligned sites convert to practice-tier pricing. If
-                  Marketplace pricing slips, Loudoun security review drags, or
-                  Forefront onboarding stalls, the outcome is materially lower ARR
-                  inside the same timeframe rather than a reshuffled milestone date.
+                  providers, a large multi-specialty enterprise deployment reaches on
+                  the order of 100 clinics, and five or more concierge-aligned
+                  sites convert to practice-tier pricing. If Marketplace pricing
+                  slips, a major eCW enterprise security cycle drags, or a lead PE
+                  rollout stalls, the outcome is materially lower ARR inside the
+                  same timeframe rather than a reshuffled milestone date.
                   Closure data from real referrals proves repeatability and feeds
-                  seed conversations. Loudoun procurement and Forefront advisor
-                  workflows already surfaced identical blockers,
-                  deterministic write-back and eligibility ahead of scheduling,
-                  which is why we prioritize those rails first.
+                  seed conversations. Across diligence conversations the same buyer
+                  objections keep resurfacing: deterministic write-back and
+                  eligibility ahead of scheduling, which is why we prioritize those
+                  rails first.
                 </p>
               </ExitCallout>
 
@@ -1405,7 +1405,7 @@ export default function TetherInvestmentMemo() {
                             unlocks:
                               "Up-levels Concierge CFO conversations into quantified leakage",
                             impact:
-                              "Supports $249 network analytics upsell anchored to MDVIP KPI reviews",
+                              "Supports $249 network analytics upsell anchored to concierge operator CFO KPI reviews",
                           },
                           {
                             feature:
@@ -1423,16 +1423,16 @@ export default function TetherInvestmentMemo() {
                             unlocks:
                               "Gives bolt-on diligence teams EBITDA tied routing math",
                             impact:
-                              "Forefront diligence explicitly asked whether portfolio-level charts could ingest referral edges; this answers that question with production data.",
+                              "Operator-side feedback from PE specialty conversations has explicitly asked for portfolio-level views of referral patterns; this surface answers that ask with production data.",
                           },
                           {
                             feature:
                               "Predictive routing (insurance, distance, performance priors)",
                             bucket: "Engagement + Monetization",
                             unlocks:
-                              "Shrinks Loudoun concierge leakage by defaulting in-network specialists",
+                              "Shrinks in-network leakage for multi-specialty groups by defaulting to in-house specialists",
                             impact:
-                              "We pilot this once monthly referral volume exceeds approximately 5,000 transactions so cohort sizes support meaningful inference.",
+                              "We pilot this once monthly referral volume exceeds approximately 5,000 transactions, the threshold where cohort sizes support meaningful inference.",
                           },
                           {
                             feature:
@@ -1459,7 +1459,7 @@ export default function TetherInvestmentMemo() {
                             unlocks:
                               "Sequences SMS plus voice confirmations without portals",
                             impact:
-                              "We believe concierge leaders accept this path because concierge MDVIP demos already prioritized agent-led reminders over another login surface.",
+                              "Concierge buyer feedback favors agent-led SMS and voice reminders over asking patients to adopt another portal login during early rollout.",
                           },
                         ] as const
                       ).map((row) => (
@@ -1496,7 +1496,7 @@ export default function TetherInvestmentMemo() {
                 <ExitCallout>
                   <p className="m-0">
                     <span className="font-semibold text-memo-text">
-                      Exit (end of 2027):
+                      Exit (calendar 2027):
                     </span>{" "}
                     50+ practices live, approximately $2.5M ARR. Network
                     intelligence visible in production workflows. PE customers
@@ -1560,7 +1560,7 @@ export default function TetherInvestmentMemo() {
                             unlocks:
                               "Detects referral orders, auth requests, scheduling hooks",
                             impact:
-                              "We believe event capture is the only architecture that scales past hourly polling fees without breaking compliance.",
+                              "Event-driven integration keeps polling spend and access-review risk bounded as transaction volume grows.",
                           },
                           {
                             feature:
@@ -1826,7 +1826,7 @@ export default function TetherInvestmentMemo() {
                           "Athena Marketplace write-back live, loop closure agent, Stedi eligibility, Ask&nbsp;Tether memory v2 ships to pilots",
                         buckets: "Foundational + Engagement-heavy",
                         drivers:
-                          "$99 pilot ladders, concierge conversion to practice tier, Loudoun contingency launch window",
+                          "$99 pilot ladders, concierge conversion to practice tier, large MSG enterprise contingency window",
                         arr: "$36-60K",
                         muted: false,
                       },
@@ -1968,7 +1968,7 @@ export default function TetherInvestmentMemo() {
                   </span>{" "}
                   Routing suggestions draw on payer acceptance, turnaround, and
                   completion velocity already observed inside Tether. Leaving the
-                  platform discards calibrated priors Loudoun admins cannot recreate
+                  platform discards calibrated priors multi-site operations leaders cannot recreate
                   in spreadsheets.
                 </p>
                 <p>
@@ -1989,8 +1989,9 @@ export default function TetherInvestmentMemo() {
                   Target gross retention over 90&nbsp;percent at month six after
                   go-live.&nbsp;
                   <span className="italic text-memo-text-secondary">
-                    We believe that benchmark is attainable because concierge pilot
-                    feedback already cites manual consult filing as weekly churn bait.
+                    That target is realistic because early pilot feedback keeps
+                    circling back to manual consult filing as the concrete churn
+                    risk once automation stalls.
                   </span>
                 </p>
               </CalloutPanel>
@@ -2544,11 +2545,14 @@ export default function TetherInvestmentMemo() {
                   CareLink is sometimes named alongside these competitors but is not
                   a meaningful threat to Tether&apos;s wedge: it is a single-EHR
                   walled garden that excludes the 60%+ of independent and
-                  concierge practices not on Epic. Across Tennr, Valerie, Locata, and
-                  Saffron, the shared pattern stays constant: none can natively bind
-                  referring workflows to receiving workflows without revisiting core
-                  architecture. The asymmetric posture is structural, which means rivals
-                  cannot close the gap incrementally inside their current roadmaps.
+                  concierge practices not on Epic.&nbsp;
+                  <span className="font-semibold text-memo-text">
+                    Across the four venture-backed competitors named above,&nbsp;
+                  </span>
+                  each is boxed into architecture that cannot natively bind
+                  referring workflows to receiving workflows. The asymmetry is
+                  structural, not incremental: closing the gap is a rebuild of core
+                  data capture, not a feature release cycle.
                 </p>
               </Prose>
               <Subhead>Why now</Subhead>
@@ -2597,9 +2601,9 @@ export default function TetherInvestmentMemo() {
                           headline:
                             "Loop closure orchestration agent plus specialist document parsing v1.",
                           userGoal:
-                            "Specialists keep existing note habits while Tether normalizes payloads and fires completion triggers without coordinators babysitting statuses.",
+                            "Specialists keep existing note habits while Tether normalizes payloads and fires completion triggers without coordinators manually polling statuses.",
                           businessGoal:
-                            "Unlocks Forefront-ready intake narrative plus satisfies MVP step five for MDVIP escalation conversations chasing closed-loop proofs.",
+                            "Feeds PE-specialty inbound intake demos and concierge escalation threads that still depend on reproducible closed-loop proof before downstream expansion commits.",
                         },
                         {
                           headline:
@@ -2607,7 +2611,7 @@ export default function TetherInvestmentMemo() {
                           userGoal:
                             "Coordinators clear insurance uncertainty before outbound routing and templated SMS nudges keep patients moving without portals.",
                           businessGoal:
-                            "Protects Loudoun-aligned eligibility promise for Segment B ROI math while finishing ModMed scaffolding ahead of synapSYS production gate.",
+                            "Protects eligibility narratives for Segment B enterprise ROI modeling while finishing ModMed scaffolding ahead of synapSYS production readiness.",
                         },
                         {
                           headline:
@@ -2621,9 +2625,9 @@ export default function TetherInvestmentMemo() {
                           headline:
                             "Commercial velocity milestones for pilots and capital conversations.",
                           userGoal:
-                            "Two or three workflows graduate from waived diagnostics into paid tiers while Forefront leadership signs a bounded pilot covenant.",
+                            "Two or three workflows graduate from waived diagnostics into paid tiers while anchor PE-specialty counterparties sign bounded pilot paperwork.",
                           businessGoal:
-                            "Demonstrates repeatable revenue pacing before pre-seed re-engage window and aligns specialist pricing ladders with imminent MDVIP enterprise contract negotiation.",
+                            "Demonstrates repeatable revenue pacing before pre-seed re-engage timelines and aligns specialist pricing ladders ahead of concierge network enterprise contracting.",
                         },
                       ],
                     },
@@ -2635,9 +2639,9 @@ export default function TetherInvestmentMemo() {
                           headline:
                             "First ModMed-supported derm rollout after partner approvals.",
                           userGoal:
-                            "Forefront locations receive Athena-equivalent fidelity on inbound packets with synapSYS-sanctioned authentication boundaries.",
+                            "Pilot derm sites receive Athena-comparable fidelity on inbound packets within synapSYS-sanctioned authentication boundaries.",
                           businessGoal:
-                            "We believe PE diligence tightens whenever the second EHR echoes Athena behavior because portfolio COOs ask for symmetrical proof across rollups.",
+                            "PE diligence tightens whenever a second production EHR mirrors Athena fidelity because operators ask for symmetrical proof ahead of rollup expansion.",
                         },
                         {
                           headline:
@@ -2651,7 +2655,7 @@ export default function TetherInvestmentMemo() {
                           headline:
                             "Month nine integration engineer focused on eCW plus parsing maintenance.",
                           userGoal:
-                            "Loudoun security exceptions get a consistent owner accountable for regressions rather than founders context switching nightly.",
+                            "Large clinic-count eCW security exceptions get a dedicated owner accountable for regressions rather than founders context switching nightly.",
                           businessGoal:
                             "Preserves write-back SLA once 100 clinics land because IT reviews already demanded dedicated engineering coverage.",
                         },
@@ -2677,7 +2681,7 @@ export default function TetherInvestmentMemo() {
                           userGoal:
                             "Buyers reviewing InfoSec questionnaires receive deterministic answers sourced from tooling instead of improvised PDFs.",
                           businessGoal:
-                            "Matches procurement expectations Loudoun surfaced during reviewer calls and unlocks payer-grade conversations earmarked for pre-seed close.",
+                            "Matches procurement language already surfacing from large MSG security reviews and clears the bar for payer-grade diligence expected at pre-seed close.",
                         },
                       ],
                     },
