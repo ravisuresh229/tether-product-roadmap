@@ -1468,10 +1468,19 @@ export default function TetherInvestmentMemo() {
                           },
                           {
                             feature:
+                              "Optional patient referral tracking login",
+                            bucket: "Engagement",
+                            unlocks:
+                              "Persistent patient experience for patients who want one; longitudinal record uploads tied to a verified identity",
+                            impact:
+                              "Opt-in surface; complements agent-led SMS/voice flows for patients who prefer self-service",
+                          },
+                          {
+                            feature:
                               "Orchestrated patient outreach playbook expansion",
                             bucket: "Engagement + Retention",
                             unlocks:
-                              "Sequences SMS plus voice confirmations without portals",
+                              "Sequences SMS plus voice confirmations as the default channel; optional patient login available in Layer 2.",
                             impact:
                               "Concierge buyer feedback favors agent-led SMS and voice reminders over asking patients to adopt a persistent portal login. The Patient record upload surface is a one-time transaction, not a portal account.",
                           },
@@ -1498,11 +1507,17 @@ export default function TetherInvestmentMemo() {
               </CalloutPanel>
               <Prose>
                 <p>
-                  We are not building a full patient portal in Layer&nbsp;2. Our agents
-                  already handle patient outreach through SMS and voice, and a persistent
-                  patient login would add HIPAA scope without improving outcomes.
-                  Engineering time stays focused on predictive routing and the
-                  Patient record upload surface.
+                  Patient-facing functionality is built in layers. Layer&nbsp;1 ships
+                  the Patient record upload surface (one-time SMS link, no login) so
+                  prior records reach the specialist before the visit. Layer&nbsp;2
+                  introduces an optional patient login for patients who want to track
+                  referral status, upload additional records over time, and view
+                  structured updates. The login is opt-in; agent-led SMS and voice flows
+                  continue to handle patients who do not want an account. A
+                  comprehensive patient portal with messaging, scheduling, billing, and
+                  clinical results stays deferred because it duplicates EHR-native patient
+                  functionality and adds HIPAA scope without moving the needle on the
+                  referral loop.
                 </p>
               </Prose>
               <div className="mt-6">
@@ -1514,9 +1529,10 @@ export default function TetherInvestmentMemo() {
                     50+ practices live, approximately $2.5M ARR. Network
                     intelligence visible in production workflows. PE customers
                     paying for portfolio analytics. Provider quality rankings
-                    become the default concierge directory standard. Agents cover
-                    patient-side coordination loops without standalone portals at
-                    this milestone. Series A closed.
+                    become the default concierge directory standard. Agents handle
+                    patient-side coordination by default; the optional patient login
+                    is available for patients who want persistent access. Series A
+                    active with traction backed by Layer 2 production data.
                   </p>
                 </ExitCallout>
               </div>
@@ -2398,7 +2414,7 @@ export default function TetherInvestmentMemo() {
                       [
                         "Bidirectional EHR sync",
                         "Yes",
-                        "Partial (specialist intake only)",
+                        "Partial",
                         "Partial",
                         "No",
                         "No",
@@ -2826,15 +2842,14 @@ export default function TetherInvestmentMemo() {
                   </li>
                   <li>
                     <span className="font-semibold text-memo-text">
-                      Full patient portal with messaging, scheduling, billing, and
-                      persistent account management.&nbsp;
+                      Comprehensive patient portal with messaging, scheduling, billing,
+                      and clinical results review.&nbsp;
                     </span>
-                    Deferred. The Layer&nbsp;1 build includes a focused Patient
-                    record upload surface (one-time SMS link for PDF uploads, no
-                    persistent login). Files land in the structured referral for
-                    specialists and route through parsing. Comprehensive patient-facing
-                    portals stay deferred because their core workflows are already
-                    handled by agent-driven SMS and voice flows.
+                    Deferred indefinitely. Layer&nbsp;1 ships the Patient record upload
+                    surface (one-time SMS link, no login). Layer&nbsp;2 adds an optional
+                    patient login for referral tracking and additional uploads, opt-in for
+                    patients who want it. What stays deferred is the full Epic
+                    MyChart-style portal that duplicates EHR-native functionality.
                   </li>
                   <li>
                     <span className="font-semibold text-memo-text">
