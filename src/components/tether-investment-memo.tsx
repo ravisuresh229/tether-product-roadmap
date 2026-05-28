@@ -152,7 +152,7 @@ export default function TetherInvestmentMemo() {
             >
               <p className="text-sm text-memo-text-secondary">Document</p>
               <p className="mt-2 text-sm text-memo-text">
-                Product roadmap &amp; capital plan, May 2026 (v4.1)
+                Product roadmap &amp; capital plan, May 2026 (v4.5)
               </p>
             </div>
           </nav>
@@ -176,7 +176,7 @@ export default function TetherInvestmentMemo() {
                   Network density is the long-game moat.
                 </p>
                 <div className="mt-10 flex flex-col gap-2 border-t border-memo-border-light pt-8 font-sans text-xs text-memo-text-tertiary">
-                  <p>May 2026 (v4.1)</p>
+                  <p>May 2026 (v4.5)</p>
                   <p>
                     Ravi Suresh, Co-Founder and CTO · Sid Thakker, Co-Founder and
                     CEO · Sach Thakker, Co-Founder and CMO
@@ -191,7 +191,7 @@ export default function TetherInvestmentMemo() {
                   Tether Health · Confidential
                 </p>
                 <p className="mt-3 text-memo-text-secondary">
-                  Product roadmap &amp; capital plan · May 2026 (v4.1)
+                  Product roadmap &amp; capital plan · May 2026 (v4.5)
                 </p>
               </footer>
             </div>
