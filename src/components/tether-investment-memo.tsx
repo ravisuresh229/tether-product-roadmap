@@ -10,7 +10,7 @@ const NAV: { id: string; label: string }[] = [
   { id: "customer", label: "The customer" },
   { id: "platform", label: "The platform" },
   { id: "revenue-model", label: "Revenue model" },
-  { id: "path-to-scale", label: "Path to scale" },
+  { id: "path-to-scale", label: "Next 12 months" },
   { id: "operations", label: "Where we are" },
   { id: "capital", label: "What capital unlocks" },
   { id: "risk", label: "Risk" },
