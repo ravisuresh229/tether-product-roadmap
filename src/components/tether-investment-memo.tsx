@@ -6,24 +6,16 @@ import { PartLabel } from "@/components/memo-ui";
 import { InvestmentMemoBody } from "@/components/investment-memo-v21-body";
 
 const NAV: { id: string; label: string }[] = [
-  { id: "one-page-pitch", label: "One-page pitch" },
-  { id: "executive-summary", label: "Executive summary" },
-  { id: "core-thesis", label: "Core thesis" },
-  { id: "segments", label: "Segments & ARR" },
-  { id: "product", label: "Product architecture" },
-  { id: "pricing", label: "Pricing model" },
+  { id: "opportunity", label: "The opportunity" },
+  { id: "customer", label: "The customer" },
+  { id: "platform", label: "The platform" },
+  { id: "revenue-model", label: "Revenue model" },
   { id: "path-to-scale", label: "Path to scale" },
-  { id: "capital-plan", label: "Capital plan" },
-  { id: "gtm", label: "Go-to-market" },
-  { id: "retention", label: "Retention & economics" },
-  { id: "data-flywheel", label: "Data flywheel" },
-  { id: "team", label: "Team" },
-  { id: "competition", label: "Competition" },
-  { id: "execution", label: "180-day execution" },
-  { id: "risks", label: "Risks" },
-  { id: "deferred-scope", label: "Deferred scope" },
-  { id: "exit-landscape", label: "Exit landscape" },
-  { id: "closing", label: "Closing" },
+  { id: "operations", label: "Where we are" },
+  { id: "capital", label: "What capital unlocks" },
+  { id: "risk", label: "Risk" },
+  { id: "team", label: "Why this team" },
+  { id: "ask", label: "The ask" },
 ];
 
 function cn(...parts: (string | false | undefined)[]) {
@@ -31,7 +23,7 @@ function cn(...parts: (string | false | undefined)[]) {
 }
 
 export default function TetherInvestmentMemo() {
-  const [active, setActive] = useState("one-page-pitch");
+  const [active, setActive] = useState("opportunity");
 
   const ids = useMemo(() => NAV.map((n) => n.id), []);
 
@@ -152,7 +144,7 @@ export default function TetherInvestmentMemo() {
             >
               <p className="text-sm text-memo-text-secondary">Document</p>
               <p className="mt-2 text-sm text-memo-text">
-                Product roadmap &amp; capital plan, May 2026 (v4.6)
+                Operating &amp; product roadmap, June 2026
               </p>
             </div>
           </nav>
@@ -167,16 +159,16 @@ export default function TetherInvestmentMemo() {
                   <PartLabel>Tether Health</PartLabel>
                 </div>
                 <h1 className="mt-5 font-serif text-balance text-[2.5rem] font-normal leading-[1.1] tracking-tight text-memo-navy md:text-[3.25rem]">
-                  Product roadmap{" "}
-                  <span className="font-serif text-[#0D7377]">&amp;</span> capital
-                  plan
+                  Operating{" "}
+                  <span className="font-serif text-[#0D7377]">&amp;</span> product
+                  roadmap
                 </h1>
                 <p className="mt-7 max-w-[720px] font-sans text-lg leading-[1.65] text-memo-text">
-                  Referrals are the wedge. PCP workflow automation is the platform.
-                  Network density is the long-game moat.
+                  The platform, the customer, the revenue model, and the path to
+                  scale.
                 </p>
                 <div className="mt-10 flex flex-col gap-2 border-t border-memo-border-light pt-8 font-sans text-xs text-memo-text-tertiary">
-                  <p>May 2026 (v4.6)</p>
+                  <p>June 2026 · Confidential</p>
                   <p>
                     Ravi Suresh, Co-Founder and CTO · Sid Thakker, Co-Founder and
                     CEO · Sach Thakker, Co-Founder and CMO
@@ -191,7 +183,7 @@ export default function TetherInvestmentMemo() {
                   Tether Health · Confidential
                 </p>
                 <p className="mt-3 text-memo-text-secondary">
-                  Product roadmap &amp; capital plan · May 2026 (v4.6)
+                  Operating &amp; product roadmap · June 2026
                 </p>
               </footer>
             </div>

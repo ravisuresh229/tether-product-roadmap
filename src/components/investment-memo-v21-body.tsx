@@ -3,11 +3,9 @@ import {
   DataTable,
   ExitCallout,
   Prose,
-  ProseField,
   SectionTitle,
   StatCard,
   Subhead,
-  cn,
 } from "@/components/memo-ui";
 
 const sectionClass =
@@ -15,745 +13,355 @@ const sectionClass =
 
 const RISKS: { title: string; w: string; m: string }[] = [
   {
-    title: "1. First paid customer conversion (highest concern)",
-    w: "If outbound concierge outreach and Marketplace inbound fail to produce a first paid customer in the August through October 2026 window, that is a product-market fit signal we must take seriously.",
-    m: "Deliver documented time savings from Lefevre and Mary Davis pilots as the case study anchor; offer extended 90-day founder pricing ($200 to $300 monthly) to the first cohort to reduce friction; lean on Sach's concierge peer network. If slip past October, F&F Phase 1c close window compresses but does not break; minimum viable close ($30K to $40K from founder plus family) carries through whenever conversion lands.",
+    title: "First paid customer conversion (highest near-term risk)",
+    w: "Our pilots are on free founder pricing. The first paid customer signing in the August through October 2026 window is the milestone that triggers the pre-seed round and validates the entire revenue thesis. If outbound and Marketplace inbound fail to produce a paid customer in that window, the F&F runway compresses and pre-seed conversations get harder.",
+    m: "Multiple parallel paths to first paid customer (Lefevre conversion, Mary Davis conversion, concierge intros through Sach's network, Castle Connolly intros through Ravi's aunt). Conservative case assumes 1 of 5 paths converts. We are building the pipeline accordingly.",
   },
   {
-    title: "2. Athena dependency",
-    w: "Athena is our only EHR integration. If partner program terms change or write-back access is restricted, the roadmap is at risk.",
-    m: "Transparent communication with the Athena Marketplace team, accelerated ModMed enrollment as second EHR. On Athena building this natively: their 25-year history shows partner-ecosystem strategy not in-house workflow build, and our acquisition path is positive even in the build-vs-buy scenario. Monitor Athena strategic announcements quarterly.",
+    title: "Athena platform dependency",
+    w: "We are launching on a single EHR. If Athena materially changes Partner Program terms, revokes API access, or de-prioritizes the Marketplace, the roadmap is at risk through Year 2.",
+    m: "Transparent relationship management with Athena (we are doing exactly this through the ISC kickoff process). Multi-EHR roadmap with ModMed as second target in Year 2. The technical substrate is EHR-agnostic by design; only the adapter layer is athena-specific.",
   },
   {
-    title: "3. Pricing model validation",
-    w: "Per-practice tier prices ($400 to $1,500) and per-seat prices ($75 to $300) are anchored against labor cost and per-provider healthcare SaaS comparables but have not been validated against actual willingness-to-pay (Lefevre and Mary Davis are on founder pricing). The 3-physician crossover threshold between per-practice and per-seat is also untested.",
-    m: "The first 3 to 5 paying customers test these directly; we adjust threshold or tier pricing before pre-seed close if needed.",
+    title: "Competition entering PCP-outbound segment",
+    w: "Tennr and Valerie raised meaningful capital (Tennr at approximately $605M post-money) in adjacent specialty-inbound categories. Either could pivot or expand into PCP-outbound. Other workflow SaaS companies could add referral-specific features.",
+    m: "Speed to category leadership on the PCP side. Customer relationships and switching costs (Tether is embedded in athenaOne workflow, not bolt-on). The dual pricing model captures economics competitors are not architected for.",
   },
   {
-    title: "4. Network deal dependency",
-    w: "Base case Month 18 ARR ($200K to $450K) assumes one PE-backed network deal closes (Privia, Bowling Green, or comparable). Both Privia and Bowling Green are uncommitted and in early procurement stage, not LOI.",
-    m: "Maintain eight to ten simultaneous PE network conversations; use Athena Marketplace inbound to expand concierge customer count so floor case still demonstrates revenue progress without a network deal. F&F survives floor case; pre-seed requires base case.",
+    title: "Founder bandwidth constraints",
+    w: "Sach is constrained by residency starting July 2026. Ravi covers all engineering surfaces. Sid joins full-time July 2026. The GTM motion cannot scale on founder time alone past 20-30 customers.",
+    m: "Pre-seed funded Head of Growth Month 8-10 is the explicit solution. Until then, scope discipline (we close concierge practices, not networks). After the Head of Growth hire, founder time refocuses on technical execution and high-priority enterprise deals.",
   },
   {
-    title: "5. Founder bandwidth and GTM scaling",
-    w: "Ravi full-time covers engineering through pre-seed window. The constraint shifts to GTM scale because founder-led sales does not scale beyond Sach's residency-constrained hours plus Sid's company-building time.",
-    m: "Pre-seed-funded Head of Growth at Month 8 to 10 relieves this. Until then, scope discipline is critical and the deferred backlog (Part 14) stays genuinely deferred.",
-  },
-];
-
-const PITCH_FIELDS: { label: string; body: string }[] = [
-  {
-    label: "What we sell",
-    body: "Tether is the EHR-native workflow automation platform for primary care, embedded inside athenaOne. The platform includes a specialist directory, the Athena Partner Program integration, and a multi-product runtime that ships new workflow products in weeks. The first two products are live: Smart Draft (generates clinically complete referrals from chart context in under 60 seconds, replacing 25 minutes of MA work per referral) and Lifecycle Orchestrator (closes the loop automatically when the consult note returns). Five additional products ship on the same runtime by Q1 2027: Practice Insights (historical referral audit and ongoing analytics), Eligibility Verification, Patient Outreach, Voice Specialist Coordination, and ModMed expansion. The long-term goal is being the workflow automation surface a primary care physician runs without leaving athenaOne.",
+    title: "CMS reimbursement rule changes",
+    w: "Our customer ROI math depends on continued TCM, CCM, and quality bonus payment structures. Major CMS changes (rare but possible) could compress the recovered-revenue math.",
+    m: "The recovered visit revenue (Stream One, $150-$200 per follow-up) is structurally durable; PCPs will bill follow-up visits regardless of CMS rule changes. The TCM/CCM exposure (Streams Two and Three) is real but ranges, not point estimates, so we have buffer. The MA labor savings are policy-independent.",
   },
   {
-    label: "Who pays us",
-    body: "Primary care practices, segmented two ways: concierge practices (MDVIP, SignatureMD, Castle Connolly PHP affiliates) where coordinated care is a brand promise patients pay $2,400 to $5,000 annually to receive, and PE-backed primary care networks (Privia at 5,100+ providers, Aledade, VillageMD, Agilon) where centralized procurement drives network-wide rollouts. Two design-partner pilots are live today (Dr. Lefevre at MDVIP DC, Dr. Mary Davis in Kentucky) on free founder-pricing in exchange for case study rights and references; first paid customers target August through October 2026 from outbound concierge outreach and Marketplace inbound on a 30-to-60-day trial structure.",
-  },
-  {
-    label: "How we price",
-    body: "Per-practice flat ($400 to $1,500 monthly) for solo and duo-physician practices. Per-seat licensing ($75 to $300 per provider monthly, with volume discounts of 15 to 25 percent on network deals) for any practice with 3+ physicians and all network contracts. Same pricing structure Microsoft, Salesforce, and modern enterprise SaaS use.",
-  },
-  {
-    label: "Why we win",
-    body: "Three structural advantages compound. First, EHR-native depth on the PCP side. Tennr ($605M) and Valerie ($39M) are document-processing platforms built for specialty inbound (infusion, HME, DME, imaging) where the workflow is making sense of unstructured faxes arriving from referring providers. Their architecture is built around vision-language models reading documents. We sit on the opposite side of the same referral, reading structured chart data through Athena Partner Program integration and generating the referral before it ever becomes a document to process. They could in theory build PCP outbound, but it would require strategic pivot from their stated positioning (faxes are here to stay for specialty intake) and a different product surface than they have today. Second, the runtime substrate. We shipped the agent runtime in May 2026 so each new workflow product ships in weeks instead of months. Integration into Athena is replicable in time; the accumulated product depth across 6+ shipped workflows is not. Third, the dual pricing model unlocks a $216M to $360M annual addressable revenue ceiling that single-product per-practice pricing structurally cannot reach.",
-  },
-  {
-    label: "Capital ask",
-    body: "$75K to $100K friends-and-family at $3M post-money cap (2.5 to 3.3 percent dilution), closing July through October 2026. The round is structured to close after the first paid customer proof point because F&F investors at this stage make sharper decisions with paid customer data in hand. Phased structure: Phase 1a $15K founder co-investment (Sid and Sach via promissory notes, exact split TBD) by early June, Phase 1b $15K to $25K family contributions (soft, contingent on early traction) by July, Phase 1c $35K to $60K outside investors after first paid customer signed. Minimum viable close at $30K to $40K from founder plus family alone is survivable through first paid customer conversion. $400K to $750K pre-seed at $8M to $12M cap closes Month 8 to 14 through institutional channels triggered by 5 to 10 paying customers (excluding design partners). Total $475K to $850K raised pre-Series A at approximately 6 to 11 percent cumulative dilution.",
-  },
-  {
-    label: "18-month milestone (base case)",
-    body: "$200K to $450K ARR from 9 to 14 paying customers including one PE-backed primary care network deal contributing 75 to 250 seats. Floor case (no network deal): $70K to $125K ARR from concierge growth alone, sufficient to survive but harder to clear pre-seed milestone. Upside case (PE network deal plus partial MDVIP rollout plus one multi-specialty group): $500K to $900K ARR. The plan anchors to base case plus partial upside.",
-  },
-  {
-    label: "Why now",
-    body: "Athena Partner Program signed April 2026. Write-back shipping next 14 days. Marketplace listing in motion. Ravi (CTO) left Scale AI in May 2026 to commit full-time to Tether. Sid (CEO) joins full-time July 1, 2026. Sach matches dermatology May 2026, joins MedStar residency July 2026 with concierge peer network. Tennr's $101M Series C in June 2025 validated the category but Tennr serves specialty clinics (infusion, HME, DME, imaging), not PCPs. We have production athenaOne pilots and signed Partner Program agreements; Tennr's wedge is specialty inbound, not PCP outbound on Athena.",
+    title: "Regulatory and HIPAA compliance scale-up",
+    w: "As we onboard more customers and process more PHI, audit exposure increases. Major HIPAA incidents or HITRUST certification delays could pause enterprise deal cycles.",
+    m: "PHI-strict logging is built into the runtime substrate from day one. SOC 2 Type II certification funded in the pre-seed round. HITRUST assessment timeline coordinated with the Athena ISC process. Cyber insurance baseline policy in place before first paid customer.",
   },
 ];
 
 export function InvestmentMemoBody() {
   return (
     <>
-      <section id="one-page-pitch" className={sectionClass}>
-        <SectionTitle kicker="ONE-PAGE PITCH" title="The one-page pitch" />
-        <div className="space-y-8">
-          {PITCH_FIELDS.map((f) => (
-            <ProseField key={f.label} label={f.label}>
-              <p className="m-0">{f.body}</p>
-            </ProseField>
-          ))}
-        </div>
-        <CalloutPanel className="mt-8">
-          <p className="m-0 font-serif text-xl leading-snug text-memo-text md:text-[22px]">
-            Tether turns the runtime architecture into a multi-product platform with the EHR-native depth investors have been waiting for someone to build in primary care.
-          </p>
-        </CalloutPanel>
-      </section>
-
-      <section id="executive-summary" className={sectionClass}>
-        <SectionTitle kicker="PART 0" title="Executive summary" />
+      <section id="opportunity" className={sectionClass}>
+        <SectionTitle kicker="01" title="The opportunity" />
+        <Subhead>The broken loop in primary care</Subhead>
         <Prose>
-        <Subhead>Where we are today</Subhead>
-          <p>athenahealth Partner Program and Platform Services API agreements signed April 2026. Marketplace listing in motion. Athena write-back ships to production in the next 14 days, gated on the ISC kickoff meeting scheduled for the week of May 26.</p>
-          <p>Two design-partner pilots live: Dr. Lefevre (MDVIP concierge, Washington DC) and Dr. Mary Davis (independent PCP, Kentucky). Both running Smart Draft against athenaOne through the runtime substrate in production as of late May 2026. Lefevre and Mary Davis are founder-pricing customers (free or nominal pricing in perpetuity in exchange for case study rights, time savings documentation, and reference value), not the first paid customer milestone. They are the anchor proof points and reference base that enables the first paid customer conversions through outbound concierge outreach and Marketplace inbound, targeted for August through October 2026.</p>
-          <p>Five additional Athena practices in early-stage outreach across MDVIP and SignatureMD networks. Privia (PCP network, multi-EHR including athenaOne) and Bowling Green Internal Medicine (hospital-affiliated PCP, Athena) conversations active but explicitly uncommitted; neither is modeled as base-case revenue in the 18-month plan. Both are treated as upside scenarios in the financial projections. Forefront Dermatology (PE specialty, ModMed) physician advisor engaged for future specialist tier work, not a 2026 revenue line.</p>
-          <p>Agent runtime (Doc 0) shipped to production main, May 2026. Six migrations authored and applied to the production Supabase project. Fourteen runtime modules, two API endpoints. The runtime is the substrate that lets us ship adjacent workflow products in weeks instead of months. Smart Draft runs through the runtime substrate in production as our first handler, validated end-to-end against real production workload. The runtime's PHI-strict logging and per-call cost tracking are observable directly in the database: each handler invocation persists a cost figure with patient-identifying message text excluded, which is direct proof rather than a narrative claim. Measured marginal cost of a Smart Draft invocation is approximately $0.004, confirming the product's per-call economics are negligible against the price point.</p>
-          <p>Ravi left Scale AI in May 2026 to commit full-time to Tether. Sid joins full-time July 1, 2026. Sach completes Georgetown medical degree May 2026, matched into dermatology May 2026, joins MedStar residency July 2026 with continued part-time clinical advisory and concierge peer network outreach. All three founders are personally committed to Tether before F&F capital is in the account.</p>
-          <p>Ravi being full-time as of May 2026 (rather than at the F&F close milestone) is the most important leading indicator of execution velocity in the next 90 days. Smart Draft is already ported to and running on the runtime substrate in production as of late May 2026. The technical output the company can realistically ship between now and August 2026 with Ravi full-time includes: complete the runtime substrate with all lifecycle handlers (referral status tracking, patient notifications, MA escalations, loop closure detection); ship Athena write-back to production and validate loop closure end-to-end; ship Practice Insights as the second product on runtime; build the eligibility verification handler as architecture proof-of-concept (Stedi paid integration deferred to pre-seed); submit the Athena Marketplace listing for approval; set up SOC 2 audit-ready posture in the F&F window (Type I certification itself funded at pre-seed close); build customer onboarding admin tooling for the next 5 to 10 customers. This is 90 days of focused full-time technical execution by a CTO who has already built the substrate to production in three months while still at Scale AI. The F&F capital does not buy the technical work; the founder commitment does. The F&F capital covers operating costs that enable the technical work to continue.</p>
-        <Subhead>The repositioning since April 2026</Subhead>
-          <p>The April 2026 roadmap centered on "graph as moat" and a two-sided marketplace where specialists paid usage-based fees. After running that thesis against well-funded competitors (Tennr at $605M, Valerie at $39M Series A), against the realistic pace of specialist adoption, and against current investor appetite for two-sided healthcare marketplaces, we are restructuring around four changes.</p>
-          <p>First, PCPs pay the subscription. Specialists are free riders until Layer 2 specialist products ship in 2027. This reverses the previous pricing model and resolves the chicken-and-egg adoption problem that made the original roadmap dependent on slow network maturation.</p>
-          <p>Second, the moat is EHR-native depth plus the runtime architecture, not the cross-provider graph. The graph still compounds as the network grows, but at our current density it is not credible as a Year 1 moat. The honest defensibility today is that we ship inside the EHR with full chart context, which our document-processing competitors structurally cannot match. The runtime is what lets us turn that EHR depth into a multi-product platform faster than competitors can rebuild.</p>
-          <p>Third, pricing uses a dual model that segments by customer scale. Small independent concierge practices (1 to 2 physicians) price per-practice flat. Larger practices, concierge networks, PE-backed PCP networks, and multi-specialty groups price per-seat. This matches how Microsoft, Salesforce, and other enterprise SaaS price across customer scales, and it unlocks the venture-scale revenue ceiling that uniform per-practice pricing would cap. Network deals at MDVIP, SignatureMD, Privia, and Loudoun scale per-seat from $80K to $5M+ ACV depending on seat count and tier.</p>
-          <p>Fourth, revenue and timeline targets are recalibrated to be credible to sophisticated investors. Month 18 ARR target is $300K to $500K (base case plus partial upside), not $800K to $1M. We expect to bootstrap parts of the engineering work and convert a friends-and-family round into a smaller-but-clean tranche that bridges to a more substantial pre-seed once we have demonstrated multi-product ACV expansion and at least one network deal in production.</p>        </Prose>
-        <Subhead>Capital ask</Subhead>
+          <p>Approximately 50% of specialist referrals from U.S. primary care never close the loop. The patient does not see the specialist, or sees them but the consult note never returns to the PCP. This has been the same broken workflow for thirty years and it costs the system meaningful money. Patients fall through the cracks, conditions go unmanaged, and the primary care practice that initiated the referral loses three things: the follow-up visit revenue, the documentation needed for higher-value billing codes, and the patient relationship.</p>
+          <p>The mechanical reason this happens is that referral coordination is manual, fragmented, and not integrated into the PCP's EHR workflow. Staff spend approximately 25 minutes per referral on coordination work: pulling clinical context from the chart, drafting the referral, identifying the right specialist, verifying insurance acceptance, sending the referral, tracking acknowledgment, tracking the appointment, tracking the visit, waiting for the consult note, and updating the chart. Half of those loops break somewhere in that chain.</p>
+        </Prose>
+        <Subhead>Why Tether exists</Subhead>
+        <Prose>
+          <p>Tether is the EHR-native software platform that closes the loop. We sit inside the primary care practice's electronic health record (athenaOne, our launch partner), generate the complete clinical referral narrative from chart context, verify the patient's insurance against the specialist's accepted plans, route the referral to the specialist's office, track every stage of the workflow automatically, and write the consult note back into the chart when it returns.</p>
+          <p>Staff time per referral drops from approximately 25 minutes to approximately 7 minutes. More loops close. The practice captures revenue that was previously being left on the table. This is the wedge.</p>
+        </Prose>
+        <Subhead>Market sizing</Subhead>
+        <Prose>
+          <p>The U.S. specialty services market triggered by primary care referrals is approximately $981 billion annually. This is not Tether's addressable revenue; it is the size of the broken system within which Tether operates. Bottom-up: approximately 315 million PCP-initiated referrals per year (FAIR Health 2022 data, adjusted to 2026) multiplied by approximately $3,114 average downstream specialty episode value (CMS Medicare Physician Fee Schedule 2024, commercial composite).</p>
+        </Prose>
         <div className="grid gap-3 sm:grid-cols-2">
-          <StatCard label="Total 18-month requirement" value="$475K to $850K" hint="Two tranches" />
-          <StatCard label="Friends and family" value="$75K to $100K" hint="$3M post-money cap, ~2.5 to 3.3% dilution, July through October 2026" />
-          <StatCard label="Pre-seed" value="$400K to $750K" hint="$8M to $12M cap, Month 8 to 14" />
-          <StatCard label="Month 18 ARR anchor" value="$300K to $500K" hint="Base plus partial upside; floor $70K to $125K" />
+          <StatCard label="Addressable subscription market" value="$1.0 to $1.5B" hint="150,000 community-based U.S. primary care practices at $15K to $30K blended ACV" />
+          <StatCard label="Five-year ARR target" value="$50M to $120M" hint="3 to 8 percent of serviceable market" />
         </div>
-        <Prose>
-          <p>Total 18-month requirement: $475K to $850K across two tranches, with the F&F tranche sized to the minimum needed to reach paid customer revenue and the pre-seed tranche sized to reach Series A milestone gates through institutional channels.</p>
-          <p>Friends and family: $75K to $100K, closing July through October 2026 (8 to 16 weeks from initial conversations) at a $3M post-money cap (approximately 2.5 to 3.3 percent dilution). The round is timed to close after first paid customer signed and documented Lefevre time savings case study (August through September 2026) because F&F investors at this stage make sharper decisions with paid customer data and case study metrics in hand. This tranche bridges to first paid customer revenue, not to a 6-month runway. Several costs (Stedi paid integration, Vapi production, conferences) are explicitly deferred to pre-seed.</p>
-          <p>Pre-seed: $400K to $750K, closing Month 8 to 14 (Q4 2026 through Q1 2027) at an $8M to $12M cap (approximately 4 to 8 percent dilution). Triggered by paid customer base of 5 to 10 customers, Marketplace listing live and generating inbound, multi-product expansion in flight, first PE-backed network deal in active negotiation. Sources: healthcare-focused angels writing $25K to $100K checks, dedicated pre-seed funds writing $100K to $500K checks, possibly an early-stage healthcare technology fund anchor.</p>
-          <p>Total cumulative dilution approximately 6 to 11 percent for $475K to $850K total capital raised pre-Series A. The F&F cap is priced at a deliberate discount to the Carta 2025 healthcare pre-seed median (approximately $10M+ for rounds at our size class) because F&F is structurally earlier than institutional pre-seed and we are optimizing for fast close with the network we can actually reach.</p>
-          <p>Eighteen-month milestone (scenario-dependent): Base case is $200K to $450K ARR from a mix of small concierge practices on per-practice flat pricing and 1 network deal (PE-backed PCP, partial concierge network rollout, or comparable) on per-seat licensing contributing 75 to 250 seats. Floor case (no network deal, small concierge only) is $70K to $125K ARR. Upside case (one PE network deal plus partial MDVIP rollout plus one multi-specialty group) is $500K to $900K ARR. The $300K to $500K range we anchor to corresponds to base case plus partial upside. Athena fully live with write-back. ModMed in production for one PE specialty pilot. Multi-product expansion shipped (eligibility verification, patient outreach). Layer 2 data foundations in place. Series A conversations active. The F&F round does not require the network deal to close. The pre-seed milestone gate does.</p>        </Prose>
-        <Subhead>Market opportunity</Subhead>
-          <p>The concierge and PE-backed primary care addressable market in the US is approximately 150,000 to 250,000 physicians. At Professional tier per-seat pricing ($150 monthly per provider) with average 20 percent volume discount, this translates to a $216M to $360M annual addressable revenue opportunity at full penetration. Even 1 percent capture equals $2M to $4M ARR. Five percent equals $10M to $18M ARR. MDVIP alone (1,300+ physicians) represents a $1.87M ARR full-penetration opportunity. Privia (5,100+ physicians and APPs) represents $7.34M. The dual pricing model is what unlocks this ceiling; uniform per-practice pricing would cap revenue at the number of practices, which is an order of magnitude smaller.</p>
-        <Subhead>What Tether is not</Subhead>
-          <p>For clarity in investor conversations: Tether is not a referral network or marketplace business. Specialists do not pay us in the F&F or pre-seed window. The network effect compounds as we grow but is not the load-bearing revenue thesis. Tether is not a prior authorization platform. Cohere Health has $200M+ in funding for that workflow; we partner or defer there, we do not compete. Tether is not an Epic-targeted product. Epic requires health system partnerships and 12-month implementation cycles that do not match our wedge segments. Tether is not a document-processing company. Tennr and Valerie compete in document parsing; we operate inside the EHR with structured data. Tether is not a general-purpose practice management or EHR replacement. We are workflow automation that sits on top of athenaOne (and later ModMed, eCW) for PCPs in specific high-willingness-to-pay segments.</p>
       </section>
 
-      <section id="core-thesis" className={sectionClass}>
-        <SectionTitle kicker="PART 1" title="Core thesis (revised)" />
+      <section id="customer" className={sectionClass}>
+        <SectionTitle kicker="02" title="The customer" />
+        <Subhead>Who pays Tether and why</Subhead>
         <Prose>
-          <p>Tether is a vertical SaaS workflow automation platform for primary care, with three structural assumptions.</p>
-        <Subhead>1.1 PCP-side workflow automation is the wedge that justifies the company</Subhead>
-          <p>PCP practices spend significant staff time on administrative workflows that are rule-based and chart-context-dependent. The MA pulls chart context, drafts the referral, sends the fax, tracks the response, files the consult note, runs eligibility checks, calls patients to confirm appointments, identifies care gaps, and chases prior authorizations. This is the work AI agents can replace and the work PCPs will pay to have replaced.</p>
-          <p>The PCP segment we target specifically is concierge and PE-backed primary care networks. Concierge practices like MDVIP affiliates, SignatureMD affiliates, and Castle Connolly Private Health Partners practices pay $2,000 to $5,000 annually per patient and have promised coordinated care as a core service. They have budget for software that delivers on that promise. PE-backed primary care networks like Privia, Agilon, and OneMedical-style groups buy at the network level so one contract covers dozens of practices with standardized procurement.</p>
-          <p>We do not target cost-sensitive solo independent PCPs in this funding window. That segment exists and may become accessible later, but in the immediate term we focus where willingness to pay is highest and the buying motion is fastest.</p>
-        <Subhead>1.2 EHR-native depth is the moat that compounds with each shipped product</Subhead>
-          <p>Our competitive position is structurally different from Tennr and Valerie because we operate inside the EHR, not on documents that flow out of the EHR. Smart Draft reads structured chart data (Conditions, Observations, Encounters, MedicationRequests, Coverage) and generates referrals with full clinical context. Lifecycle Orchestrator monitors EHR state changes (Encounter completion, DocumentReference creation) and acts on them automatically. Practice Insights mines historical EHR data to identify patterns. Every product we ship inherits the same EHR integration depth.</p>
-          <p>This is a defensible position because rebuilding it requires either deep EHR integration work (years of engineering plus partner agreements with Athena, ModMed, eCW) or a different product architecture than document-first competitors have built. Tennr's RaeLM is brilliant at parsing documents but cannot match a product that starts with structured data. Valerie's human-plus-AI approach scales linearly with operations staff, not with software.</p>
-          <p>The graph eventually matters. As we accumulate referrals across many practices, the cross-provider data becomes its own product (Layer 2 network intelligence). But that is a Year 2 to Year 3 outcome dependent on density we have not yet achieved. Selling the graph as a current moat to a sophisticated investor would be intellectually dishonest given our scale.</p>
-        <Subhead>1.3 The agent runtime is the technical asset that enables multi-product expansion</Subhead>
-          <p>We shipped the agent runtime in May 2026. It is the substrate every Tether agent runs on: task queue, cost budget, structured output validation, human-in-the-loop approvals, webhook bridge, circuit breakers, evaluation harness. Each new product (Smart Draft, Lifecycle Orchestrator, Practice Insights, Eligibility Verification, Patient Outreach, Voice Specialist Verification) is a handler that registers against the runtime, not a separately engineered system.</p>
-          <p>The runtime is what makes the multi-product roadmap credible on a small engineering team. Building eligibility verification as a standalone product would take six to eight weeks. Building it as a handler on the runtime takes three to four weeks. The same compression applies to every subsequent product. The runtime is invisible to customers but visible to investors as the technical asset that justifies the platform thesis.</p>
-        <Subhead>1.4 Why this is not the previous "graph as moat" thesis</Subhead>
-          <p>The April 2026 roadmap argued that the joined record of cross-provider referrals was the moat. That thesis is structurally correct but premature. It requires meaningful density (50+ practices, 5,000+ referrals per month) before the graph has signal. At our current scale the graph contains four practices and small numbers of referrals. We will reach graph density eventually, but selling it as the current moat to investors who have done diligence on this category would not survive the first technical conversation.</p>
-          <p>The revised thesis is honest about today and ambitious about tomorrow. Today the moat is EHR-native product depth, runtime architecture, and customer relationships in our target segments. Tomorrow the moat compounds with network density. Both are true. Leading with what is real today is the credible founder posture.</p>
+          <p>We sell to three customer segments, each with different economics and different sales motions.</p>
+          <p><span className="font-semibold">Solo and duo concierge practices (1-2 providers).</span> Practices with 200-600 members, charging $1,500 to $5,000 per member per year. Revenue at the practice is $300K to $3M annually. Patient retention is the entire business. Membership fees compound; losing 5% to attrition costs the practice 5% of revenue forever. The MA handling referrals is a senior, expensive employee whose time is the largest non-physician cost in the practice. These customers buy Tether because the MA time savings is observable in week one, and recovered TCM and follow-up billing pays for the subscription many times over.</p>
+          <p><span className="font-semibold">Small to mid-size primary care groups (3-10 providers).</span> Independent groups, often physician-owned, generally fee-for-service plus some Medicare Advantage capitation. Annual revenue $2M to $15M. These practices are price-sensitive but operationally rigorous. They have a practice manager who runs the P&L and understands code-level reimbursement. They buy Tether after a 30-day pilot where the billing impact can be measured against the baseline.</p>
+          <p><span className="font-semibold">PE-backed primary care networks and MSOs (10-1000+ providers).</span> Privia, Bowling Green, OneMedical-style consolidators, MSO platforms managing affiliated independent groups. These are the deals that move the needle on ARR. Revenue per deal: $250K to $1M+ in single contracts. Sales cycle: 4-9 months. They buy Tether after a procurement review and a multi-practice pilot, generally with a Head of Growth running the deal.</p>
+        </Prose>
+        <Subhead>Why concierge is the wedge</Subhead>
+        <Prose>
+          <p>Three reasons concierge is our beachhead, not a final state.</p>
+          <p>First, concierge practices are unusually willing to pay for software that improves the member experience because their entire business model is premium-priced member experience. Second, concierge practices are small enough that a single physician decision-maker can sign. Third, MDVIP, SignatureMD, and Castle Connolly affiliations create natural peer-to-peer referral networks for software adoption. Sach has direct introductions into these networks.</p>
+          <p>After we have 10-20 concierge customers with documented results, the path opens to small groups (where we sell on labor plus revenue capture math) and then to networks (where we sell on portfolio-level revenue impact and care coordination outcomes).</p>
         </Prose>
       </section>
 
-      <section id="segments" className={sectionClass}>
-        <SectionTitle kicker="PART 2" title="Segment analysis (sharpened)" />
+      <section id="platform" className={sectionClass}>
+        <SectionTitle kicker="03" title="The platform" />
+        <Subhead>One platform, four releases</Subhead>
         <Prose>
-          <p>The segments from the April roadmap are correct but the entry sequencing and customer profile descriptions need to be sharper.</p>
-        <Subhead>Segment A: Concierge-affiliated independent PCPs</Subhead>
-          <p><span className="font-semibold">Target networks</span>: MDVIP (1,300+ physicians, owned by Charlesbank Capital and Goldman Sachs), SignatureMD (200 physicians), Castle Connolly Private Health Partners (150 physicians), Specialdocs, PartnerMD.</p>
-          <p><span className="font-semibold">Why this segment first</span>: Concierge practices are not cost-sensitive. They pay annual membership fees of $2,000 to $5,000 per patient and have promised "we coordinate your specialist care" as a core service offering. Today most concierge practices deliver on that promise through MA labor (15 to 30 minutes per referral on coordination work). Tether replaces that labor with automation, which is a clean ROI story for the practice owner.</p>
-          <p><span className="font-semibold">Pricing model</span>: Solo and duo-physician concierge practices price per-practice flat ($400 to $1,500 monthly depending on tier). Larger concierge practices (3+ physicians) and concierge network deals price per seat ($75 to $300 per provider monthly with practice minimums). MDVIP and SignatureMD network-level contracts are explicitly per-seat with volume discounts. The dual model is described in Part 4.</p>
-          <p><span className="font-semibold">Buying motion</span>: Direct outreach from Sach to peers in MDVIP plus warm introductions through network executive contacts. Two paths in parallel. Path one is practice-by-practice signups at small concierge practices ($400 to $750 monthly per practice). Path two is network-level contracts at MDVIP, SignatureMD, or Castle Connolly PHP where one signature covers many physicians at per-seat pricing. Network deals are the upside; practice-by-practice signups are the base case.</p>
-          <p><span className="font-semibold">Realistic pipeline through Month 18</span>: 5 to 8 small concierge practices at per-practice pricing contributing $36K to $72K annualized, plus potential network deal upside at MDVIP or SignatureMD. A partial MDVIP rollout of 50 physicians at Professional tier per-seat ($150 monthly) contributes $90K annualized. A full early-stage MDVIP rollout of 200 physicians contributes $288K annualized at 20 percent volume discount. Base case assumes practice-by-practice signups; network deal is upside.</p>
-        <Subhead>Segment B: PE-backed primary care networks</Subhead>
-          <p><span className="font-semibold">Target networks</span>: Privia Health (5,100+ physicians and advanced practitioners across 1,300+ practice locations in 15 states and DC, Nasdaq: PRVA), Agilon Health, OneMedical, Aledade, VillageMD, Privia-style aggregator models in regional markets.</p>
-          <p><span className="font-semibold">Why this segment</span>: PE-backed primary care networks have procurement budgets, standardized buying processes, and a strong organizational motivation to deploy technology across all member practices. One contract with Privia could cover 50 to 500 providers at standardized per-seat pricing. The challenge is sales cycle length (6 to 12 months) and procurement complexity.</p>
-          <p><span className="font-semibold">Pricing model</span>: All Segment B deals are per-seat with volume discounts. Network buyers expect per-provider licensing because that is how they price every other software contract in their portfolio. Per-practice flat pricing is not credible for this segment.</p>
-          <p><span className="font-semibold">Buying motion</span>: Sid leads outbound to PE network executives, supported by case studies from concierge segment. Sales cycle is long but contract value justifies the effort. Bowling Green Internal Medicine fits this segment (hospital-affiliated, Athena, 8 providers). Privia and Bowling Green conversations are active but uncommitted as of May 2026; both are upside scenarios, not base-case pipeline.</p>
-          <p><span className="font-semibold">Realistic pipeline through Month 18</span>: 0 to 2 signed network deals depending on Privia, Bowling Green, and other PE-backed network outcomes. Per-seat ACV scales with seat count. A 100-seat Professional-tier deal at 15 percent volume discount equals $153K ACV. A 500-seat Professional-tier deal at 25 percent volume discount equals $720K ACV. An 8-seat Bowling Green deal at no volume discount equals $14,400 ACV. Base case assumes one deal closes by Month 18 contributing $100K to $300K depending on seat count. Floor case (neither closes) is $0 from this segment.</p>
-        <Subhead>Segment C: Independent multi-specialty groups with primary care</Subhead>
-          <p><span className="font-semibold">Target groups</span>: Loudoun Medical Group (100 clinics, 300 providers on eCW), Inova-affiliated independents, regional multi-specialty groups with embedded primary care.</p>
-          <p><span className="font-semibold">Why this segment</span>: Multi-specialty groups need both outbound referral management (PCPs to internal specialists) and inbound referral processing (specialists receiving from external PCPs). Tether's PCP-side product handles the outbound piece. Layer 2 expansion into specialist-side tooling makes us relevant to the full group.</p>
-          <p><span className="font-semibold">Pricing model</span>: Per-seat with volume discounts. Multi-specialty groups have established procurement processes and expect per-provider licensing.</p>
-          <p><span className="font-semibold">Buying motion</span>: Loudoun in IT security review now. Sid leads with support from Sach for clinical credibility. Long cycle, network-level contract.</p>
-          <p><span className="font-semibold">Realistic pipeline through Month 18</span>: 0 to 1 signed multi-specialty group. A Loudoun-style 300-provider Professional-tier deal at 20 percent volume discount equals $432K ACV. Smaller multi-specialty deals at 50 to 100 providers equal $72K to $153K ACV. Pipeline is 0 to 1 deal, contributing $0 to $432K depending on scope.</p>
-        <Subhead>Segment D (deferred to 2027): PE-backed specialty networks</Subhead>
-          <p><span className="font-semibold">Target networks</span>: Forefront Dermatology (170 locations on ModMed), USDP, Schweiger, EyeCare Partners.</p>
-          <p><span className="font-semibold">Why deferred</span>: Specialty networks are the inbound side of the referral relationship. Our current product is PCP-side outbound. The specialist value proposition requires Note Summarizer agent, enhanced directory positioning, and intake automation. These ship in 2027 after the PCP side is established.</p>
-          <p><span className="font-semibold">Strategic note</span>: We maintain the Forefront physician advisor relationship and ModMed integration so we are ready to activate this segment when the specialist products ship. Not a 2026 revenue line.</p>
-        <Subhead>Realistic Month 18 ARR scenarios</Subhead>
-          <p>The Month 18 ARR target depends on whether a PE-backed primary care network deal closes plus whether concierge network rollouts mature. We are showing three scenarios so the dependency is explicit. All scenarios reflect the dual pricing model (per-practice for small concierge, per-seat for networks and 3+ physician groups) described in Part 4.</p>
-        <p className="m-0"><span className="font-semibold">Floor case: small concierge practices only, no network deals</span></p>
-        <DataTable
-          headers={["Segment", "Customer mix", "Pricing model", "Annual contribution"]}
-          rows={[["Small concierge practices (1 to 2 physicians)", "8 to 12 practices at Starter or Professional tier", "Per-practice flat ($400 to $750 monthly)", "$50K to $90K"], ["Mid-size concierge practices (3 to 5 physicians)", "2 to 3 practices at Professional tier", "Per-seat ($150 per provider monthly)", "$20K to $35K"], ["PE-backed PCP networks", "0 deals", "n/a", "$0"], ["Independent multi-specialty", "0 deals", "n/a", "$0"], ["Concierge network deals (MDVIP partial rollout)", "0", "n/a", "$0"], ["Floor case total", "10 to 15 customers", "", "$70K to $125K"]]}
-        />
-          <p>This is the survival case. If neither Privia nor Bowling Green nor MDVIP network deal converts in the F&F-and-pre-seed window, the company still generates real ARR from small-practice concierge growth and multi-product expansion. The pre-seed milestone gate becomes harder to clear at this level but is not impossible if concierge ACV expansion is strong.</p>
-        <p className="m-0"><span className="font-semibold">Base case: one network deal closes plus concierge growth</span></p>
-        <DataTable
-          headers={["Segment", "Customer mix", "Pricing model", "Annual contribution"]}
-          rows={[["Small concierge practices", "6 to 10 practices", "Per-practice flat", "$40K to $75K"], ["Mid-size concierge practices", "2 to 3 practices", "Per-seat", "$20K to $35K"], ["PE-backed PCP network OR Concierge network rollout", "1 deal at 50 to 200 seats", "Per-seat at 15 to 20 percent volume discount", "$80K to $290K"], ["Independent multi-specialty", "0 deals", "n/a", "$0"], ["Base case total", "9 to 14 customers", "", "$140K to $400K"]]}
-        />
-          <p>Multi-product expansion on existing customers (Starter to Professional upgrades when eligibility verification and patient outreach ship) adds approximately $60K ARR, bringing base case from $140K to $400K to $200K to $450K ARR. This is the number the plan anchors to.</p>
-        <p className="m-0"><span className="font-semibold">Upside case: one PE network deal plus partial MDVIP rollout plus one multi-specialty group</span></p>
-        <DataTable
-          headers={["Segment", "Customer mix", "Pricing model", "Annual contribution"]}
-          rows={[["Small concierge practices", "6 to 10 practices", "Per-practice flat", "$40K to $75K"], ["Mid-size concierge practices", "2 to 3 practices", "Per-seat", "$20K to $35K"], ["PE-backed PCP network", "1 deal at 100 to 200 seats", "Per-seat at 15 to 20 percent discount", "$150K to $290K"], ["Concierge network rollout (MDVIP or SignatureMD)", "1 partial rollout at 50 to 100 seats", "Per-seat", "$90K to $180K"], ["Independent multi-specialty", "1 deal at 50 to 100 seats", "Per-seat at 15 percent discount", "$77K to $153K"], ["Upside case total", "10 to 15 customers", "", "$377K to $733K"]]}
-        />
-          <p>Including multi-product expansion, upside case reaches $500K to $900K ARR.</p>
-          <p><span className="font-semibold">The $300K to $500K Month 18 ARR target we anchor to in this plan corresponds to base case plus partial upside.</span> We are not committing to upside case as the milestone. We are not falling back to floor case as the milestone. The middle of the range assumes one PE-backed network deal in active but uncommitted conversation (Privia, Bowling Green, or comparable) closes, or one concierge network rollout (MDVIP, SignatureMD partial penetration) matures from upside scenario to actual customer. Neither is committed pipeline as of May 2026.</p>
-          <p>A sophisticated investor should read this section as evidence that we have modeled the business rather than picking a number we wanted to hit. The F&F round survives the floor case. The pre-seed round depends on at least base case. Series A depends on upside case or comparable per-seat expansion across multiple network deals.</p>
-        <ExitCallout>
-          <p className="m-0 text-sm leading-relaxed">
-            Pipeline footnote: Privia and Bowling Green represent PE-backed PCP network upside; partial MDVIP or SignatureMD rollout represents concierge network upside. Base case assumes one path matures, not simultaneous PE and MDVIP network closes. The approximately $60K multi-product expansion bridge in the base-case table moves $140K to $400K segment math to $200K to $450K ARR.
-          </p>
-        </ExitCallout>
-        <Subhead>Why per-seat changes the long-term ceiling</Subhead>
-          <p>Per-seat pricing changes the addressable market math at scale in ways per-practice pricing does not. MDVIP alone has 1,300+ affiliated physicians. At Professional tier per-seat pricing of $150 monthly with 20 percent volume discount, full MDVIP penetration would be $1.87M ARR from one network logo. Privia has 5,100+ physicians and advanced practitioners; full penetration at the same pricing is $7.34M ARR. The total concierge plus PE-backed primary care addressable market in the US is approximately 150,000 to 250,000 physicians. Even 1 percent of this market at per-seat pricing equals $2M to $4M ARR. Five percent equals $10M to $18M ARR.</p>
-          <p>This is the ceiling per-seat pricing unlocks that per-practice flat pricing structurally cannot match. The Month 18 numbers above are still conservative because they assume single-network deals at partial penetration, but the per-seat model is what makes the $10M+ ARR Series B and beyond credible to a venture-scale investor.</p>
+          <p>Tether is a platform with four named releases over the next eighteen months. Each release ships a defined agentic capability, addresses a defined customer outcome, unlocks a defined pricing tier, and depends on a defined capital trigger. We have shipped the first release. The next three are funded sequentially from the friends and family round and the pre-seed round that follows.</p>
+        </Prose>
+
+        <CalloutPanel className="mt-6">
+          <p className="m-0 font-semibold text-memo-navy">Release 01 · Tether Referrals — Live in production (May 2026)</p>
+        </CalloutPanel>
+        <Prose>
+          <p>The AI-generated clinical referral and lifecycle agent. The platform pulls patient context from athenaOne, generates a complete clinical referral narrative ready for physician review, routes the referral to the specialist, tracks acknowledgment / scheduling / visit / consult-note return automatically, and writes the consult note back into athenaOne when it arrives. Practice-level analytics surface stalled referrals before they fall through.</p>
+          <p>This is the wedge product. It is what is shipped today and what the first paying customers sign for.</p>
+          <p><span className="font-semibold">Pricing tier:</span> Launch — $600 / practice / month (solo concierge), $125 / provider / month (small group), $100-$125 / provider volume-tiered (network).</p>
+          <p><span className="font-semibold">Status:</span> Live in production with two design partners. Athena write-back deploying this quarter. Athena Marketplace listing target Q3 2026.</p>
+        </Prose>
+
+        <CalloutPanel variant="warm" className="mt-6">
+          <p className="m-0 font-semibold text-memo-navy">Release 02 · Tether Eligibility — Q4 2026 alpha, Q1 2027 GA</p>
+        </CalloutPanel>
+        <Prose>
+          <p>Stedi-backed insurance eligibility verification agent. Before the referral goes out, Tether automatically verifies that the specialist accepts the patient's insurance plan. Eliminates the single largest cause of referral rejection.</p>
+          <p>This is the first capability that triggers the price increase from launch to full platform, because it removes a meaningful additional 5-8 minutes of MA work per patient encounter (not just per referral) and unlocks Stedi-grade eligibility data the customer cannot get from athenaOne natively.</p>
+          <p><span className="font-semibold">Pricing tier:</span> Full platform — $1,200 / practice (solo), $225 / provider (small group), $150-$200 / provider (network).</p>
+          <p><span className="font-semibold">Capital dependency:</span> Stedi paid integration plus engineering time, approximately $15K to $25K all-in. Funded from the pre-seed round.</p>
+        </Prose>
+
+        <CalloutPanel variant="warm" className="mt-6">
+          <p className="m-0 font-semibold text-memo-navy">Release 03 · Tether Voice — Q2 2027 alpha, Q3 2027 GA</p>
+        </CalloutPanel>
+        <Prose>
+          <p>Vapi-backed voice coordination agent. Specialist offices without patient portals (which is the majority of them) get phone calls from Tether's voice agent: schedule confirmation, appointment reminders, consult note follow-up. The MA phone time at small practices is 5-15 hours per week. Tether Voice eliminates the majority of it.</p>
+          <p>This release defends the full-platform pricing because the customer has now seen us replace two categories of MA work (referral coordination and phone-based specialist follow-up). Without Voice, the launch tier and full platform are not differentiated enough to justify the 2x price.</p>
+          <p><span className="font-semibold">Capital dependency:</span> Vapi setup plus voice agent design and clinical safety review, approximately $15K to $25K all-in. Funded from pre-seed round.</p>
+        </Prose>
+
+        <CalloutPanel variant="warm" className="mt-6">
+          <p className="m-0 font-semibold text-memo-navy">Release 04 · Tether Network — Q4 2027 onward</p>
+        </CalloutPanel>
+        <Prose>
+          <p>Multi-EHR support (athenaOne plus ModMed plus others) and practice-network analytics. This is the release that makes large PE-backed network deals possible, because few networks are single-EHR.</p>
+          <p>The network analytics layer is the second-order monetization: aggregated referral pattern intelligence sold to the MSO or network leadership team. Which specialists deliver, which ones don't, which payer mixes generate the best outcomes. This is what crosses ACV above $100K per network.</p>
+          <p><span className="font-semibold">Pricing tier:</span> Per-seat at scale, custom volume-tiered. ACV crosses $100K on 50+ provider contracts. Network analytics layer adds $25K to $100K to ACV depending on size.</p>
+          <p><span className="font-semibold">Capital dependency:</span> Multi-EHR engineering (second engineer plus integration work) and enterprise sales motion (Head of Growth). Funded from pre-seed plus early Series A.</p>
         </Prose>
       </section>
 
-      <section id="product" className={sectionClass}>
-        <SectionTitle kicker="PART 3" title="Product architecture" />
+      <section id="revenue-model" className={sectionClass}>
+        <SectionTitle kicker="04" title="Revenue model" />
+        <Subhead>How Tether earns revenue</Subhead>
         <Prose>
-        <Subhead>Layer 1: PCP workflow automation, calendar 2026 through Q3 2027</Subhead>
-          <p>The product surface that ships during the F&F and pre-seed windows. All products are framed in relation to the PCP referral workflow because referrals is the wedge that brought customers to the platform.</p>
-        <p className="m-0"><span className="font-semibold">Product 1: Smart Draft and referral creation (live on the runtime substrate in production, May 2026)</span></p>
-          <p>Reads Athena chart data, generates structured referral packet with full clinical context, sends via fax through WestFax (HIPAA fax plan with BAA included). Live in production with Lefevre and Mary Davis, running through the runtime substrate as our first production handler, validated end-to-end against real production workload.</p>
-        <p className="m-0"><span className="font-semibold">Product 2: Lifecycle Orchestrator (ships Q3 2026)</span></p>
-          <p>Monitors every open referral for state changes. Detects when specialist scheduled the patient, when the visit completed, when the consult note came back. Surfaces stale referrals to the MA dashboard. Sends consult note write-back to PCP chart automatically once it arrives.</p>
-        <p className="m-0"><span className="font-semibold">Product 3: Practice Insights (ships Q3 2026)</span></p>
-          <p>Two distinct functions. First, the historical referral audit: at the start of every customer relationship (free, before paid trial), Tether pulls the practice's prior 12 months of referral data and produces a baseline report on volume, loop closure rate, time-to-completion, and outliers. This is a one-time reference document and the sales hook that justifies the A&C signing. Second, ongoing analytics: a four-paragraph Monday morning briefing from current referral data plus a real-time dashboard surfacing patterns (insurance mismatches, repeat-offender specialists, care gaps, stale accumulation). The historical audit is the wedge; the ongoing analytics is the ongoing value.</p>
-        <p className="m-0"><span className="font-semibold">Product 4: Eligibility Verification (ships Q4 2026)</span></p>
-          <p>Runs Stedi-backed eligibility checks on patients before the PCP refers them. Reads Coverage from Athena, hits Stedi for 270/271 transaction, parses 271 response, writes eligibility result back to chart as a custom document. Positioned to PCPs as "eligibility verification for your referrals." Net new monthly revenue addition to existing customers.</p>
-        <p className="m-0"><span className="font-semibold">Product 5: Patient Outreach (ships Q1 2027)</span></p>
-          <p>Texts referred patients via Telnyx three days post-referral to confirm scheduling, again after visit to confirm completion. SMS notifications are architected to carry no PHI (status prompts that direct the patient to log in rather than naming diagnoses or providers). Surfaces no-show risk and patient resistance to the PCP. Positioned as "patient follow-up for your referrals."</p>
-        <p className="m-0"><span className="font-semibold">Product 6: Voice-Based Specialist Coordination (ships Q1 2027)</span></p>
-          <p>Vapi-driven voice agent calls specialist offices to verify accepting new patients, insurance accepted, current wait times, and acknowledge specific inbound referrals. Updates Tether specialist directory and feeds the lifecycle orchestrator. Does not require Athena write-back.</p>
-        <Subhead>Layer 2: PCP-side network intelligence and specialist products, 2027 onward</Subhead>
-          <p>Activated when network density supports it. Practice Insights expands into cross-practice analytics ("your close rate vs peer median"). Specialist-side tooling ships when we have meaningful inbound referral volume: Note Summarizer for consult note drafting, enhanced directory tier for specialists, intake automation. Specialists transition from free riders to monetized customers when their specific products ship.</p>
-        <Subhead>Layer 3: Headless EHR coordination, 2028+</Subhead>
-          <p>Long-horizon vision included for completeness but not in the 18-month capital plan. Tether becomes coordination infrastructure between EHRs across the full set of workflows (referrals, prior auth, scheduling, patient outreach, care gaps). Not underwritten by F&F or pre-seed capital.</p>
-        <Subhead>What ships in 2026 alone</Subhead>
-        <DataTable
-          headers={["Quarter", "Shipped products", "Cumulative ACV ceiling per practice (per-practice flat pricing)"]}
-          rows={[["Q2 2026", "Smart Draft (live)", "$300 to $400 monthly"], ["Q3 2026", "+ Lifecycle Orchestrator, Practice Insights", "$400 to $600 monthly"], ["Q4 2026", "+ Eligibility Verification", "$600 to $900 monthly"], ["Q1 2027", "+ Patient Outreach, Voice Specialist Coordination", "$900 to $1,300 monthly"]]}
-        />
-          <p>This is the ACV expansion trajectory under per-practice flat pricing for solo and duo concierge practices. Network deals and 3+ physician practices scale on per-seat tiers detailed in Part 4 ($75 to $300 per provider monthly), which produces dramatically higher ACVs at the network level (MDVIP at 200 seats equals $288K ACV; Privia at 100 seats equals $153K ACV). Same product set, different pricing structure based on customer scale.</p>
+          <p>Pricing scales on two dimensions: scope of product (launch versus full platform) and practice size (per-practice flat for the smallest, per-seat for groups and networks).</p>
         </Prose>
-      </section>
-
-      <section id="pricing" className={sectionClass}>
-        <SectionTitle kicker="PART 4" title="Pricing model (revised)" />
+        <DataTable
+          headers={["", "Solo or duo concierge (1-2)", "Small to mid group (3-10)", "Network or PE-backed (10+)"]}
+          rows={[
+            ["Launch product (today through Q4 2026)", "$600 / practice / month", "$125 / provider / month", "$100-$125 / provider, volume tiered"],
+            ["Full platform (Q1 2027 onward)", "$1,200 / practice / month", "$225 / provider / month", "$150-$200 / provider, volume tiered"],
+          ]}
+        />
         <Prose>
-          <p>PCPs pay. Specialists are free. We use a dual pricing model that segments by customer scale: per-practice flat pricing for small independent concierge practices, and per-seat licensing for concierge networks, PE-backed primary care networks, and any practice with 3+ physicians where per-seat math is more favorable. This is the same pricing segmentation Microsoft, Salesforce, and the rest of enterprise SaaS uses to match pricing to customer scale.</p>
-        <Subhead>Why two models, not one</Subhead>
-          <p>A solo concierge practice and a 200-physician concierge network are not the same customer. Charging both on the same model leaves money on the table at one end or creates procurement friction at the other.</p>
-          <p>Per-practice flat pricing wins for solo and duo-physician practices because it is simple, predictable, and below the threshold that triggers procurement review. Lefevre and Mary Davis are design-partner pilots on founder pricing in perpetuity (free or nominal) in exchange for case study rights and reference value, not paying customers in the F&F window. The first paying customers (target 1 to 3 through F&F window from Sach's concierge peer network outreach and Athena Marketplace inbound) are on per-practice pricing because that is the right model for their solo or duo-physician scale.</p>
-          <p>Per-seat licensing wins for any practice with 3+ physicians and for all network deals because revenue scales with the customer's organization. When a concierge network adds physicians, our revenue grows automatically. When a PE-backed network buys at the corporate level, per-seat pricing is the structure their procurement team expects and can underwrite. Network-level contracts with volume discounts at 15 to 25 percent are standard enterprise SaaS practice.</p>
-          <p>The crossover threshold is approximately 3 to 4 physicians. Below this, per-practice flat pricing is cheaper for the customer and simpler for us to sell. Above this, per-seat licensing is structurally better for our revenue and aligns with how the customer's organization grows.</p>
-        <Subhead>Per-practice flat pricing (small independent practices)</Subhead>
-          <p>For solo and duo-physician concierge practices. Three tiers.</p>
-        <DataTable
-          headers={["Tier", "Price per practice per month", "Included products"]}
-          rows={[["Starter", "$400", "Smart Draft, Lifecycle Orchestrator, Practice Insights, basic directory"], ["Professional", "$750", "Starter plus Eligibility Verification, Patient Outreach"], ["Enterprise", "$1,500", "Professional plus Voice Specialist Coordination, network analytics, priority support"]]}
-        />
-          <p>Starter ships now and is the F&F-window price point for the first paying customers. Professional ships when Eligibility and Patient Outreach are live (Q4 2026 and Q1 2027). Enterprise ships when Voice and network analytics are live (Q1 to Q2 2027).</p>
-          <p>These prices are starting points anchored against labor cost equivalence (Starter $400 monthly equals approximately 16 hours of MA time saved at $25 per hour fully loaded, which Smart Draft delivers in the first month at typical referral volume) and against per-provider comparables in healthcare SaaS (Athena charges $140 to $400 per provider; Doximity premium tiers $500+). They are not yet validated against actual willingness-to-pay from paying customers because Lefevre and Mary Davis are on founder pricing. The first 3 to 5 paying customers from outbound and Marketplace inbound will test these price points directly and we will adjust if pushback warrants it.</p>
-        <Subhead>Trial-to-paid structure for new customers (going forward)</Subhead>
-          <p>The first paying customers in the F&F window onboard through a standard trial structure. Two paths depending on customer fit and timing:</p>
-          <p><span className="font-semibold">Standard trial (default for Marketplace inbound and most outbound)</span>: 30-to-60-day free trial with full Starter tier access. Customer experiences Smart Draft, Lifecycle Orchestrator, and Practice Insights against their own production athenaOne data. At trial end, customer converts to paid Starter at $400 monthly per-practice or $75 per provider per month at $300 practice minimum on per-seat. Trial-to-paid conversion is the expected outcome at trial end, anchored by documented time savings from the trial period. Expected trial-to-paid conversion rate based on B2B SaaS benchmarks for product with clear ROI demonstration is 40 to 60 percent for customers who reach the end of the trial period (versus the industry-wide free trial benchmark of 15 to 25 percent for products without clear ROI). The differentiation is that Tether produces measurable time savings during the trial, so the conversion conversation is anchored in data the customer can verify.</p>
-          <p><span className="font-semibold">Extended pilot for select concierge practices</span>: 90-day pilot at founder pricing of $200 to $300 monthly, then standard Starter tier ($400 monthly) at month 4. Used selectively for concierge practices that bring strategic reference value (named MDVIP affiliates, Castle Connolly PHP members, well-known physicians in target geographies). Founder pricing is a one-time discount, not in perpetuity.</p>
-          <p><span className="font-semibold">Design-partner status (closed; reserved for Lefevre and Mary Davis)</span>: Free in perpetuity (or nominal pricing if structurally needed for accounting purposes) in exchange for case study rights, time savings documentation, and reference value. Both pilots are committed as design partners and Tether does not extend this structure to additional customers; the design-partner cohort is closed at two customers.</p>
-          <p>The design-partner versus trial-to-paid distinction is structurally important for investor modeling. Lefevre and Mary Davis appear in the customer count as references and case studies but do not appear in ARR. ARR trajectories in Part 5 are calculated from trial-to-paid customers only.</p>
-        <Subhead>Per-seat licensing (3+ physician practices, concierge networks, PE-backed networks)</Subhead>
-          <p>For practices and networks where revenue should scale with seat count. Three tiers, each with a per-practice monthly minimum that floors the price for smaller groups.</p>
-        <DataTable
-          headers={["Tier", "Price per provider per month", "Practice minimum per month", "Included products"]}
-          rows={[["Starter", "$75", "$300", "Smart Draft, Lifecycle Orchestrator, Practice Insights"], ["Professional", "$150", "$500", "Starter plus Eligibility Verification, Patient Outreach"], ["Enterprise", "$300", "$1,000", "Professional plus Voice Specialist Coordination, network analytics, priority support, dedicated CSM"]]}
-        />
-          <p>Per-provider pricing reflects how the customer's revenue scales (concierge physicians charge $2,000 to $5,000 per patient annually, so per-physician licensing maps cleanly to their economics). At Professional tier, $150 per provider monthly is below the per-provider cost of athenahealth's EHR ($140 to $400 depending on tier) and well below Doximity's premium tiers ($500+). The pricing is anchored in the established healthcare SaaS norm.</p>
-        <Subhead>Network deal pricing examples</Subhead>
-          <p>Network buyers sign at the network level with volume discounts. The discount schedule is approximately 15 percent at 50+ seats, 20 percent at 200+ seats, 25 percent at 500+ seats.</p>
-          <p><span className="font-semibold">MDVIP-style concierge network deal at 200 active physicians on Professional tier</span>: $150 per provider per month, 20 percent volume discount equals $120 effective per-seat price, totals $288K ACV. If MDVIP eventually onboards 500 physicians, this becomes $720K ACV. The full 1,300-physician network at Enterprise tier and 25 percent volume discount would be $3.5M ACV.</p>
-          <p><span className="font-semibold">Privia-style PCP network deal at 100 providers on Professional tier</span>: $150 per provider per month, 15 percent volume discount equals $128 effective per-seat price, totals $153K ACV. At 500 providers it scales to $720K ACV. Full Privia rollout at 5,100+ providers across multiple tiers would exceed $7M ACV.</p>
-          <p><span className="font-semibold">Bowling Green Internal Medicine at 8 providers on Professional tier</span>: $150 per provider per month, no volume discount (below 50-seat threshold), totals $14,400 ACV. Small ACV but the strategic value is establishing a hospital-affiliated network reference customer that opens larger hospital opportunities.</p>
-          <p><span className="font-semibold">Loudoun Medical Group at 300 providers on Professional tier</span>: $150 per provider per month, 20 percent volume discount equals $120 effective per-seat price, totals $432K ACV.</p>
-        <Subhead>Why per-seat is the venture-scale model</Subhead>
-          <p>Three reasons per-seat licensing is the right model as Tether scales beyond the initial small-practice customers.</p>
-          <p>First, organic ACV expansion as the customer grows. When MDVIP adds 50 new affiliated physicians next year, our revenue from MDVIP grows automatically without new sales activity. This is the cleanest growth dynamic in enterprise SaaS and the reason Microsoft, Salesforce, HubSpot, and every comparable company prices this way.</p>
-          <p>Second, easier multi-product upsell. Shipping eligibility verification or patient outreach becomes "upgrade your existing seats from Starter to Professional," not "negotiate a new product line." Lower friction, faster expansion revenue.</p>
-          <p>Third, predictable revenue per logo for investor modeling. Investors model per-seat SaaS businesses as "seats times ARPU," both of which have clear growth levers. Tether's path to $10M+ ARR becomes a function of seat-count growth (achievable: MDVIP alone has 1,300+ physicians, Privia has 5,100+, the addressable concierge plus PE-backed PCP market is hundreds of thousands of physicians).</p>
-        <Subhead>Why PCPs will pay</Subhead>
-          <p>The sales motion has a free hook before the paid conversation. Practice Insights includes a historical referral audit: once the practice signs the Authorization and Consent (A&C) form to enable Tether on athenaOne (a one-time, free step in their athenaOne admin settings), Tether pulls their last 12 months of referral data and produces a baseline report showing referral volume, loop closure rate, average time-to-completion, and outliers. The report itself is free and demonstrates the workflow gap in concrete numbers specific to that practice. This is the wedge that gets the A&C signed and unlocks the live product trial.</p>
-          <p>Documented time savings from Lefevre and Mary Davis pilots are the primary sales artifact by August 2026 (case study finalized once write-back has been live for 6+ weeks). Lefevre's MA spends approximately 25 minutes per referral on coordination work. Smart Draft plus Lifecycle Orchestrator cut this to approximately 7 minutes. At 35 referrals per month, the practice saves approximately 10 hours of MA labor monthly, or $250 to $300 at fully loaded MA rates.</p>
-          <p>Per-practice Starter tier at $400 monthly is at or near labor-cost parity for a solo concierge practice, which is the threshold a cost-conscious practice manager signs at. For a 3-physician concierge practice at per-seat Starter pricing of $225 monthly ($75 per provider times 3), the math is significantly more favorable. For a 200-physician MDVIP network deal, the per-provider cost is below what the network already spends on coordination overhead and the value proposition scales with the network's brand promise to deliver coordinated care.</p>
-        <Subhead>Why specialists do not pay (yet)</Subhead>
-          <p>Specialists join the platform for free to receive structured referrals from Tether PCPs. They get visibility into inbound flow, structured intake context, and basic directory listing. They do not pay for these features because (a) the F&F-window products do not deliver enough specialist-side value to justify a price, and (b) keeping specialist adoption frictionless is what makes the PCP product better over time.</p>
-          <p>Specialists become paying customers in 2027 when Note Summarizer drafts consult notes for them automatically, when enhanced directory positioning becomes available, and when intake automation ships. That is a future revenue line worth $300 to $500 per specialist provider per month under per-seat pricing or per-office at higher tiers for larger groups. Not in the 18-month plan.</p>
+          <p>Blended ACV at scale is targeted at $20,000 to $35,000 per customer per year. Network contracts at 50+ providers cross $100K ACV.</p>
+          <p><span className="font-semibold">Grandfathering for early customers.</span> The first ten paying customers sign at launch pricing and are grandfathered through their first six months on the full platform, with renewal increase capped at 2x the launch rate. New customers signing after Q1 2027 sign at the full-platform rate from day one. This protects the early-customer relationship and creates the case study volume we need.</p>
+        </Prose>
+
+        <Subhead>Why this pricing, not other pricing</Subhead>
+        <Prose>
+          <p>Investors and customers will both ask why these tiers, not higher or lower. Three answers.</p>
+          <p><span className="font-semibold">Why not $300/month for the launch tier?</span> Because at $300, the unit economics of the sales motion don't work. Founder-led concierge sales costs founder time (essentially free) but the customer success and onboarding cost we will eventually carry is real. $600 covers it. $300 forces us to choose between bad gross margins and bad customer experience.</p>
+          <p><span className="font-semibold">Why not $1,500 for the launch tier?</span> Because the launch product is genuinely narrower than what ships in Q1 2027. We are anchoring at a price the recovered revenue clearly justifies (5-10x net positive on month one, see below) so the buying decision is unambiguous. The price will rise when the value rises.</p>
+          <p><span className="font-semibold">Why per-practice flat for solo and per-provider for groups?</span> Because the cost-to-serve math is different. A solo concierge practice with one MA and one physician has roughly fixed referral volume regardless of provider count. A 5-physician group has 5x the referral volume and 5x the recovered revenue, so per-provider pricing aligns price with value capture. The crossover happens at 3 providers, which is why our pricing matrix transitions there.</p>
+          <p><span className="font-semibold">Why volume tiering for networks?</span> Because network procurement teams expect it, and because at scale our marginal cost per provider drops materially. A 100-provider network using Tether costs us approximately the same engineering and support as a 25-provider network, so we can offer the volume tier without margin erosion.</p>
+        </Prose>
+
+        <Subhead>How Tether makes the customer money</Subhead>
+        <Prose>
+          <p>This is the load-bearing claim of the entire revenue thesis. We can defend it with real CMS data.</p>
+          <p>The mechanism is loop closure. When Tether closes a referral that would otherwise have been lost, the primary care practice unlocks four real billable revenue streams under current CMS and commercial payer rules. The first two are directly attributable to Tether (we cause them); the third and fourth are indirectly supported by Tether (we enable better documentation that supports them).</p>
+        </Prose>
+
+        <Subhead id="stream-one">Stream One · Follow-up visit billing on closed loops</Subhead>
+        <Prose>
+          <p>When a referral closes and the specialist sends back a consult note, the PCP typically schedules a follow-up visit to review findings. This is a billable established-patient encounter. CMS 2024 reimbursement: 99213 (~$92) for low complexity, 99214 (~$130) for moderate complexity, 99215 (~$184) for high complexity. Blended with concierge and commercial multipliers, the average is approximately $150 to $200 per visit.</p>
+          <p>Math for a solo concierge practice: approximately 100 referrals per month (FAIR Health average); current closure rate without Tether approximately 50%; Tether-recovered closed loops approximately 30 to 40 percent of the previously-lost half = 15 to 20 additional closed loops per month; follow-up visit conversion rate on recovered loops approximately 75%; additional follow-up visits per month: 11 to 15. <span className="font-semibold">Recovered visit revenue per month: $1,650 to $3,000.</span> For a 5-provider group: roughly 5x the volume, so $8,250 to $15,000 per month.</p>
+        </Prose>
+
+        <Subhead>Stream Two · Transitional Care Management codes</Subhead>
+        <Prose>
+          <p>This is the highest-leverage CMS code category and the one that almost no PCP captures fully today. CMS pays separately for Transitional Care Management when the PCP coordinates care after a qualifying post-acute event (hospitalization, ER visit, or qualifying specialist encounter) and documents the work within specific time windows.</p>
+          <p>The codes: CPT 99495 (TCM, moderate complexity) approximately $185; CPT 99496 (TCM, high complexity) approximately $249. The American Academy of Family Physicians estimates that PCPs capture only 20-30% of the TCM revenue they are technically eligible for, because the documentation burden is high enough that the workflow happens but the billing doesn't get captured.</p>
+          <p>Math for a solo concierge practice: approximately 30-40 percent of recovered closed loops involve a TCM-qualifying event; TCM-eligible events per month approximately 4 to 7; average reimbursement per TCM bill (blended) approximately $200. <span className="font-semibold">Recovered TCM revenue per month: $800 to $1,400.</span> For a 5-provider group: $5,000 to $10,000 per month.</p>
+        </Prose>
+
+        <Subhead>Stream Three · Chronic Care Management and Principal Care Management codes</Subhead>
+        <Prose>
+          <p>CMS pays separately for CCM (CPT 99490 at ~$63/month per patient for 20 minutes of non-face-to-face coordination work; CPT 99491 at ~$83 for complex CCM) and PCM (CPT 99424 and 99425, separate fee schedule for single high-risk conditions).</p>
+          <p>These codes depend on patient cohort enrollment, not on referral closure, so we attribute them less directly to Tether. The honest framing: Tether's documentation also supports CCM and PCM billing by maintaining the care coordination paper trail that CMS audits expect. We do not claim a specific dollar amount per practice here because the impact varies dramatically by patient mix. Rough estimate for a practice with significant Medicare patient panel: $500 to $2,000 per month in additional CCM/PCM billing.</p>
+        </Prose>
+
+        <Subhead>Stream Four · Quality bonus payments</Subhead>
+        <Prose>
+          <p>HEDIS measures, MIPS, and Medicare Star Ratings reward closed-loop care coordination through several measures including care transitions composite, medication reconciliation post-discharge, and care coordination process measures.</p>
+          <p>Bonus payments range from 2 to 7 percent of total Medicare revenue for high-performing practices. For a PCP with $300,000 in annual Medicare revenue, that is $6,000 to $21,000 per year in performance-based reimbursement, of which approximately 30-50% is directly attributable to documented loop closure. Annual attributable quality revenue: approximately $2,000 to $10,000 per provider per year, or $170 to $850 per provider per month.</p>
+        </Prose>
+
+        <Subhead>Total customer ROI math</Subhead>
+        <Prose>
+          <p><span className="font-semibold">Solo concierge practice (1 provider, $600/month subscription):</span> Stream One $1,650 – $3,000 / month; Stream Two $800 – $1,400 / month; Stream Three $500 – $2,000 / month; Stream Four $170 – $850 / month. Total recovered revenue: $3,120 – $7,250 per month. Net ROI: 5.2x to 12.1x at launch pricing.</p>
+          <p><span className="font-semibold">5-provider small group ($625/month subscription, $125/provider × 5):</span> Total recovered revenue scales roughly linearly: $15,600 – $36,250 per month. Net ROI: 25x to 58x at launch pricing.</p>
+          <p><span className="font-semibold">100-provider network ($12,500/month subscription, $125/provider × 100):</span> Total recovered revenue at network scale: approximately $300K – $700K per month. Plus quality bonus and RAF impact at network scale: additional $1M – $5M annually. Net ROI: 25x to 50x+ at network scale.</p>
+          <p>These ratios are deliberately conservative. Upper bounds assume diverse referral mix and high-complexity patients. Lower bounds assume average concierge patient panel without complex chronic disease.</p>
+        </Prose>
+
+        <Subhead>Why this matters for unit economics</Subhead>
+        <Prose>
+          <p>The customer is not just net-positive on the subscription. The customer is net-positive by an order of magnitude. This creates three things we need for a venture-scale business:</p>
+          <ol className="m-0 list-decimal space-y-2 pl-5">
+            <li><span className="font-semibold">Low price sensitivity.</span> A customer recovering $5K/month from a $600 subscription does not negotiate hard at renewal.</li>
+            <li><span className="font-semibold">High retention.</span> Customer churn assumptions in our model are 5-8% annually post-launch, materially below healthcare SaaS averages of 12-18%.</li>
+            <li><span className="font-semibold">Expansion revenue.</span> The customer who experiences 5-12x ROI on the launch tier is highly likely to upgrade to the full platform at 2x price when Tether Eligibility and Tether Voice ship, because the same ROI math holds at the higher price.</li>
+          </ol>
         </Prose>
       </section>
 
       <section id="path-to-scale" className={sectionClass}>
-        <SectionTitle kicker="PART 5" title="Path to scale" />
+        <SectionTitle kicker="05" title="Path to scale" />
+        <Subhead>The five-year ARR build</Subhead>
         <Prose>
-        <Subhead>Realistic ARR trajectory through Month 30</Subhead>
-          <p>The trajectory below tracks both customer count (practices and network deals) and seat count (per-seat licensed providers) because seats are the leading indicator of revenue under per-seat pricing.</p>
-        <DataTable
-          headers={["Phase", "Month", "Practices", "Total seats", "ARR range (base case)"]}
-          rows={[["Pre-conversion", "0", "0 paying (2 design-partner pilots on founder pricing)", "0", "$0"], ["Conversion plus early sales", "6", "4 to 6 small concierge", "4 to 12", "$20K to $40K"], ["Multi-product plus Marketplace inbound", "12", "8 to 12 customers, mostly small concierge plus 1 to 2 mid-size", "15 to 35", "$75K to $130K"], ["Multi-product plus first network deal (base case)", "18", "9 to 14 customers including 1 network deal", "75 to 250 seats", "$200K to $450K"], ["Pre-Series A", "24", "20 to 35 customers, 1 to 2 mature network deals", "300 to 750 seats", "$600K to $1.2M"], ["Series A readiness", "30", "40 to 60 customers, 3 to 5 network deals", "1,000 to 2,500 seats", "$1.8M to $4.5M"]]}
-        />
-          <p>This trajectory shows base case numbers. Floor case (no network deal, small concierge only) reduces the Month 18 figure to $70K to $125K from approximately 6 to 10 paying small concierge customers at average ACV of $10K to $13K. Upside case (one PE network deal plus partial MDVIP rollout plus one multi-specialty group) pushes Month 18 to $500K to $900K and Month 24 to $1.2M to $2.5M. The plan anchors to base case.</p>
-          <p>The non-linear inflection between Month 24 and Month 30 is driven by network deals maturing into deeper seat penetration. A first network deal in Month 18 at 100 seats grows to 300 to 500 seats by Month 30 as the customer expands rollout to more affiliated practices. This is organic ACV expansion that happens without new sales activity, which is the structural advantage per-seat pricing provides.</p>
-          <p>Key assumptions: Athena write-back ships on schedule. First paid customer signed August through October 2026 from outbound concierge outreach or Marketplace inbound (Lefevre and Mary Davis remain on founder pricing as design-partner references, not the paid revenue milestone). The Marketplace listing generates 2 to 4 qualified inbound leads per month from Q4 2026 onward. At least one network deal closes by Month 18 (base case), either PE-backed PCP or partial concierge network rollout. Multi-product expansion moves ARPU per seat from $75 (Starter) toward $150 (Professional) on the existing customer base over the 18-month window as eligibility, patient outreach, and voice products ship.</p>
-          <p>This is materially more conservative than the April 2026 roadmap. It is also achievable. A sophisticated investor running diligence will discount aggressive numbers by 50 percent. Showing $200K to $450K Month 18 ARR with explicit scenario math and dual-pricing-model logic discounts less than showing $800K to $1M ARR with uniform pricing assumptions buried under confidence.</p>
-        <Subhead>What drives non-linear growth after Month 24</Subhead>
-          <p>The runtime ships products faster than competitors. By Month 24 we expect to have five to six shipped workflow products on the runtime, versus competitors who are typically one to two products deep. ACV expansion compounds on the existing customer base without new sales activity through seat-tier upgrades (Starter to Professional to Enterprise).</p>
-          <p>Per-seat licensing creates a second compounding mechanism. As network deals mature, the customer onboards more of their affiliated physicians onto Tether. A 100-seat MDVIP deal at Month 18 plausibly becomes a 300-seat deal at Month 30 as MDVIP rolls out to more affiliated practices. The same dynamic applies to Privia, Loudoun, and any network-level customer.</p>
-          <p>Network density begins to matter at Month 24 onward. When 30 to 50 specialists are organically signed up to receive structured referrals from Tether PCPs, the specialist side becomes monetizable through Layer 2 products. This is the genuine network effect, accessible only after PCP density justifies it.</p>
-          <p>PE-backed primary care network deals compound revenue per logo through both ARPU expansion (Starter to Professional to Enterprise) and seat expansion (more affiliated providers onboarded over time). A full Privia rollout across 5,100+ providers at Enterprise tier would exceed $10M ARR from one logo. We do not assume this level of penetration in the 18-month plan, but it is the ceiling per-seat pricing creates for Series B and beyond.</p>
+          <p>The bottom-up build, with assumptions:</p>
+          <p><span className="font-semibold">Year 1 (June 2026 - June 2027):</span> Q3 2026 first paid customer signed. Q4 2026: 3-5 paid customers, all concierge or small practice; Tether Eligibility alpha with design partners. Q1 2027: Tether Eligibility GA; new customers sign at full-platform pricing. Q2 2027: 8-15 paid customers, average ACV $15-20K. Ending ARR: $200K to $400K. Trigger: pre-seed round closes Month 8-14.</p>
+          <p><span className="font-semibold">Year 2 (June 2027 - June 2028):</span> Tether Voice ships Q3 2027. Head of Growth hired Q3 2027. First network deal closes Q4 2027. 30-50 paid individual practices plus 1 network deal. Ending ARR: $1.5M to $3M. Trigger: Series A conversations begin late Year 2.</p>
+          <p><span className="font-semibold">Year 3 (June 2028 - June 2029):</span> Multi-EHR live (ModMed plus athenaOne). Network analytics layer GA. 2-3 network deals at PE-backed organizations. 100-200 individual practices plus 3-5 network deals. Ending ARR: $8M to $15M.</p>
+          <p><span className="font-semibold">Year 4 (June 2029 - June 2030):</span> Established category leadership on PCP outbound. Expansion into adjacent EHR markets. 5-8 major network deals. Ending ARR: $25M to $50M.</p>
+          <p><span className="font-semibold">Year 5 (June 2030 - June 2031):</span> Network deals at scale dominating ARR composition. Practice-network analytics layer driving 20-30% of revenue. Ending ARR: $50M to $120M.</p>
+          <p>These numbers are not promises. They are the operating plan we are building toward, with explicit assumptions baked in. The base case assumes we hit the milestones above. The downside case assumes we are 12-18 months slow on each. The upside case assumes one or two network deals come faster than projected (highly possible given pipeline activity).</p>
         </Prose>
-      </section>
 
-      <section id="capital-plan" className={sectionClass}>
-        <SectionTitle kicker="PART 6" title="Capital plan (restructured)" />
+        <Subhead>Customer acquisition by phase</Subhead>
         <Prose>
-          <p>The capital ask is structured as two tranches matched to specific milestone gates. The F&F tranche is sized to the minimum needed to reach paid customer revenue, not to a 6-month runway target. The pre-seed tranche, raised through institutional channels rather than personal network, closes after multi-product expansion is in flight and 5 to 10 paying customers are documented.</p>
-        <Subhead>Tranche 1: Friends and family, $75K to $100K, phased close May through October 2026 (Phase 1a founder co-investment May to June; outside investors July to October after first paid customer)</Subhead>
-          <p>The F&F round is structured as three phases matching the proof points investors at each phase will recognize. This is more honest than claiming a 30 to 60 day close because the proof points needed to attract outside investors land sequentially over the next 4 months.</p>
-          <p><span className="font-semibold">Phase 1a (May to June 2026): Founder co-investment, $15K committed.</span> Sid and Sach contribute $15K combined via simple promissory notes (cheaper and faster than full SAFE documentation; converts to equity at the next priced round or repays from outside F&F proceeds). Exact split between Sid and Sach is to be finalized. Notes documented for cap table integrity with minimal legal overhead (~$500 total). Cash deposit targets early June 2026 to fund operations.</p>
-          <p><span className="font-semibold">Conversion mechanics</span>: Outside F&F (Phases 1b and 1c) and all pre-seed capital raise on SAFEs at the stated post-money caps ($3M for F&F, $8M to $12M for pre-seed). Founder promissory notes from Phase 1a convert on the same terms as the first outside SAFE round (so the founder contribution effectively receives the $3M cap) or repay from Phase 1c proceeds if Phase 1c closes first. This treats founder co-investment as equity-equivalent capital while preserving documentation simplicity.</p>
-          <p><span className="font-semibold">The monthly burn this round funds.</span> Before allocating the round, the honest monthly operating cost of a HIPAA-compliant production stack matters because it is the floor every phase has to clear. This is the corrected stack reflecting actual BAA economics:</p>
+          <p><span className="font-semibold">Phase 1 · Founder-led concierge (now through Q1 2027).</span> Channel: Sach's network of concierge physicians from Georgetown and MedStar rotations. MDVIP and Castle Connolly affiliated docs introduced through Ravi's aunt and Lefevre referrals. Cost per customer: founder time only. Volume: 1-2 closed customers per month at the high end of effort. Limitation: founder-led sales does not scale past approximately 20 customers without a dedicated GTM hire. Sach is constrained by residency starting July 2026.</p>
+          <p><span className="font-semibold">Phase 2 · Head of Growth and inbound (Q2 2027 onward).</span> Channel: Athena Marketplace inbound plus Head of Growth running concierge-network sales motion. MDVIP and SignatureMD partnership negotiation. Cost per customer: approximately $3K-$5K CAC. Volume: 3-5 closed customers per month after ramp.</p>
+          <p><span className="font-semibold">Phase 3 · Enterprise and MSO direct (Q4 2027 onward).</span> Channel: Direct sales into PE-backed primary care networks. 4-9 month sales cycles. Cost per acquisition: approximately $30K to $50K per network deal. Payback period: under 6 months at $250K-$1M ARR per deal. Volume: 1-2 network deals per quarter at maturity.</p>
+        </Prose>
+
+        <Subhead>Unit economics by segment</Subhead>
         <DataTable
-          headers={["Service", "BAA status", "Monthly cost"]}
+          headers={["", "Solo concierge", "Small group", "Network"]}
           rows={[
-            ["Supabase Team plan + HIPAA add-on", "Required (PHI at rest; no compliant shortcut on Pro tier)", "$900 to $950"],
-            ["Athena Platform Services (Path B)", "Partner agreement signed April 2026", "$1,000 to $1,250"],
-            ["AWS Bedrock (Claude inference)", "BAA free via AWS Artifact; usage-based at pilot scale", "$150 to $300"],
-            ["Fax via WestFax HIPAA plan", "BAA included free (Telnyx gatekeeps BAA behind $2,500/mo spend, so we swap fax to WestFax)", "$15 to $50"],
-            ["Vercel Pro", "Conduit exception for pilot; BAA add-on ($370/mo) deferred to pre-seed", "$20"],
-            ["Google Workspace Business Starter ×3", "Required (email/Drive PHI)", "$21"],
-            ["Total monthly compliant burn", "", "$2,106 to $2,611"],
+            ["ACV (full platform)", "$14.4K", "$13.5K – $45K", "$150K – $1M+"],
+            ["CAC", "Founder time → $3-5K", "$5-10K", "$30-50K"],
+            ["Gross margin", "~95%", "~95%", "~92% (custom integration)"],
+            ["LTV (5-year, conservative churn)", "$54K – $72K", "$50K – $200K", "$750K – $5M"],
+            ["LTV : CAC", "12x+ at maturity", "10x+ at maturity", "25x+"],
+            ["Payback period", "1-2 months", "1-3 months", "3-6 months"],
           ]}
         />
-          <p>The single biggest correction from prior versions: the HIPAA-compliant Supabase tier is an ongoing $900 to $950 per month, not a one-time setup. It is standing operating burn from the start of the window. Over the five months (June through October), compliant infrastructure plus Athena alone runs $10.5K to $13K. Note the two-vendor messaging split: fax goes through WestFax (where the HIPAA BAA is free and fax is where full referral documents with PHI live), and patient SMS goes through Telnyx (where notifications are designed to carry no PHI in the message body).</p>
-          <p>The $15K Phase 1a is the bridge that funds roughly 1.5 months of full operations while Phase 1b and 1c close:</p>
-        <DataTable
-          headers={["Phase 1a use", "Amount", "Why this is must-have"]}
-          rows={[
-            ["Ravi founder draw, June (first month full-time)", "$4,000", "Personal runway through paid customer conversion; below market but operationally sustainable"],
-            ["Compliant infrastructure burn, June (Supabase HIPAA, Bedrock, WestFax, Vercel, Google Workspace)", "$1,500", "Ongoing monthly stack above, one month; non-negotiable compliant baseline"],
-            ["Athena Platform Services, June through August (3 months)", "$3,500", "Path B Variable Monthly Service Fee Tier 1 ($900 base) plus per-Connection fees ($30 per practice); ~$1,000 to $1,250 monthly, prepaid through August"],
-            ["Legal: SAFE template + founder promissory note + BAA template", "$3,500", "Paperwork infrastructure for Phases 1b and 1c plus first paid customer contracts; without templates, no rounds close"],
-            ["Supabase HIPAA tier, July (ahead of Phase 1b close)", "$1,000", "Second month of database BAA tier before family money lands"],
-            ["Contingency", "$1,500", "Buffer for the gap between Phase 1a deposit and Phase 1b close"],
-            ["Phase 1a total", "$15,000", ""],
-          ]}
-        />
-          <p>Items deliberately deferred to Phase 1b or pre-seed proceeds:</p>
-        <ul className="m-0 list-disc space-y-2 pl-5">
-            <li>Sid founder draw: begins July from Phase 1b proceeds (Sid covers personal expenses through prior savings until then)</li>
-            <li>Vercel BAA add-on ($370/mo): conduit exception holds for the pilot; add the BAA at pre-seed when paying customers demand full subprocessor coverage</li>
-            <li>Langfuse Pro: Cloud free tier sufficient for pilot volume; defer paid tier to pre-seed</li>
-            <li>Stedi paid integration (eligibility ships Q4 2026), Vapi (voice ships Q1 2027), conference attendance, paid sales tooling: all deferred</li>
-        </ul>
-          <p><span className="font-semibold">On the Supabase cost specifically</span>: the HIPAA tier is the largest fixed line in the stack, and the obvious question is whether to migrate to cheaper raw AWS infrastructure. The answer for now is no. Supabase is battle-tested in production healthtech, the $900 to $950 monthly cost is predictable, and a migration would put a live PHI system at risk while consuming founder engineering time during the window we most need it on product. We treat this as a deliberate, accepted cost and revisit only if scale economics clearly justify it later. We will apply for AWS Activate startup credits regardless, since those offset Bedrock inference cost on our existing AWS account at no downside.</p>
-          <p>This co-investment signals founder personal belief in the company at the $3M cap valuation we are asking outside investors to support. Sid and Sach are taking the same valuation risk that Virgin, Florida CEO, Ben, and angel introductions will be asked to take.</p>
-          <p><span className="font-semibold">Phase 1b (June to July 2026 target, contingent on early traction): Family and closest network, $15K to $25K.</span> Initial soft commitment from family is approximately $15K with potential for up to $25K if early traction is gained (write-back live, design-partner case study data documented, Marketplace listing submitted). Cash deposit timing is not yet firm and depends on traction milestones in June, with most likely window late June through July. This portion is achievable on family belief in the founders, but is not treated as committed until cash is in the business account. Phase 1b proceeds fund Sid's first founder draws (from July), continued compliant infrastructure burn (~$2,100 to $2,600 monthly), and the bridge to first paid customer. Combined with founder co-investment, total committed by end of July is approximately $30K to $40K.</p>
-          <p><span className="font-semibold">Phase 1c (August to October 2026): Outside investors, $35K to $60K.</span> Virgin partner, Florida CEO, Ben, and angel introductions close after write-back is live, Lefevre time savings case study documented, and first paid customer signed. Outside investors at this stage have meaningful proof points to anchor their decision: paid customer revenue (even at small scale, from first paid customer), documented Smart Draft time savings from design-partner pilots, and the runtime substrate live in production with Smart Draft already running on it. This portion is realistic to close in the 8-week window after first paid customer signs.</p>
-          <p><span className="font-semibold">Phase 1c indicative allocation (~$42.5K representative close, within the $35K to $60K outside-investor range)</span>:</p>
-        <DataTable
-          headers={["Phase 1c use", "Amount", "Why this is the right priority"]}
-          rows={[
-            ["Founder draws August through October (Ravi $4K monthly, Sid $4K monthly; Sach takes no founder draw during residency as he has residency income)", "$24,000", "Three months of compressed but operational founder compensation for full-time founders only"],
-            ["Compliant infrastructure burn, August through October (Supabase HIPAA, Bedrock, WestFax, Vercel, Google Workspace at ~$1,200 to $1,400 monthly across 3 months)", "$4,000", "Ongoing monthly stack scaling with customer count; non-negotiable PHI compliance"],
-            ["Cyber insurance baseline policy ($1M to $2M coverage, annualized premium)", "$3,000", "Required from the moment we handle PHI in production; non-deferrable once paying customers onboard"],
-            ["Additional legal (customer contract iterations, advisor agreements, IP review)", "$5,000", "Paid customer onboarding generates contract questions that need legal time"],
-            ["Athena Platform Services, September through October (continued)", "$2,500", "At expanded customer count (3 to 5 paying customers plus design partners), Connection fees rise to approximately $1,200 monthly. Two months of continued Path B obligation."],
-            ["Contingency", "$4,000", "Buffer for unanticipated costs in pre-seed bridging window"],
-            ["Phase 1c total", "$42,500", ""],
-          ]}
-        />
-          <p>At lower Phase 1c close ($35K to $40K), founder draws compress further, additional legal is deferred to early pre-seed, and contingency drops toward zero. The cyber insurance baseline and the compliant infrastructure burn are both non-negotiable once paying customers onboard; everything else flexes.</p>
-          <p><span className="font-semibold">Total target: $75K to $100K across all three phases.</span> Phase 1a ($15K) plus Phase 1b ($15K to $25K) plus Phase 1c ($35K to $60K) spans the range. Minimum viable close is $30K to $40K (founder plus family), which covers the non-negotiable monthly compliant burn, Athena fees, and legal templates, but compresses founder draws (Ravi only, Sid and Sach draws deferred) and defers cyber insurance and additional legal to Phase 1c. If Phase 1c is oversubscribed beyond the $100K target, additional capital up to a soft ceiling of approximately $135K can be accommodated at the $3M cap before we direct further investor interest toward the pre-seed round.</p>
-          <p><span className="font-semibold">What this tranche buys</span>: Bridge to first paid customer revenue (Phases 1a and 1b), then bridge to the pre-seed round opening (Phase 1c). By end of tranche 1: Athena write-back live in production. Lefevre and Mary Davis time savings documented as case study (both remain on founder pricing as design-partner references in perpetuity). First paid customer signed at Starter tier ($400 monthly) following 30-to-60-day free trial structure. Athena Marketplace listing submitted for approval. Bare-minimum operating costs covered for approximately 4 to 6 months while founders bootstrap deferrable expenses. (Smart Draft is already running on the runtime substrate in production as of May 2026, so the tranche does not need to fund that work.)</p>
-          <p><span className="font-semibold">What we are explicitly bootstrapping rather than funding</span>:</p>
-        <ul className="m-0 list-disc space-y-2 pl-5">
-            <li>Stedi (eligibility verification not shipping until Q4 2026; defer paid integration to that point)</li>
-            <li>Vapi (voice product ships Q1 2027; defer)</li>
-            <li>Langfuse Pro (Cloud free tier sufficient through F&F window; defer paid)</li>
-            <li>Sales tooling, conference attendance, and case study production (Sach uses free tools)</li>
-            <li>Operating reserve (cut to minimum; we will manage to plan or bridge through the phased close)</li>
-        </ul>
-          <p><span className="font-semibold">If only $30K to $40K closes (Phases 1a plus 1b only)</span>: this covers roughly three to four months of the compliant stack plus Athena fees plus legal templates, but not full founder draws through October. Ravi draws begin at $4K monthly from Phase 1a proceeds, Sid draws are deferred until Phase 1c outside money lands, Sach takes no draw at all (residency income), and additional legal and cyber insurance defer to Phase 1c. The non-negotiable monthly compliant burn (~$2,100 to $2,600) and Athena fees are still covered. This is uncomfortable but survivable through to the outside-investor phase.</p>
-          <p><span className="font-semibold">Bootstrap component at the founder level</span>: Ravi left Scale AI in May 2026 and is full-time on Tether as of that date, with personal runway bridged through prior savings and founder draws beginning June from Phase 1a proceeds. Sid joins full-time July 1, 2026, covering personal expenses through prior savings from CapM Advisory and Level Equity until his draws begin from Phase 1b. Sach is in residency from July 2026 with separate residency income and takes no founder draw in this window. None of the three takes market-rate compensation. This round buys operations to the paid-customer-revenue proof point, not a long-runway buffer.</p>
-          <p><span className="font-semibold">Why the timing of phase 1a matters</span>: Ravi being full-time as of May 2026 with personal runway tightening means phase 1a (founder co-investment from Sid and Sach) needs to deposit by early June to fund Ravi's June draw. The SAFE documents should be drafted in the next two weeks (legal cost approximately $3K to $5K, pulled from founder personal contributions or family bridge) so phase 1a can close before personal runway pressure becomes operational.</p>
-          <p><span className="font-semibold">Valuation</span>: $3M post-money cap on SAFEs for Phases 1b and 1c. Phase 1a founder promissory notes convert on the same terms as the first outside SAFE round (see conversion mechanics above), so all F&F capital effectively receives the $3M cap. Pricing justification is documented in detail below this section.</p>
-          <p><span className="font-semibold">Milestone gates for pre-seed round (tranche 2)</span>: Write-back live in production at Lefevre and Mary Davis (design-partner pilots used as case study reference base, remain on founder pricing). Documented time savings data (minutes per referral, loop closure rate) from Lefevre case study. Marketplace listing submitted for approval (or live). Smart Draft running production traffic on the runtime substrate. 5 to 10 paying customers signed at Starter or Professional tier (excluding design partners) from concierge outreach or Marketplace inbound. First PE-backed network conversation advanced to LOI stage or comparable.</p>
-        <Subhead>Tranche 2: Pre-seed, $400K to $750K, closing Month 8 to 14 (Q4 2026 through Q1 2027)</Subhead>
-          <p>The F&F round caps out at the network we can reach through personal relationships (Sid, Sach, parents, Virgin partner, Florida CEO, Ben, a small number of warm angel introductions). Realistic ceiling for F&F as a network is $75K to $150K total. To raise meaningfully more capital, we must move to institutional channels: healthcare-focused angels writing $25K to $100K checks, dedicated pre-seed funds, and small early-stage healthcare technology funds. This is the pre-seed round, not an F&F extension.</p>
-          <p><span className="font-semibold">What this tranche buys</span>: 10 to 14 months of additional runway through Q1 2028 or later depending on raise size. Eligibility verification and patient outreach shipped on the runtime. Voice specialist coordination prototype live. ModMed adapter deployed for Forefront-style specialty rollouts. Head of Growth in seat at Month 8 to 11 (depending on raise size). Founding engineer hired at Month 14 to 18 (if upper-band raise) or deferred to Series A (if lower-band raise). SOC 2 Type I program initiated. First PE-backed network deal in active negotiation or signed. Month 18 ARR target of $200K to $450K (base case) to $500K+ (upside) achieved.</p>
-          <p><span className="font-semibold">Why pre-seed comes directly after F&F, not an extension</span>: An F&F extension assumes the same network can write more checks once more proof points exist. In practice, that network is bounded. Family, close friends, and the small set of angel-style F&F checks are largely deployed in tranche 1. The next $400K to $750K requires reaching investors who are not in our personal network: healthcare workflow-focused angels (often surfaced through warm intros from existing F&F investors plus accelerator-network connections), pre-seed funds writing $100K to $500K checks at the early stage, and possibly an early-stage healthcare technology fund writing a $250K to $500K anchor check.</p>
-          <p><span className="font-semibold">Sources of capital for pre-seed</span>:</p>
-        <ul className="m-0 list-disc space-y-2 pl-5">
-            <li>Healthcare-focused angels (typical check size $25K to $100K). Reachable through warm intros from existing F&F investors, AngelList syndicates, and healthcare industry conferences.</li>
-            <li>Pre-seed funds (typical check size $100K to $500K). Examples of funds active in healthcare workflow automation: Bling Capital, BoxGroup, Susa Ventures, Lerer Hippeau, and a long tail of healthcare-tech-focused micro-funds.</li>
-            <li>Healthcare strategic angels: physicians who have exited healthcare-tech companies and write personal checks at the early stage.</li>
-            <li>Possibly: an accelerator commitment (Y Combinator if invited; Techstars Healthcare; Atomico Angel; comparable programs that write $125K to $500K plus advisory).</li>
-        </ul>
-          <p><span className="font-semibold">Triggering events for opening pre-seed conversations</span>: 5 to 10 paying customers signed at Starter or Professional tier (excluding design partners). Lefevre and Mary Davis case study documented with time savings metrics. Marketplace listing live and generating qualified inbound. First PE-backed network conversation at LOI or term sheet stage. With these proof points in place, pre-seed conversations are substantively different from where we are today.</p>
-          <p><span className="font-semibold">Specific allocation</span>:</p>
-        <DataTable
-          headers={["Line item", "Amount"]}
-          rows={[["Founder salaries (Ravi and Sid at operational rate of approximately $10K monthly each, Sach unpaid during residency with separate residency income) for 12 months", "$240,000"], ["Head of Growth (senior GTM hire, Month 8 to 10 start, base plus first-year commission target)", "$180,000"], ["Founding engineer (Month 14 to 18 start, depending on raise size; full-time backend/integration)", "$90,000"], ["EHR and compliance infrastructure scaled (Athena volume tier, Vercel BAA add-on, optional AWS RDS migration off Supabase, ModMed enrollment)", "$60,000"], ["SOC 2 Type I (Vanta or Drata plus auditor)", "$25,000"], ["Stedi paid integration (eligibility verification production scale)", "$15,000"], ["Vapi setup and initial voice product development", "$15,000"], ["Insurance (cyber liability, D&O required by institutional investors, general liability) and expanded legal", "$25,000"], ["GTM (conferences including MGMA, athenahealth user conference, sales tooling, case study production)", "$25,000"], ["Operating reserve", "$50,000"], ["Total", "$725,000"]]}
-        />
-          <p>The allocation total ($725K) shown in the table above is the upper-band case at the $750K raise level. At $575K midpoint, Head of Growth lands at Month 9 to 11 and founding engineer is deferred to Series A. At $400K lower bound, founding engineer hire delays to Series A funding entirely, Head of Growth hire delays 2 to 3 months, and operating reserve compresses. Operating reserve scales with raise size. The capital required to hit the Month 18 ARR base case ($200K to $450K) is not the full $725K; it is closer to the $400K to $575K range. The upper band funds faster scaling and a stronger Series A position.</p>
-          <p>One compliance item to confirm with Athena before Marketplace go-live: some Marketplace partners are asked to complete a HITRUST self-assessment within 90 days of going live (roughly $6K to $10K). It was not in our partner onboarding emails and may be waived or shortcut by our existing Certified API security review. If it applies, it is funded from the SOC 2 line or operating reserve without changing the total.</p>
-          <p><span className="font-semibold">Why Head of Growth before founding engineer</span>: Ravi being full-time as of May 2026 means engineering capacity is covered for the F&F window and most of the pre-seed window. The bottleneck on growth is not engineering output; it is GTM scale beyond founder time. A senior Head of Growth (experienced healthcare SaaS GTM lead, ideally with EHR-adjacent vertical sales background) propels both Motion 1 (concierge outbound) by relieving Sach during residency and Motion 2 (PE network business development) by relieving Sid for company-building. The founding engineer hire follows once Ravi needs technical scale beyond what one CTO can deliver, which is realistically Month 14 to 18 of company timeline.</p>
-          <p><span className="font-semibold">Valuation</span>: $8M to $12M post-money cap on SAFEs (priced round possible at the higher end). Approximately 4 to 8 percent dilution for $400K to $750K raised. Cap step-up from F&F $3M to pre-seed $8M to $12M is anchored in: paid customer revenue documented, multi-product expansion in flight, runtime in production with multiple handlers shipped, Marketplace inbound channel functioning, first network deal in active negotiation.</p>
-          <p><span className="font-semibold">Milestone gates for Series A</span>: 20 to 35 paying customers including at least 2 network deals at meaningful seat counts. Total seat count 300 to 750. $600K to $1.2M ARR (base case trajectory at Month 24). Three EHRs in production (Athena, ModMed, eCW). SOC 2 Type I complete. At least one PE-backed network contract signed and in active expansion. Eligibility, patient outreach, and voice specialist coordination products live. Layer 2 specialist tooling in development.</p>
-        <Subhead>Tranche 3: Series A, target Month 24 to 30, $4M to $8M</Subhead>
-          <p>Not in the current capital plan. Triggered by reaching $1M+ ARR run-rate with multi-product proof points and at least one network deal in production. Funds Epic integration via Redox, expanded GTM team, Layer 2 specialist products, and geographic expansion to second metro market.</p>
-        <Subhead>Total dilution path</Subhead>
-        <DataTable
-          headers={["Round", "Capital", "Cap", "Implied dilution", "Cumulative dilution"]}
-          rows={[["F&F", "$75K to $100K", "$3M", "2.5% to 3.3%", "2.5% to 3.3%"], ["Pre-seed", "$400K to $750K", "$8M to $12M", "4% to 8%", "6.5% to 11.3%"], ["Series A", "$4M to $8M", "$25M to $40M", "16% to 25%", "22% to 36%"]]}
-        />
-          <p>Founders retain approximately 64 to 78 percent through Series A. This is healthy ownership for a venture-backed company at Series A close.</p>
-        <Subhead>Valuation justification: why the $3M F&F cap is defensible</Subhead>
-          <p>This section addresses the question Virgin partner explicitly raised: is the valuation cap adequately justified.</p>
-          <p><span className="font-semibold">The proof points anchoring the $3M F&F cap</span>:</p>
-          <p>1. <span className="font-semibold">Athena Partner Program signed</span> (April 2026). Athena vets partners for security, HIPAA compliance, and integration quality before granting Partner status. This is a multi-month qualification process that not every applicant clears. As of 2025, Athena Marketplace has 800+ approved partners across 800+ API endpoints; we are now one of them. 2. <span className="font-semibold">Athena Platform Services API agreement signed</span>. This is the contractual mechanism that enables EHR write-back, which is the technical foundation for our loop closure value proposition. 3. <span className="font-semibold">Two design-partner pilots running in production</span>. Dr. Lefevre (MDVIP-affiliated concierge, Washington DC) and Dr. Mary Davis (independent PCP, Kentucky). Both on founder pricing in perpetuity (free or nominal) in exchange for case study rights, time savings documentation, and reference value to future paying customers. The design-partner relationship is structurally valuable because it provides production usage data, time savings benchmarks, and concierge physician references at no acquisition cost. This is more valuable for the valuation case than two small paid contracts at this stage. 4. <span className="font-semibold">Agent runtime substrate shipped to production main</span>. Six migrations applied to the production Supabase project. Fourteen runtime modules. Two API endpoints. Smart Draft running through the runtime substrate in production as our first handler. 5. <span className="font-semibold">Multi-product roadmap defined with shipping cadence</span>. Smart Draft live. Lifecycle Orchestrator and Practice Insights ship Q3 2026. Eligibility Verification ships Q4 2026. Patient Outreach and Voice Specialist Coordination ship Q1 2027. Five products live within 12 months on the same runtime substrate. 6. <span className="font-semibold">Three sales motions activated in parallel</span>. Sach concierge peer outreach (MDVIP/SignatureMD network), Sid PE network deals (Privia, Bowling Green, Loudoun conversations active), Athena Marketplace inbound (post-listing-approval). 7. <span className="font-semibold">PE-backed primary care network conversations active</span>. Privia (5,100+ providers, Nasdaq: PRVA), Bowling Green Internal Medicine, additional conversations underway. These conversations are active and in early procurement stage, not at LOI or term sheet. The fact that they are active at all is materially ahead of a typical pre-seed healthcare workflow startup that has not yet reached PE network procurement teams. 8. <span className="font-semibold">ModMed integration foundation in place</span>. Forefront Dermatology physician advisor relationship maintained. Multi-EHR architecture preserves optionality for Layer 2 specialty network expansion.</p>
-          <p><span className="font-semibold">Comparable transactions and what they paid at similar stages</span>:</p>
-          <p>The 2025 healthcare workflow automation comparable set anchors our pricing. Specific data points from Carta's 2025 pre-seed market analysis and known transactions:</p>
-        <ul className="m-0 list-disc space-y-2 pl-5">
-            <li>**Carta 2025 healthtech pre-seed median valuation cap**: $35M for rounds of at least $2.5M raised (Q3 2025 data). For smaller pre-seed rounds (under $250K raised), median cap is $7.5M to $10M across all sectors. Healthcare-specific median is typically 30 to 50 percent higher than cross-sector median due to regulatory complexity and longer sales cycles.</li>
-            <li>**Carta 2025 cross-sector pre-seed median pre-money valuation**: $7.7M (Q3 2025, down slightly from $8.0M in Q2). Median pre-money for AI-tagged companies: $19M to $20M.</li>
-            <li>**Locata** (YC S25 cohort, healthcare workflow automation for PCPs): Raised pre-seed in 2025 at approximately $5M to $8M post-money with YC backing and no production customers.</li>
-            <li>**Saffron Health** (YC cohort, PCP automation for FQHCs and rural clinics): Raised pre-seed at YC-standard $20M post-money cap with YC backing.</li>
-            <li>**PicassoMD** (referral coordination platform for PCPs): Raised Series A at $9.4M post-money in 2021, before the current AI traction wave.</li>
-            <li>**Tennr trajectory**: Series A $18M (March 2024), Series B $37M (October 2024), Series C $101M at $605M valuation (June 2025). Tennr's pre-seed was substantially lower (early 2022) but full disclosure terms not public.</li>
-        </ul>
-          <p><span className="font-semibold">The pricing logic</span>:</p>
-          <p>Our $3M F&F cap is intentionally below the cross-sector pre-seed median of $7.7M post-money pre-money and well below the healthcare-specific median of $10M+ for comparable round sizes. We are pricing the F&F round at a meaningful discount to comparables for three reasons:</p>
-          <p>First, F&F is structurally earlier than institutional pre-seed. F&F investors take more risk and should be priced accordingly. A $3M cap is conservative even by F&F standards.</p>
-          <p>Second, we want the round to close quickly with confidence. A lower cap closes faster than a market-rate cap because the price-to-proof ratio is more favorable for the investor. We are optimizing for round close speed rather than dilution minimization.</p>
-          <p>Third, the lower cap signals discipline to subsequent investors. The pre-seed at $8M to $12M cap will look credible because the step-up is anchored in specific proof points (paid customer revenue, multi-product expansion plus first network deal, runtime in production with multiple handlers shipped).</p>
-          <p>The $3M F&F cap is approximately 40 percent of the cross-sector pre-seed median and approximately 30 percent of the healthcare-specific pre-seed median. This is an unusually deep discount for a company at our proof-point stage. Sophisticated F&F investors will recognize the cap as deliberately conservative and will value the discipline signal.</p>
-          <p><span className="font-semibold">What a $3M cap means in dollars for a $25K check</span>:</p>
-          <p>A $25K F&F check at $3M post-money cap represents approximately 0.83 percent ownership at the cap-equivalent valuation, before dilution from subsequent rounds. If Tether reaches a Series A at $30M post-money (lower end of our Series A range) and we assume cumulative dilution of approximately 25 to 30 percent from pre-seed plus Series A rounds, that $25K check is worth approximately $175K to $190K at Series A conversion (7x to 8x return). If Tether reaches a strategic exit at $100M (lower end of our exit range) with similar cumulative dilution applied, that $25K check is worth approximately $580K to $625K (23x to 25x return). These return scenarios are documented in detail in Part 15 (Exit landscape). The numbers shown net of dilution are more conservative than the undiluted cap-equivalent math and reflect what F&F investors would actually realize at exit.</p>
-          <p><span className="font-semibold">The investor pitch on valuation</span>:</p>
-          <p>We are pricing the F&F round to be the friendliest entry point we will offer. Anyone who writes a check at this cap is locked in at our lowest valuation for the life of the company. The pre-seed will step up substantially. The Series A will be a meaningful multiple of all prior caps. The structural advantage of investing at the F&F cap is access to the company at its earliest defensible valuation, with the strongest proof points possible for that valuation level.</p>
-        <Subhead>Why the capital plan is realistic rather than optimistic</Subhead>
-          <p>The previous April roadmap's $985K capital plan was unrealistic because it assumed institutional pre-seed capital was available at competitive terms on a 6-month timeline. The current market reality for healthcare workflow automation startups at our stage requires a different structure.</p>
-          <p>The revised plan does three things differently. First, the F&F tranche is sized to the minimum viable amount ($75K to $100K) anchored to the actual network we can reach through personal relationships, rather than to a 6-month runway target. Second, the pre-seed is raised through institutional channels (healthcare-focused angels, pre-seed funds) rather than as an extension of the F&F network, because the F&F network is bounded at $75K to $150K. Third, several costs (Stedi paid integration, Vapi production, conferences, paid sales tooling) are deferred from F&F to pre-seed because they are not required to reach the paid customer revenue milestone.</p>
-          <p>This is the difference between optimistic capital planning and disciplined capital planning. Total capital raised through Series A remains comparable (when including Series A) to the previous plan. The timing and tranche structure are more realistic.</p>
-        <Subhead>Current cap table</Subhead>
-          <p>Three founders, equal ownership: Ravi Suresh (CTO), Sid Thakker (CEO), Sach Thakker (CMO) each at approximately 33.3 percent. Standard 4-year vesting with 1-year cliff measured from each founder's effective start date. No existing SAFEs, notes, advisor grants, or convertible instruments outstanding as of May 2026 prior to the upcoming Phase 1a founder promissory notes. Delaware C-corporation. Employee option pool (10 to 15 percent) established at pre-seed close.</p>
+        <Prose>
+          <p>The unit economics work at every stage. The reason this is true is the customer's recovered-revenue ROI: customers who are net-positive 5-12x on subscription do not churn at venture-SaaS rates and do not require expensive customer success investment.</p>
         </Prose>
       </section>
 
-      <section id="gtm" className={sectionClass}>
-        <SectionTitle kicker="PART 7" title="Go-to-market strategy" />
+      <section id="operations" className={sectionClass}>
+        <SectionTitle kicker="06" title="Where we are operationally" />
+        <Subhead>Product and engineering</Subhead>
         <Prose>
-          <p>Three sales motions run in parallel during the F&F and pre-seed windows. Each has a different cycle length, deal size, and customer profile. The combination is what gets us to 8 to 12 paying customers by Month 12 and 12 to 18 by Month 18.</p>
-        <Subhead>Motion 1: Founder-led concierge peer outreach (Sach)</Subhead>
-          <p>Sach Thakker is a Georgetown MD with the dermatology match plus MedStar clinical relationships plus direct connections into MDVIP through family practice ties. The motion is peer-to-peer outreach into the concierge physician community. The pitch lands different from a software vendor cold-call because the seller is a physician who understands the clinical workflow.</p>
-          <p>Target: 20 to 30 conversations per quarter with MDVIP-affiliated, SignatureMD-affiliated, and Castle Connolly PHP physicians. Expected conversion rate from conversation to trial-to-paid customer: 10 to 15 percent based on Lefevre and Mary Davis pipeline patterns. Expected output: 2 to 3 signed customers per quarter from this channel.</p>
-          <p>Cycle length: 30 to 60 days from first conversation to signed contract for solo and duo-physician concierge practices. CAC is founder time only with near-zero cash. ACV is per-practice flat ($400 to $1,500 monthly) for solo and duo practices or per-seat ($150 per provider monthly) for 3+ physician concierge groups.</p>
-          <p>This motion is the dominant source of F&F-window customers and remains important through pre-seed window. It scales to 5 to 8 closed deals per quarter as Sach moves from PGY-1 to PGY-2 with more available hours.</p>
-        <Subhead>Motion 2: PE network deals (Sid)</Subhead>
-          <p>Sid Thakker is a former PE and IB analyst with relationships into Privia, Bowling Green Internal Medicine, and the broader PE-backed primary care ecosystem. The motion is direct outbound to network executives, operations leaders, and procurement teams. The pitch lands as enterprise SaaS for a portfolio operator, not a software demo for a clinician.</p>
-          <p>Target: 8 to 12 simultaneous PE network conversations active throughout the F&F and pre-seed windows. Expected conversion rate from active conversation to LOI or pilot: 10 to 20 percent. Cycle length: 6 to 12 months from first conversation to signed network contract. ACV per signed network is $100K to $500K+ depending on seat count and tier.</p>
-          <p>This motion is the source of the network deals that drive base-case to upside-case ARR. One deal closing materially changes the trajectory. Multiple deals closing in the pre-seed window is what justifies Series A. CAC is founder time plus modest GTM spend ($25K in pre-seed allocation for conferences, sales tooling, and case study production). Implied CAC per network deal closed is approximately $20K to $30K including founder time at notional rates, against ACVs of $100K+, which gives a CAC payback under 6 months.</p>
-          <p>This motion is slower than concierge but produces dramatically larger deals. The combination of Motion 1 (volume) and Motion 2 (value) is what produces the customer mix in the Month 18 scenarios.</p>
-        <Subhead>Motion 3: Athena Marketplace inbound plus content visibility (Ravi plus Sid)</Subhead>
-          <p>The Athena Marketplace listing goes live after write-back is in production and the listing is approved (4 to 12 weeks from submission). The listing exposes Tether to 162,000+ athenaOne providers. Expected inbound: 2 to 4 qualified leads per month at steady state.</p>
-          <p>Alongside Marketplace inbound, we run a low-cost content and SEO motion to capture organic inbound from PCPs searching for referral workflow solutions. Sach already writes a clinical newsletter (TheDermBrief audience). We extend that surface with referral-focused content targeting low-competition, high-intent search terms (athenaOne referral workflow, concierge practice referral tracking, MA time on referrals). Cost is minimal during F&F window (writing time, no paid distribution); the goal is to build a documented inbound channel that compounds for pre-seed pitch and reduces dependency on outbound founder time. This motion does not produce material near-term customer count but it produces lead pipeline that becomes meaningful by Month 12 onward.</p>
-          <p>Conversion rate from inbound lead to trial-to-paid customer: 20 to 30 percent for self-qualified leads who come through Marketplace or content channels. Cycle length: 30 to 45 days because the lead has already self-identified the problem. ACV is mostly per-practice flat for the small-practice inbound, with occasional network-level inquiries that route to Sid's motion.</p>
-          <p>CAC is approaching zero (Marketplace listing fees are budgeted in EHR infrastructure line; content motion is founder time only). By Month 12, Marketplace inbound plus content together should contribute 1 to 2 closed customers per month, freeing Sach's time for higher-leverage concierge network conversations.</p>
-        <Subhead>Customer journey and onboarding</Subhead>
-          <p>A signed customer goes through a defined path from contract signature to fully operational. The journey is short because the product is EHR-native and most setup work is automated.</p>
-          <p><span className="font-semibold">Day 0: Contract signed.</span> Standard month-to-month Starter contract at $400 monthly per-practice or per-seat equivalent, with annual prepay option at 10 percent discount. Founder pricing customers (90-day extended pilot at $200 to $300 monthly) sign a separate addendum that auto-converts to standard pricing at month 4 unless cancelled with 30 days notice. BAA executed at signature. Cancellation policy is 30 days notice with no termination fee.</p>
-          <p><span className="font-semibold">Days 1 to 3: Athena practice provisioning.</span> Ravi provisions the customer's Athena practice ID in the Tether runtime, configures FHIR API access through the customer's Athena Partner Program credentials, and runs smoke tests against the practice's production data. This is largely automated through admin tooling built during Phase 1a. At scale (post-pre-seed founding engineer hire), this becomes a 30-minute task performed by the engineering team.</p>
-          <p><span className="font-semibold">Days 3 to 7: Smart Draft live.</span> Smart Draft is configured for the practice's typical referral patterns. The customer's MA receives a brief async walkthrough (Loom video plus written guide, not a live training session) on how to access the draft referral packets. First production referrals run through Smart Draft within the first week.</p>
-          <p><span className="font-semibold">Days 7 to 30: Loop closure validation.</span> Athena write-back configures for the practice. Lifecycle Orchestrator tracks referral status changes back from specialists. Practice Insights dashboard surfaces time savings and loop closure metrics. The customer's office manager receives a weekly summary email of the metrics.</p>
-          <p><span className="font-semibold">Day 30: First value-realization checkpoint.</span> Documented time savings shared with the practice (target: 10+ hours of MA time saved monthly, comparable to Lefevre baseline). If trial period, this is also the renewal conversation. If paid contract from signature, this is the moment to discuss multi-product upgrades when eligibility and patient outreach ship.</p>
-          <p><span className="font-semibold">Day 60 and beyond: Quarterly business reviews.</span> Sach (or pre-seed window CSM) runs a 30-minute quarterly review with the practice covering metrics, product roadmap, and expansion opportunities. This is the primary retention motion for the F&F-window customer base.</p>
-          <p>The implementation cost to Tether is approximately 4 to 8 hours of founder time per customer in the F&F window. At pre-seed scale (10+ customers), this transitions to a dedicated customer success function with onboarding automated to under 2 hours of staff time per customer.</p>
-        <Subhead>Support coverage during F&F and pre-seed window</Subhead>
-          <p>Customer support during the F&F window through approximately 15 to 20 paying customers is split across the founding team by domain expertise rather than handled by a dedicated CS function:</p>
-        <ul className="m-0 list-disc space-y-2 pl-5">
-            <li><span className="font-semibold">Technical issues</span> (bugs, performance, integration questions, API errors): Ravi as full-time CTO. Response target 4 business hours during business days, 24 hours for non-urgent issues.</li>
-            <li><span className="font-semibold">Administrative and billing issues</span> (invoicing, contract questions, BAA inquiries, account management): Sid as CEO. Response target 24 business hours.</li>
-            <li><span className="font-semibold">Clinical questions and product feedback</span> (workflow questions, clinical context, MA training, product enhancement requests): Sach as CMO, with response time accommodating residency schedule (24 to 48 hours typical).</li>
-        </ul>
-          <p>Support tooling is intentionally lightweight at this stage: email plus shared inbox, Loom for async walkthroughs, async written documentation (Notion or comparable), occasional Zoom for higher-touch issues. No paid support platform until pre-seed scale.</p>
-          <p>This model scales to approximately 15 to 20 paying customers before a dedicated CS hire becomes operationally necessary. The pre-seed-funded Head of Growth role primarily covers sales rather than CS; a dedicated CS lead is a Series A hire.</p>
-        <Subhead>Contract and revenue mechanics (high-level)</Subhead>
-          <p>Default contract is month-to-month with auto-renewal; annual prepay available at 10 percent discount; cancellation is 30 days notice with no termination fee. Network deals sign annual contracts with 30 percent of ACV due at signature and quarterly billing thereafter; setup fees of $5K to $25K for 50+ seat network deals. Revenue recognizes monthly for monthly contracts and ratably over 12 months for annual prepay per GAAP. 30-day AR cycle with approximately 2 percent bad debt allowance based on healthcare practice billing stability. Full contract templates and detailed mechanics available on diligence request.</p>
-          <p>The three motions are complementary, not redundant. Motion 1 produces immediate revenue at small ACV with fast cycle. Motion 2 produces lumpy revenue at large ACV with slow cycle. Motion 3 produces predictable revenue at small ACV with no founder time scaling.</p>
-          <p>The blended CAC across all three motions through Month 18 is approximately $1,500 to $3,000 per customer (founder time priced at notional rates, no paid acquisition). Compared to the blended ACV of $20K at Month 18, CAC payback is under 6 months across the portfolio. This is healthier than typical healthcare SaaS where CAC payback runs 18 to 24 months.</p>
-          <p>The GTM evolution beyond Month 18 looks like this. Series A funding adds a dedicated sales lead for Motion 2 (PE networks) so Sid can focus on company-building. Marketplace inbound becomes self-serve onboarding with light sales support. Sach transitions to head of clinical advisory while continuing peer-network outreach. The three-motion mix continues but each motion scales with the appropriate resource type rather than continuing to depend on founders.</p>
-        <Subhead>What we explicitly are not doing in GTM</Subhead>
-          <p>We are not running paid acquisition (Google Ads, LinkedIn Ads) until we have unit economics that justify it. Founder-led outreach is cheaper and higher-quality at our stage.</p>
-          <p>We are not building a sales development representative team. SDRs at this scale burn capital faster than they produce revenue.</p>
-          <p>We are not attending every healthcare conference. We attend Athena's user conference, MGMA, and one to two concierge-focused events per year. Other conferences are evaluated case-by-case based on attendee profile match.</p>
-          <p>We are not chasing health system enterprise deals (Cleveland Clinic, Kaiser, HCA). Those are Epic-anchored and require different sales motion. Deferred to Series A and beyond.</p>
+          <p>The agent runtime substrate shipped to the main code branch in May 2026. All safety mechanisms (budget enforcement, circuit breaker, PHI-strict logging, atomic persistence, L2 cache) are exercised against real production data and verified.</p>
+          <p>Tether Referrals is in production. Variable cost per AI-generated referral is approximately $0.004 per invocation. Gross margin on every subscription is effectively the full subscription price.</p>
+          <p>Historical referral audit is operational against real customer practices in production. Forward write-back to athenaOne is deploying this quarter, gated on athena scope provisioning at the ISC kickoff.</p>
+        </Prose>
+
+        <Subhead>Athena partnership</Subhead>
+        <Prose>
+          <p>athenahealth Partner Program agreement signed April 2026, including Platform Services API access. We are one of a limited number of partners with this level of integration access. ISC integration kickoff is pending scheduling with our assigned athena resource manager. The single technical ask we have at the kickoff is a three-scope provisioning ticket (Medication.rs, ServiceRequest.rs, DocumentReference.cu) across the Preview and Production athena apps.</p>
+          <p>Athena Marketplace listing target Q3 2026. The listing exposes Tether to the approximately 162,000 providers on athenaOne and is a real inbound channel once it goes live with case study material.</p>
+        </Prose>
+
+        <Subhead>Design partners</Subhead>
+        <Prose>
+          <p><span className="font-semibold">Dr. Lefevre</span>, MDVIP concierge physician in Washington DC, has been using Tether daily in his practice. His historical referral audit is operational against his real athenaOne tenant. His practice is the source of our pre-Tether vs post-Tether time-savings baseline.</p>
+          <p><span className="font-semibold">Ms. Davis</span>, who runs an independent primary care practice in Kentucky, is the second design partner. Her practice contributes a non-concierge baseline to our data.</p>
+          <p>Both are on free founder pricing during the design partnership window. Conversion to paid pricing target Q4 2026.</p>
+        </Prose>
+
+        <Subhead>Team</Subhead>
+        <Prose>
+          <p><span className="font-semibold">Ravi Suresh, CTO.</span> Came from Scale AI customer-facing engineering. Built the production runtime substrate while still employed there. Full-time on Tether as of May 2026. Owns all technical surfaces: agent runtime, athena integration, infrastructure, data layer, AI inference architecture.</p>
+          <p><span className="font-semibold">Sid Thakker, CEO.</span> Five years at CapM Advisory and Level Equity in private equity and growth investing. Full-time as of July 2026. Owns fundraising, GTM, partnerships, operations, customer development.</p>
+          <p><span className="font-semibold">Sach Thakker, CMO.</span> Graduated Georgetown School of Medicine in May 2026, begins dermatology residency at MedStar in July 2026. Owns clinical credibility, concierge-physician network development, product clinical validation. Constrained by residency hours from July onward; the pre-seed Head of Growth hire is partly designed to address this constraint.</p>
+          <p>The three have known each other for over a decade.</p>
+        </Prose>
+
+        <Subhead>The next 90 days</Subhead>
+        <Prose>
+          <ol className="m-0 list-decimal space-y-2 pl-5">
+            <li>Athena ISC integration kickoff and scope provisioning ticket cleared.</li>
+            <li>Write-back to athenaOne live in production for Dr. Lefevre.</li>
+            <li>Athena Marketplace listing submitted for approval (Q3 2026 go-live target).</li>
+            <li>First paid customer signed (target window August through October 2026).</li>
+            <li>Outbound to concierge networks accelerating: Castle Connolly intro pipeline through Ravi's aunt, MDVIP intro pipeline through Dr. Lefevre, SignatureMD evaluation.</li>
+            <li>Pre-Tether vs post-Tether billing baseline established with Dr. Lefevre's practice (TCM volume, follow-up visit volume, time per referral). This becomes the case study that anchors all subsequent investor and customer conversations.</li>
+          </ol>
         </Prose>
       </section>
 
-      <section id="retention" className={sectionClass}>
-        <SectionTitle kicker="PART 8" title="Retention and unit economics" />
+      <section id="capital" className={sectionClass}>
+        <SectionTitle kicker="07" title="What capital unlocks" />
+        <Subhead>The friends and family round ($75K-$100K at $3M post-money cap)</Subhead>
         <Prose>
-          <p>A platform thesis requires customers stay. The dual pricing model and multi-product roadmap only produce venture-scale revenue if churn is low and net retention is high. This section addresses the structural reasons retention should be strong and the operational reality of managing it.</p>
-        <Subhead>Why retention should be structurally high</Subhead>
-          <p>EHR-integrated workflow software has significantly higher switching costs than horizontal SaaS. Three structural factors create stickiness.</p>
-          <p>First, integration setup is non-trivial. Each customer goes through Athena Marketplace activation, BAA execution, user provisioning, MA training, and workflow integration into existing referral processes. Switching to a competitor requires repeating all of this with no guarantee of better outcomes. The 30 to 90 days of operational disruption alone is a meaningful barrier.</p>
-          <p>Second, accumulated practice data creates lock-in. Practice Insights generates 6 months of referral pattern analysis that the customer relies on for operational decisions. Lifecycle Orchestrator tracks every open referral with full state history. Switching to a competitor means losing all of this institutional memory.</p>
-          <p>Third, the multi-product bundle compounds the switching cost. A customer using Smart Draft plus Lifecycle Orchestrator plus Eligibility Verification plus Patient Outreach is replacing four staff workflows. Switching means re-integrating four products, not one.</p>
-          <p>The comparable retention benchmarks support these dynamics. Public vertical SaaS comparables: ServiceTitan reported gross retention above 95 percent in its S-1 (per Meritech Capital's analysis). Phreesia operates at $26,249 annual revenue per healthcare services client (Q3 FY2026), up 7 percent year-over-year, with 4,520 paying clients and 7 percent net client growth, implying strong net retention through expansion. Athenahealth retention exceeds 95 percent (well-documented across healthcare SaaS industry research). The 2025 vertical SaaS NRR benchmark from Benchmarkit shows 108 to 120 percent for mid-market vertical SaaS, with top quartile above 130 percent (per High Alpha 2025 SaaS Benchmarks Report). We target 95 percent gross retention and 115 to 130 percent net retention as the planning assumptions, anchored to the middle-to-top of these vertical SaaS benchmarks.</p>
-        <Subhead>Where churn risk concentrates</Subhead>
-          <p>The riskiest moment is the first paid customer conversion from trial to paid Starter tier. A customer who never pays anything churns when the pilot ends. The 30-to-60-day free trial structure for new customers (going forward) is designed so that paid conversion is the expected outcome at trial end, with documented time savings as the anchor. Lefevre and Mary Davis remain on founder pricing as references and are not the test case for paid conversion; the first 3 to 5 customers from outbound concierge outreach and Marketplace inbound are the test cases. The mitigation is documented time savings from the Lefevre and Mary Davis case studies plus founder pricing for the first cohort of paid customers to reduce buyer's remorse.</p>
-          <p>The second risk vector is multi-product upgrade refusal. A Starter customer who declines to upgrade to Professional when eligibility verification ships is not technically churning but is signaling product fit weakness. Net retention math assumes 60 to 70 percent of Starter customers upgrade to Professional within 6 months of the upgrade availability. If real upgrade rates come in at 30 percent, ACV expansion slows and the Month 18 trajectory becomes harder to hit.</p>
-          <p>The third risk vector is network deal churn during contract renewal. A PE-backed network signs a 12-month contract. If renewal comes due before Layer 2 specialist tooling is live, the customer may not see enough additional value to renew at expanded ACV. This is a Year 2 concern, not Year 1.</p>
-        <Subhead>Net retention math</Subhead>
-          <p>Net retention combines gross retention with expansion revenue from existing customers. The targets:</p>
-          <p>Year 1 (Months 0 to 12): Gross retention 90 to 95 percent. Net retention 100 to 110 percent driven by per-practice customers adopting Professional tier when eligibility ships.</p>
-          <p>Year 2 (Months 12 to 24): Gross retention 92 to 96 percent as customers settle into stable usage. Net retention 115 to 130 percent driven by per-seat customers adding more providers to existing network contracts and per-practice customers upgrading to Enterprise tier.</p>
-          <p>Year 3+: Gross retention 95 percent+. Net retention 130 percent+ as Layer 2 specialist tooling ships and network deals expand to additional clinics within the same PE portfolio.</p>
-          <p>These numbers are conservative relative to top-quartile vertical healthcare SaaS, which can reach 140 to 150 percent net retention at scale. We are anchoring against the realistic middle of the range rather than the best case.</p>
-        <Subhead>Unit economics summary</Subhead>
-          <p>Blended ACV at Month 18: $20K to $30K per customer depending on segment mix. (Reference: Phreesia operates at $26,249 per healthcare services client in Q3 FY2026, validating that this ACV range is realistic for healthcare SaaS at scale.)</p>
-          <p>Blended CAC through Month 18: $1,500 to $3,000 per customer (founder-led outreach, no paid acquisition). (Reference: 2025 Benchmarkit data shows median SaaS CAC payback at 18 months across all segments and 6.8 months across early-stage; vertical healthcare SaaS typically runs longer due to regulatory complexity. Our number is aggressive but plausible because founder time during F&F is the dominant input rather than paid sales infrastructure.)</p>
-          <p>CAC payback: 3 to 6 months on per-practice flat customers, 6 to 9 months on per-seat customers including network deals where the founder-time investment per deal is higher. Both are below the 12-month threshold considered healthy and well below the 18-month industry median.</p>
-          <p>Gross margin: 75 to 85 percent at scale. Cost of goods is primarily Supabase HIPAA tier, Athena Platform Services API fees, Bedrock inference, WestFax and Telnyx outbound, Stedi transaction fees, and Vapi voice calls.</p>
-          <p><span className="font-semibold">Early-stage gross margin reality</span>: at 10 customers, fixed-base infrastructure does not yet allocate thinly. The two big fixed bases are Supabase HIPAA tier ($900 to $950 monthly regardless of customer count) and Athena Variable Monthly Service Fee ($900 base plus $30 per Connection). Spread across 10 customers, these two alone are roughly $180 to $215 per customer monthly. Layered with Bedrock, fax, and per-Connection fees, gross margin at 10-customer scale lands in the 50 to 65 percent range depending on tier mix. At 30+ customers the fixed bases allocate to $60 to $70 per customer and gross margin moves to the 75 to 85 percent industry benchmark (comparable to ServiceTitan at 70 to 75 percent and Phreesia at 65 to 70 percent).</p>
-          <p>The gross margin trajectory from sub-scale to industry-benchmark is a known pattern in vertical SaaS where infrastructure base fees create early pressure. Detailed per-customer cost build available on diligence request.</p>
-          <p><span className="font-semibold">Structural advantage on Athena costs</span>: Path B excludes Certified API (FHIR R4 read) calls from billable volume. We route reads through Certified APIs wherever possible and pay only for write-back operations, which are far less frequent. This is a meaningful gross margin advantage versus middleware competitors who pay per call regardless.</p>
-          <p>LTV at 90 percent gross retention and 6-year customer life equals roughly $90K to $140K per customer at $20K to $25K blended ACV. LTV-to-CAC at maturity targets 6-to-1 to 9-to-1, which is healthy relative to the 3-to-1 vertical SaaS baseline and credible enough to defend in diligence.</p>
+          <p>Bridges to first paid customer revenue and pre-seed conversion. Funds five months of operations: HIPAA-compliant infrastructure, below-market founder draws for Ravi and Sid, legal templates for first customer contracts, cyber insurance, and contingency.</p>
+          <p>This is the round currently active. Phase 1a is founder co-investment by early June 2026. Phase 1b is family and closest network late June through July 2026. Phase 1c is outside friends and family August through October 2026, gated on the first paid customer signing.</p>
+        </Prose>
+
+        <Subhead>The pre-seed round ($400K-$750K at $8M-$12M cap, target Month 8-14)</Subhead>
+        <Prose>
+          <p>This is the round that funds the bridge from launch product to full platform. Three uses of capital:</p>
+          <p><span className="font-semibold">Product expansion to the full platform (approximately $30K-$50K).</span> Stedi paid integration for insurance eligibility (~$15K-$25K), Vapi voice product setup and agent design (~$15K-$25K), and the second engineering hire who ships these integrations and the multi-EHR adapters. This is the bridge from $600 launch pricing to $1,200 full-platform pricing, and from $15K-$20K early ACV to $20K-$35K mature ACV.</p>
+          <p><span className="font-semibold">Head of Growth (approximately $180K-$240K annual including equity).</span> Senior GTM operator with healthcare software sales experience into PE-backed primary care networks, MSO platforms, and concierge organizations. Target hire Month 8-10. This is the single highest-leverage hire in the company because one network contract at 50-200 providers is equivalent to two years of founder-led practice-by-practice selling.</p>
+          <p><span className="font-semibold">Second engineer (approximately $180K annual including equity).</span> Ships the Stedi and Vapi integrations, then the multi-EHR work. Frees Ravi to focus on runtime substrate and core platform.</p>
+          <p>Remainder funds infrastructure scale (Supabase HIPAA tier expansion, Bedrock usage at higher volume), SOC 2 Type II certification (required for enterprise deals), legal infrastructure for network contracts, insurance scale-up.</p>
+        </Prose>
+
+        <Subhead>The Series A round (target $4M-$8M, Month 18-30)</Subhead>
+        <Prose>
+          <p>Funds the enterprise sales motion at scale. Multiple Head of Growth-class hires running parallel deal cycles. Full customer success function. Multi-EHR engineering capacity. Marketing function. This is the round that turns Tether from a 30-customer concierge software company into a network-tier primary care platform.</p>
         </Prose>
       </section>
 
-      <section id="data-flywheel" className={sectionClass}>
-        <SectionTitle kicker="PART 9" title="The data flywheel and long-term moat" />
+      <section id="risk" className={sectionClass}>
+        <SectionTitle kicker="08" title="Risk" />
         <Prose>
-          <p>The Layer 2 vision in Part 3 describes network intelligence as a future product surface. This section explains how the data flywheel that powers it actually compounds, and why it becomes defensible only at meaningful density.</p>
-        <Subhead>What gets captured per referral</Subhead>
-          <p>Every closed-loop referral generates a structured record that includes: PCP practice, specialist practice, patient demographics, clinical reason, insurance carrier and plan, time to specialist acknowledgment, time to scheduled appointment, time to visit completion, time to consult note return, document codes returned, completion outcome (seen, completed, declined, no-response), and any escalations or interventions during the lifecycle.</p>
-          <p>This is a 15-to-20-dimensional record per referral, generated entirely from the EHR-native data we already touch. We do not need to ask the customer to enter additional data. The data is a byproduct of the workflow we are automating.</p>
-        <Subhead>Why density unlocks product</Subhead>
-          <p>At 100 referrals across 5 practices, the data is anecdotal. Patterns are not statistically meaningful and any insights we surface are obvious from individual practice review.</p>
-          <p>At 5,000 referrals across 30 practices, statistical patterns become meaningful. We can credibly say "for cardiology referrals on BCBS PPO plans, specialist X has a 23 percent higher loop closure rate than specialist Y." This is information the PCP cannot derive from their own data because they do not have comparable cross-practice signal.</p>
-          <p>At 50,000 referrals across 200 practices, the dataset becomes a defensible asset. Specialist quality scoring, predictive routing, and payer-specific completion probability all become products that no competitor can replicate without similar data. This is the moat we are building toward.</p>
-        <Subhead>Concrete Layer 2 products powered by the flywheel</Subhead>
-          <p><span className="font-semibold">Specialist Matcher</span> uses cross-practice closure data to rank specialists for each clinical question. The PCP sees not just "cardiologists in network" but "cardiologists ranked by completion probability for patients with your insurance mix and clinical profile." This is impossible without cross-practice data.</p>
-          <p><span className="font-semibold">Predictive routing for in-network optimization</span> identifies referrals likely to leak out-of-network and suggests in-network alternatives. Critical for PE-backed networks and value-based-care practices where leakage directly impacts revenue.</p>
-          <p><span className="font-semibold">Payer-specific intelligence</span> identifies which specialist-payer combinations have the highest completion rates. A PCP referring a Medicare Advantage patient gets routing that explicitly accounts for which specialists work well with which MA plans.</p>
-          <p><span className="font-semibold">Practice benchmarking</span> allows a concierge practice to compare its referral patterns against peer concierge practices. "Your cardiology loop closure rate is 67 percent, the median across MDVIP-affiliated practices is 81 percent" is exactly the operational insight a concierge practice owner pays for.</p>
-        <Subhead>The realistic timeline to flywheel value</Subhead>
-          <p>The April 2026 roadmap incorrectly positioned the data flywheel as a current moat. It is not. At our current density (4 practices, small referral volume), the data does not support meaningful product yet.</p>
-          <p>The realistic timeline to first Layer 2 product is Month 18 to 24, when we expect to have crossed 30+ practices and 5,000+ closed referrals. Practice benchmarking is the first product because it requires the least density. Specialist Matcher follows at 10,000+ closed referrals. Predictive routing requires 50,000+ closed referrals and arrives Month 30+.</p>
-          <p>This is not in the F&F or pre-seed milestone gates. We are not selling the flywheel as a current moat. We are positioning it as the structural defensibility that emerges once Layer 1 reaches meaningful density. Investors who understand network-effect businesses recognize this pattern from comparable companies (Doximity, Zocdoc, Phreesia, Klara all built networks before monetizing the data on top).</p>
-        <Subhead>Why this is genuinely defensible</Subhead>
-          <p>A competitor entering the market today would need to (a) build EHR integration depth comparable to ours on Athena plus expand to other EHRs, (b) acquire enough customers to generate comparable referral volume, and (c) accumulate enough closed loops over enough time to make the data statistically meaningful. This is a 3 to 5 year head start that our 18-month wedge produces.</p>
-          <p>The flywheel is the long-game moat. The runtime is the medium-game advantage. The EHR-native depth is the immediate-game differentiation. All three compound. None of them alone is the company.</p>
+          <p>What can go wrong, and what we are doing about each.</p>
         </Prose>
-      </section>
-
-      <section id="team" className={sectionClass}>
-        <SectionTitle kicker="PART 10" title="Who ships this" />
-        <Prose>
-        <Subhead>Ravi Suresh, CTO and Co-Founder</Subhead>
-          <p>Leads all technical execution: product, platform architecture, EHR integrations, runtime, agent development. Built Tether from zero to production in approximately three months while still at Scale AI inference infrastructure. Left Scale AI in May 2026 to commit full-time to Tether. Agent runtime (Doc 0) shipped to production main, May 2026. Production athenaOne FHIR reads live. Write-back on production rails pending ISC integration build. Former medical student route at Indiana University before choosing systems over clinical practice. Full-time on Tether as of May 2026; personal runway bridged through prior savings plus family support, with founder draws beginning June 1, 2026 from F&F proceeds.</p>        </Prose>
-        <Subhead>Sid Thakker, CEO and Co-Founder</Subhead>
-        <Prose>
-          <p>Originates PE specialty and PCP network pipelines, leads concierge expansion conversations, owns diligence storytelling, forecasting, and capital execution. Produced the MDVIP and Forefront relationships from cold outbound. Previously Investment Banking Analyst at CapM Advisory and Growth Equity Analyst at Level Equity. Penn economics. Full-time on Tether July 1, 2026.</p>        </Prose>
-        <Subhead>Sach Thakker, CMO and Co-Founder</Subhead>
-        <Prose>
-          <p>Owns clinical onboarding, bedside credibility, pilot acquisition, specialist recruiting, and clinical advisory. Anchors the wedge in lived training pain at MedStar-affiliated rotations. Georgetown medical degree May 2026, dermatology match May 2026, intern orientation July 2026. Realistic contribution during PGY-1 is 5 to 10 hours per week focused on high-leverage clinical relationship management (concierge peer outreach, Lefevre and Mary Davis case studies, clinical advisory). Capacity expands meaningfully in PGY-2 and beyond.</p>        </Prose>
-        <Subhead>Operating split</Subhead>
-        <Prose>
-          <p>Ravi handles all technical and integration work end-to-end as full-time CTO: runtime architecture, EHR integrations, all handler development (Smart Draft, Lifecycle Orchestrator, Practice Insights, eligibility, patient outreach, voice when shipped), customer technical onboarding, infrastructure operations, observability, and security posture. Full-time ownership of the entire technical surface throughout the day rather than evening/weekend windows is the durable capability Ravi brings to the company over the next 6 to 12 months.</p>
-          <p>Sid handles administrative customer support, business operations, PE network business development, investor relations, financial operations, and legal coordination. Sach handles clinical onboarding, technical support input where clinical judgment matters, concierge peer outreach, and case study development with Lefevre and Mary Davis.</p>
-          <p>The first non-founder hire is Head of Growth (senior GTM lead), targeted Month 8 to 10 of company timeline with pre-seed funding. This person propels both concierge outbound and PE network business development beyond founder time scale. The founding engineer follows at Month 14 to 18, extending Ravi's capacity into multi-EHR deployment and specialized handler development so Ravi can focus on runtime evolution and Layer 2 architecture. The sequencing reflects the actual constraint: with Ravi full-time, engineering capacity is covered through the pre-seed window, and GTM scale becomes the bottleneck on growth.</p>
-        </Prose>
-      </section>
-
-      <section id="competition" className={sectionClass}>
-        <SectionTitle kicker="PART 11" title="Competitive positioning" />
-        <Prose>
-          <p>The April 2026 roadmap positioned Tether against Tennr, Valerie, Locata, and Saffron primarily through the two-sided graph framing. The revised positioning focuses on the structural differences between EHR-native PCP workflow automation and the document-processing or specialist-side approaches competitors have built.</p>        </Prose>
-        <Subhead>Tennr ($101M Series C, $605M valuation, June 2025)</Subhead>
-        <Prose>
-          <p>Document-processing platform for specialty clinics receiving referrals. Vision-language model (RaeLM) trained on inbound documents. Strong execution, well-funded by IVP, a16z, Lightspeed, GV, ICONIQ. Customer base concentrated in infusion (KabaFusion, Reliant Specialty Infusion), home medical equipment, durable medical equipment, and imaging centers. Per Tennr's published positioning, "faxes are here to stay" and their economics depend on processing the long tail of unstructured inbound referrals that flow into specialty clinics from many sources.</p>
-          <p><span className="font-semibold">Critical competitive update (June 2025)</span>: Tennr launched Tennr Network alongside their Series C. Tennr Network provides real-time referral status visibility to referring providers, receiving providers, and patients. This is encroachment on the visibility layer that our Lifecycle Orchestrator delivers, and it deserves direct address.</p>
-          <p><span className="font-semibold">Tether's position relative to Tennr and Tennr Network</span>: We remain structurally differentiated even with Tennr Network shipping. Tennr Network is an extension of Tennr's existing specialty-clinic customer base, surfacing referral status from the inbound side. It is not an EHR-native product for PCPs. To use Tennr Network, a referring PCP would need their downstream specialist to be a Tennr customer first. This is the inverse of our positioning: we operate from the PCP side with deep Athena integration regardless of what specialist EHR the receiving party uses.</p>
-          <p>The customer overlap is also distinct. Tennr serves specialty clinics, especially infusion, HME, DME, and imaging where inbound document volume is the operational bottleneck. We serve PCPs (concierge and PE-backed primary care networks) where outbound referral coordination is the workflow pain. The two products coexist at the same patient referral relationship: Tether generates the structured referral on the PCP side, Tennr processes it on the specialty intake side. We expect partnership conversations with Tennr at some point in the next 18 months rather than head-to-head competition.</p>
-          <p>Where Tennr expansion poses real risk: if Tennr decides to build a PCP-side product directly (not Tennr Network's visibility layer, but an actual PCP workflow product with EHR integration), they have the capital and engineering capacity to do so. We have signed Athena Partner Program and Platform Services API agreements (April 2026) plus production athenaOne FHIR reads live, which puts us meaningfully ahead on Athena-specific integration depth, but the absolute head start in months is difficult to quantify without knowing Tennr's internal roadmap. The mitigation is execution speed in our segment before Tennr decides to compete directly. Tennr's current expansion is geographic and into adjacent specialty verticals (infusion, HME, imaging), not into PCP-side products.</p>        </Prose>
-        <Subhead>Valerie Health ($39M Series A)</Subhead>
-        <Prose>
-          <p>AI-plus-human front office automation for independent provider groups, including multi-specialty groups. Reads inbound documents via vision-language models, routes via human-supervised workflows. Targets larger independent groups including PE-backed practices.</p>
-          <p><span className="font-semibold">Tether's position relative to Valerie</span>: Valerie's human-in-the-loop services model scales linearly with operations staff, which limits gross margins and creates dependency on hiring quality operations leads. Our agent-runtime architecture is pure software with HITL only on initial customer onboarding. At scale, our gross margins are structurally higher than Valerie's. We also target a sharper customer profile (concierge PCPs and PE-backed PCP networks) where Valerie focuses on larger multi-specialty groups. Overlap exists in PE-backed groups but the segment sizes are large enough for multiple winners.</p>        </Prose>
-        <Subhead>Locata (YC S25, pre-seed)</Subhead>
-        <Prose>
-          <p>PCP-side AI agents for referral pre-fill, prior auth submission, patient voice outreach. Smaller scale, similar customer to Tether but document-and-workflow-focused rather than EHR-native.</p>
-          <p><span className="font-semibold">Tether's position relative to Locata</span>: We have meaningful integration depth and customer traction Locata has not yet built. Their pre-seed stage means they are 12 to 18 months behind us on product maturity. We can outpace them by shipping multi-product expansion faster on the runtime than they can ship feature-by-feature on a less mature architecture.</p>        </Prose>
-        <Subhead>Saffron Health (YC)</Subhead>
-        <Prose>
-          <p>PCP-side automation for FQHCs and rural clinics tied to value-based care. Different customer segment (federally qualified health centers and rural providers) with different buying motion. Not in direct competition for Tether accounts in the seed window.</p>        </Prose>
-        <Subhead>Cohere Health ($200M+ raised)</Subhead>
-        <Prose>
-          <p>Prior authorization automation, sells to health plans not providers. Not in Tether's category. Mentioned because prior auth is on the long-term Tether roadmap but the right path is partnership or acquisition rather than competition.</p>        </Prose>
-        <Subhead>Why our position is defensible</Subhead>
-        <Prose>
-          <p>We are not betting on out-engineering Tennr's vision model or matching Valerie's operations scale. We are betting on a structural insight: the cleanest place to capture referral data is at the moment of creation inside the PCP's EHR, and the cleanest way to monetize PCP workflow pain is through multi-product SaaS bundling on a unified runtime. Both insights are correct. Both are accessible to us specifically because we built the runtime in May 2026 and have working Athena integration today.</p>
-          <p>Competitors can build their way toward our position but they cannot match our momentum on Athena specifically, and the runtime gives us shipping velocity that is structurally faster than feature-by-feature competitors. Time is on our side if we move fast on the next 18 months.</p>
-        </Prose>
-      </section>
-
-      <section id="execution" className={sectionClass}>
-        <SectionTitle kicker="PART 12" title="Execution plan: next 180 days" />
-        <Prose>
-        <Subhead>Q2 2026 (May to July)</Subhead>
-          <p><span className="font-semibold">Athena write-back live in production</span>. ISC kickoff week of May 26. Production deployment within 14 days of kickoff. Lefevre is the first customer experiencing automated loop closure. This is the milestone everything else depends on.</p>
-          <p><span className="font-semibold">Smart Draft port to runtime complete (done, May 2026)</span>. Smart Draft runs entirely through the runtime substrate in production, validating every Doc 0 primitive against real production workload. This is the proof-of-concept that allows subsequent handlers to ship faster.</p>
-          <p><span className="font-semibold">Lifecycle Orchestrator AwaitConsultNote handler shipped</span>. The first non-Smart-Draft handler. Closes the loop automatically when Athena delivers a consult note. The handler that makes the loop closure promise real.</p>
-          <p><span className="font-semibold">Practice Insights narrative generator shipped</span>. Sales artifact for prospects. Sach uses it in every concierge outreach conversation.</p>
-          <p><span className="font-semibold">First paid customer signed at Starter tier</span>. Target signing date August through October 2026 from outbound concierge outreach (Sach's MDVIP/SignatureMD peer network) or Marketplace inbound. Customer onboarded via 30-to-60-day free trial structure that converts to $400 monthly Starter tier or extended 90-day founder pricing at $200 to $300 monthly. Lefevre and Mary Davis case study (documented time savings, loop closure rate) anchors the trial-to-paid conversation. Lefevre and Mary Davis themselves remain on founder pricing in perpetuity as design-partner references.</p>
-          <p><span className="font-semibold">Athena Marketplace listing live</span>. Distribution channel opens. Target two to four qualified inbound leads per month from the listing.</p>
-          <p><span className="font-semibold">Sach activates concierge network outreach</span>. 20 to 30 MDVIP and SignatureMD peer conversations over the quarter. Goal: 2 to 3 signups from this outreach.</p>
-          <p><span className="font-semibold">Sid leads Privia and Bowling Green follow-through</span>. Advance the Florida CEO conversation toward an F&F investment decision or advisory relationship. Bowling Green meeting outcome determines whether to pursue as paying customer or as advisory relationship.</p>
-          <p><span className="font-semibold">F&F round closes.</span> Target $75K to $100K committed by October 2026 across phased close: Phase 1a founder co-investment ($15K via promissory notes, exact split between Sid and Sach TBD) by early June, Phase 1b family contributions ($15K to $25K) by July, Phase 1c outside investors ($35K to $60K, Virgin partner plus Florida CEO plus Ben plus angel introductions) after first paid customer signed (August through October 2026). Minimum viable close $30K to $40K from Phases 1a and 1b alone.</p>        </Prose>
-        <div className="relative pl-8">
-          <div className="absolute bottom-0 left-[7px] top-8 w-px bg-memo-border" aria-hidden />
-          <div className="absolute left-0 top-2 h-3.5 w-3.5 rounded-full border-2 border-memo-teal bg-memo-bg" />
-          <Subhead>Q3 2026 (August to October)</Subhead>
-          <Prose>
-            <ul className="m-0 list-disc space-y-3 pl-5">
-              <li><span className="font-semibold">Eligibility Verification handler ships.</span> Stedi integration live. Existing customers upgrade from Starter to Professional pricing. New customers sign at Professional tier.</li>
-              <li><span className="font-semibold">Patient Insights pattern detectors shipped.</span> Insurance mismatch, repeat-offender specialist, stale accumulation, care gap detectors all live. Sales artifact becomes substantially more powerful for prospect demos.</li>
-              <li><span className="font-semibold">ModMed adapter deployment.</span> for first Forefront-style specialty pilot. Validates multi-EHR architecture works. Does not generate immediate revenue but proves out the scaling story for investors.</li>
-              <li><span className="font-semibold">First PE-backed network deal in active negotiation (upside milestone, not base case).</span> Privia, Bowling Green, or comparable. Target signed pilot or LOI by end of Q3 if any one of the active conversations matures on this timeline. Floor case does not assume this milestone hits in Q3.</li>
-              <li><span className="font-semibold">Customer count target.</span> : 5 to 7 paying customers by end of Q3 (mix of small concierge practices on per-practice pricing and 1 to 2 mid-size practices on per-seat). Total seat count target 10 to 20 seats. ARR run-rate target $40K to $75K.</li>
-            </ul>
-          </Prose>
-        </div>
-        <div className="relative pl-8">
-          <div className="absolute bottom-0 left-[7px] top-8 w-px bg-memo-border" aria-hidden />
-          <div className="absolute left-0 top-2 h-3.5 w-3.5 rounded-full border-2 border-memo-teal bg-memo-bg" />
-          <Subhead>Q4 2026 (November through January 2027)</Subhead>
-          <Prose>
-            <ul className="m-0 list-disc space-y-3 pl-5">
-              <li><span className="font-semibold">Patient Outreach handler ships.</span> Telnyx-driven patient texting (zero-PHI SMS notifications) integrated into the referral lifecycle.</li>
-              <li><span className="font-semibold">Voice Specialist Coordination prototype.</span> Vapi calls to specialist offices for verification. Initial use case is specialist directory enrichment, not active referral routing.</li>
-              <li><span className="font-semibold">Pre-seed round opens for conversations.</span> Target close Month 8 to 14 of company timeline (Q4 2026 through Q1 2027). With 5 to 10 paying customers, demonstrated multi-product expansion, and Marketplace inbound functioning, pre-seed should be raisable through institutional channels (healthcare-focused angels, pre-seed funds) at the targeted cap.</li>
-              <li><span className="font-semibold">Customer count target.</span> : 8 to 12 paying customers by end of Q4. Total seat count target 25 to 60 seats including any partial network deal progress. ARR run-rate target $80K to $150K.</li>
-            </ul>
-          </Prose>
-        </div>
-        <div className="relative pl-8">
-          <div className="absolute bottom-0 left-[7px] top-8 w-px bg-memo-border" aria-hidden />
-          <div className="absolute left-0 top-2 h-3.5 w-3.5 rounded-full border-2 border-memo-teal bg-memo-bg" />
-          <Subhead>Q1 2027</Subhead>
-          <Prose>
-            <ul className="m-0 list-disc space-y-3 pl-5">
-              <li><span className="font-semibold">Pre-seed round closes.</span> at $400K to $750K, $8M to $12M post-money cap (institutional angels and pre-seed funds).</li>
-              <li><span className="font-semibold">Head of Growth.</span> in seat (if not already hired earlier in pre-seed window).</li>
-              <li><span className="font-semibold">Founding engineer.</span> hire targeted Month 14 to 18 per pre-seed raise size.</li>
-              <li><span className="font-semibold">Layer 2 specialist tooling begins.</span> Note Summarizer scoped. First specialist signups converted from free to Pro tier when their products ship.</li>
-              <li><span className="font-semibold">Customer count target.</span> : 12 to 15 paying customers by end of Q1 2027. Total seat count target 50 to 150 seats depending on network deal maturation. ARR run-rate target $150K to $300K.</li>
-            </ul>
-          </Prose>
-        </div>
-      </section>
-
-      <section id="risks" className={sectionClass}>
-        <SectionTitle kicker="PART 13" title="Risks" />
-        <Prose>
-          <p>Five risks dominate the F&F-window plan. Each has an explicit mitigation. Detailed regulatory, model dependency, and competitive scenario analysis available on diligence request.</p>
-        </Prose>
-        <div className="overflow-hidden rounded-lg border border-memo-border">
-          {RISKS.map((r, idx) => (
-            <div
-              key={r.title}
-              className={cn(
-                "border-b border-memo-border px-5 py-4 last:border-b-0",
-                idx % 2 === 0 ? "bg-memo-bg" : "bg-memo-warm"
-              )}
-            >
-              <p className="text-sm font-semibold text-memo-text">{r.title}</p>
-              <p className="mt-2 text-sm text-memo-text-secondary">
-                <span className="font-medium text-memo-text">Risk: </span>
-                {r.w}
-              </p>
-              <p className="mt-2 text-sm leading-relaxed text-memo-text">
-                <span className="font-sans text-xs font-semibold uppercase tracking-[0.08em] text-memo-teal">
-                  Mitigation:{" "}
-                </span>
-                {r.m}
-              </p>
+        <div className="space-y-8">
+          {RISKS.map((r) => (
+            <div key={r.title}>
+              <Subhead>{r.title}</Subhead>
+              <ExitCallout>
+                <p className="m-0 mb-3">{r.w}</p>
+                <p className="m-0">
+                  <span className="font-semibold">Mitigation: </span>
+                  {r.m}
+                </p>
+              </ExitCallout>
             </div>
           ))}
         </div>
       </section>
 
-      <section id="deferred-scope" className={sectionClass}>
-        <SectionTitle kicker="PART 14" title="Deferred scope (unchanged from April roadmap)" />
+      <section id="team" className={sectionClass}>
+        <SectionTitle kicker="09" title="Why this team" />
         <Prose>
-          <p>These threads stay visible for diligence but off the F&F critical path.</p>
-          <ul className="m-0 list-disc space-y-3 pl-5">
-            <li><span className="font-semibold text-memo-text">Epic via Redox. </span>Deferred to Series A. Health system sales cycles do not justify spend during F&F and pre-seed.</li>
-            <li><span className="font-semibold text-memo-text">Native mobile app. </span>Deferred indefinitely. PCPs and MAs work on desktop.</li>
-            <li><span className="font-semibold text-memo-text">Comprehensive patient portal. </span>Deferred indefinitely. The Layer 1 Patient Record Upload Surface and the Layer 2 optional patient login cover the use cases that matter. A full Epic MyChart-style portal duplicates EHR-native functionality and is not where Tether competes.</li>
-            <li><span className="font-semibold text-memo-text">Embedded SMART on FHIR surface inside athenaClinicals. </span>Deferred to pre-seed window months 9 to 12.</li>
-            <li><span className="font-semibold text-memo-text">Multi-language patient communication. </span>Deferred.</li>
-            <li><span className="font-semibold text-memo-text">Custom routing rules per practice. </span>Deferred to Enterprise tier post-pre-seed.</li>
-            <li><span className="font-semibold text-memo-text">Specialist-facing performance benchmarking products. </span>Deferred to Layer 2.</li>
-            <li><span className="font-semibold text-memo-text">Prior authorization automation. </span>Deferred to 2027 plus, likely as partnership with Cohere or similar rather than direct build.</li>
-          </ul>
+          <p>Three people, three surfaces of the company, ten years of relationship.</p>
+          <p>Ravi is the technical conviction. He built the runtime substrate while still employed at Scale AI because he believed the platform thesis was correct. He covers every technical surface of Tether by himself and is one of the rare engineers who can credibly carry a healthcare-grade infrastructure platform without a co-founder engineer.</p>
+          <p>Sid is the operating conviction. He has seen enough early-stage and growth-stage healthtech companies from the investor side (CapM Advisory, Level Equity) to know the difference between companies that look like they will scale and companies that actually will. He brings the discipline and the financial literacy that founder teams often lack.</p>
+          <p>Sach is the clinical conviction. He is the only one of the three who lives in the actual healthcare system, who has rotated through concierge and primary care practices, who has personal relationships with the physicians we sell to. The credibility he brings to a sales conversation is something Tether cannot buy.</p>
+          <p>The combination is rare and the relationships are durable. We have known each other for more than a decade.</p>
         </Prose>
       </section>
 
-      <section id="exit-landscape" className={sectionClass}>
-        <SectionTitle kicker="PART 15" title="Exit landscape and long-term strategy" />
+      <section id="ask" className={sectionClass}>
+        <SectionTitle kicker="10" title="The ask" />
         <Prose>
-          <p>Sophisticated investors evaluate exit potential at every funding stage. This section addresses the realistic exit paths for Tether and the comparable transactions that anchor expectations.</p>        </Prose>
-        <Subhead>The four credible exit paths</Subhead>
-        <div className="space-y-6">
-          <ProseField label="Path 1: Strategic acquisition by an EHR vendor.">
-            <p className="m-0">Athenahealth, Veradigm (formerly Allscripts), eClinicalWorks, or Oracle Health (formerly Cerner) all have strategic reasons to own a workflow automation layer that increases the value of their core EHR. Athenahealth specifically has a history of acquiring complementary technology (Epocrates, Praxify) and the Marketplace structure means we are already a known quantity to their partnerships team. Realistic acquirer valuation at $5M to $10M ARR is 8x to 15x revenue, producing $40M to $150M outcomes.</p>
-          </ProseField>
-          <ProseField label="Path 2: Strategic acquisition by a workflow platform.">
-            <p className="m-0">Phreesia, Commure, Notable Health, and similar adjacent companies have explicitly broadened from single-workflow products into multi-product platforms. They would acquire Tether to add referral coordination and PCP segment expertise. Recent comparables: Phreesia's acquisition of Access eForms ($35M, expanded workflow surface), Commure's continued roll-up of workflow tools. Realistic acquirer valuation at $5M to $20M ARR is 6x to 12x revenue, producing $30M to $240M outcomes.</p>
-          </ProseField>
-          <ProseField label="Path 3: Series C and beyond, continued independent growth.">
-            <p className="m-0">Tennr ($605M valuation), Cohere Health ($200M+ raised), and Olive AI (peak $4B valuation before later difficulties) demonstrate that healthcare workflow automation can support multi-hundred-million-dollar private valuations. With strong execution and multi-product expansion, Tether could plausibly reach $20M+ ARR and Series C valuation in the $300M to $600M range by Year 4 to 5. Exit then becomes growth equity recapitalization, secondary liquidity, or IPO track.</p>
-          </ProseField>
-          <ProseField label="Path 4: IPO at scale.">
-            <p className="m-0">Phreesia went public in 2019 at $1B+ valuation, currently trades at approximately $2B market cap. Doximity went public in 2021 at $10B+ valuation. The IPO comparables for vertical healthcare SaaS exist but require $100M+ ARR with healthy growth and margins. This is a Year 6 to 8 outcome, not relevant for current fundraising but worth noting as the optionality path.</p>
-          </ProseField>
-        </div>
-        <Subhead>What the F&F and pre-seed investors should expect</Subhead>
-        <Prose>
-          <p>The F&F and pre-seed rounds bet on Path 3 or Path 1 outcome (Series C scale independent growth or strategic acquisition). Path 2 outcomes are also achievable from the same fundamentals. Path 4 (IPO) is upside scenario that requires Series A and Series B success first.</p>
-          <p>These return scenarios are stated on a cap-equivalent basis before dilution from subsequent rounds. Applying realistic cumulative dilution of approximately 25 to 30 percent through Series A reduces actual realized returns by roughly the same proportion. The numbers below show cap-equivalent multiples; investors should apply the dilution adjustment to estimate realized returns.</p>
-          <p>Conservative case for F&F investor return: $3M F&F cap, $40M to $60M strategic acquisition at $5M ARR, produces 13x to 20x cap-equivalent return on F&F investment over 4 to 5 years (roughly 9x to 14x realized after dilution).</p>
-          <p>Base case for F&F investor return: $3M F&F cap, $100M to $200M acquisition or Series C secondary at $10M to $15M ARR, produces 33x to 67x cap-equivalent return on F&F investment (roughly 23x to 47x realized after dilution).</p>
-          <p>Upside case for F&F investor return: $3M F&F cap, $500M+ growth equity or IPO track at $25M+ ARR, produces 165x+ cap-equivalent return (roughly 115x+ realized after dilution).</p>
-          <p>These return ranges are anchored against comparable healthcare workflow automation outcomes. We are not claiming the upside case as base case. We are showing the realistic distribution of outcomes given the comparable transaction data.</p>        </Prose>
-        <Subhead>What we are deliberately not doing</Subhead>
-        <Prose>
-          <p>We are not optimizing for a quick acquisition by Athena. The strategic acquisition path is available if we execute well, but pursuing it as the primary strategy would compromise the multi-EHR architecture that makes the company more valuable than a single-vendor add-on.</p>
-          <p>We are not chasing the Olive AI playbook. Olive raised $850M and grew aggressively across multiple workflows without a coherent platform thesis, then collapsed when the workflows did not unify into a defensible product. We are deliberately the opposite: tight wedge, unified runtime, sequential product expansion, multi-product retention before next product launches.</p>
-          <p>We are not building toward an early secondary sale before Series A. Founders are committed through Series A close at minimum. The runtime architecture and EHR integration depth are designed for a 5+ year build.</p>
+          <p>This roadmap accompanies (does not replace) the separate friends and family investment memo, which contains the full SAFE terms, valuation cap methodology, fund allocation detail, dilution math, and illustrative return scenarios.</p>
         </Prose>
-      </section>
-
-      <section id="closing" className={sectionClass}>
-        <SectionTitle kicker="CLOSING" title="Closing" />
+        <CalloutPanel className="mt-4">
+          <p className="m-0 font-sans text-base leading-[1.7] text-memo-text">
+            <span className="font-semibold">Current round:</span> $75K to $100K at $3M post-money cap, post-money SAFE (Y Combinator standard form), MFN, no discount, no interest, no maturity, converting at the next priced equity round. Suggested individual check range: $25K to $50K. Close window: June through October 2026.
+          </p>
+        </CalloutPanel>
         <Prose>
-          <p>This roadmap (v4.6) is the document we show to the Florida CEO and every subsequent F&F investor. It tells a different story than the April 2026 version: more conservative on revenue, more honest about competitive positioning, more disciplined on capital, more focused on the wedge segment with highest willingness to pay, and explicitly dual-pricing to match how enterprise SaaS scales across customer sizes.</p>          <p>The thesis is intact. Healthcare referral coordination is a real problem. The PCP side is structurally underserved. EHR-native depth is a defensible position. The runtime gives us shipping velocity that compounds across multiple products. Concierge and PE-backed primary care networks are the customer profile that pays. The dual pricing model (per-practice flat for small practices, per-seat licensing for 3+ physician practices and networks) is what unlocks the venture-scale revenue ceiling. The base case path from $0 to $200K to $450K ARR over 18 months is credible. The path from $300K to $1.5M ARR over the following 12 months relies on multi-product expansion plus at least one network deal closing and maturing into deeper seat penetration.</p>          <p>We are showing scenario-based numbers (floor case $70K to $125K, base case $200K to $450K, upside case $500K to $900K at Month 18) with explicit dual-pricing math because we have modeled the business rather than picking a target number. The F&F round survives floor case. The pre-seed round depends on base case. Series A requires upside case or comparable per-seat expansion across multiple network deals.</p>          <p>Tether is not Tennr. Tether is not Valerie. Tether is the workflow automation platform for primary care, built on a custom agent runtime, starting with the referral wedge, expanding into adjacent PCP workflows. The runtime is the technical asset that justifies the platform thesis. The dual pricing model is the commercial structure that justifies the venture-scale ARR ceiling. Documented Lefevre time-savings case study plus first paid customer signed (August through October 2026) are the proof points that justify the F&F raise. The first network deal in the pre-seed window is the proof point that justifies Series A.</p>          <p>This is the company. This is the plan.</p>
+          <p>We are happy to walk through any section of this roadmap in detail, demonstrate the production runtime, or address specific questions on the revenue model, the path to scale, or the risk picture.</p>
           <p className="text-memo-text-secondary">
-            <span className="font-semibold text-memo-text">End of document v4.6. </span>
-            May 2026.
+            <span className="font-semibold text-memo-text">Tether Health, June 2026. Confidential.</span>
           </p>
         </Prose>
       </section>
-
     </>
   );
 }
