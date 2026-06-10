@@ -15,7 +15,7 @@ const RISKS: { title: string; w: string; m: string }[] = [
   {
     title: "First paid customer conversion (highest near-term risk)",
     w: "Our pilots are on free founder pricing. The first paid customer signing in the August through October 2026 window is the milestone that triggers the pre-seed round and validates the entire revenue thesis. If outbound and Marketplace inbound fail to produce a paid customer in that window, the F&F runway compresses and pre-seed conversations get harder.",
-    m: "Multiple parallel paths to first paid customer (Lefevre conversion, Mary Davis conversion, concierge intros through Sach's network, Castle Connolly intros through Ravi's aunt). Conservative case assumes 1 of 5 paths converts. We are building the pipeline accordingly. Outbound SSO shipping in Q3 removes the workflow-friction objection (separate tab, separate login) that most commonly stalls PCP software adoption at the trial stage.",
+    m: "Multiple parallel paths to first paid customer (Lefevre conversion, Ms. Davis conversion, concierge intros through Sach's network, Castle Connolly intros through Ravi's aunt). Conservative case assumes 1 of 5 paths converts. We are building the pipeline accordingly. Outbound SSO shipping in Q3 removes the workflow-friction objection (separate tab, separate login) that most commonly stalls PCP software adoption at the trial stage.",
   },
   {
     title: "Athena platform dependency",
@@ -74,7 +74,7 @@ export function InvestmentMemoBody() {
         <Subhead>Who pays Tether and why</Subhead>
         <Prose>
           <p>We sell to three customer segments, each with different economics and different sales motions.</p>
-          <p><span className="font-semibold">Solo and duo concierge practices (1-2 providers).</span> Practices with 200-600 members, charging $1,500 to $5,000 per member per year. Revenue at the practice is $300K to $3M annually. Patient retention is the entire business. Membership fees compound; losing 5% to attrition costs the practice 5% of revenue forever. The MA handling referrals is a senior, expensive employee whose time is the largest non-physician cost in the practice. These customers buy Tether because the MA time savings is observable in week one, and recovered TCM and follow-up billing pays for the subscription many times over.</p>
+          <p><span className="font-semibold">Solo and duo concierge practices (1-2 providers).</span> Practices with 200-600 members, charging $1,500 to $5,000 per member per year. Revenue at the practice is $300K to $3M annually. Patient retention is the entire business. Membership fees compound; losing 5% to attrition costs the practice 5% of revenue forever. The MA handling referrals is a senior, expensive employee whose time is the largest non-physician cost in the practice. These customers buy Tether because the MA time savings is observable in week one, and the recovered follow-up billing and staff time pays for the subscription multiple times over, before counting care-management codes.</p>
           <p><span className="font-semibold">Small to mid-size primary care groups (3-10 providers).</span> Independent groups, often physician-owned, generally fee-for-service plus some Medicare Advantage capitation. Annual revenue $2M to $15M. These practices are price-sensitive but operationally rigorous. They have a practice manager who runs the P&L and understands code-level reimbursement. They buy Tether after a 30-day pilot where the billing impact can be measured against the baseline.</p>
           <p><span className="font-semibold">PE-backed primary care networks and MSOs (10-1000+ providers).</span> Privia, Bowling Green, OneMedical-style consolidators, MSO platforms managing affiliated independent groups. These are the deals that move the needle on ARR. Revenue per deal: $250K to $1M+ in single contracts. Sales cycle: 4-9 months. They buy Tether after a procurement review and a multi-practice pilot, generally with a Head of Growth running the deal.</p>
         </Prose>
@@ -172,7 +172,7 @@ export function InvestmentMemoBody() {
         <Subhead>How Tether makes the customer money</Subhead>
         <Prose>
           <p>This is the load-bearing claim of the entire revenue thesis. We can defend it with real CMS data.</p>
-          <p>The mechanism is loop closure. When Tether closes a referral that would otherwise have been lost, the primary care practice unlocks four real billable revenue streams under current CMS and commercial payer rules. The first two are directly attributable to Tether (we cause them); the third and fourth are indirectly supported by Tether (we enable better documentation that supports them).</p>
+          <p>The mechanism is loop closure. When Tether closes a referral that would otherwise have been lost, the practice captures five value streams: one operational (Stream Zero, recovered staff labor) and four billable under current CMS and commercial payer rules (Streams One through Four). Streams Zero and One are directly attributable to Tether and form the ROI floor we quote. Streams Two through Four are real but indirect or subset-dependent, so we present them as upside rather than counting them in the floor.</p>
           <p><span className="font-semibold">How we know, not just what we claim.</span> Every recovery-rate figure in this section is an assumption until measured, and we are measuring it. Dr. Lefevre's historical referral audit runs against his real athenaOne tenant and establishes the pre-Tether baseline: closure rate, follow-up visit volume, TCM capture, and staff time per referral. Post-Tether deltas against that baseline, not modeled rates, become the case study that anchors customer and investor conversations from Q3 2026 onward. Where this section states a range, the range is the hypothesis; the baseline study is the measurement design.</p>
         </Prose>
 
@@ -181,22 +181,21 @@ export function InvestmentMemoBody() {
           <p>A solo concierge practice with a 400-600 member panel generates approximately 40 specialist referrals per month (panel-adjusted from FAIR Health per-patient referral rates; a full 2,000-patient panel generates roughly 2-3x this volume). At the documented ~50% closure failure rate, approximately 20 loops per month break. Our working assumption, measured against the Lefevre baseline, is that Tether recovers 30-40% of broken loops: 6 to 8 additional closed loops per month.</p>
         </Prose>
 
+        <Subhead>Stream Zero · Staff labor recovered</Subhead>
+        <Prose>
+          <p>Tether reduces coordination time from approximately 25 minutes to approximately 7 minutes per referral. At 40 referrals per month that is roughly 12 staff hours returned, worth <span className="font-semibold">$300 to $400 per month</span> at loaded MA cost, and worth more than that in a concierge practice where the MA's time is the member-experience budget. This stream is independent of CMS policy and is the first value the customer observes, in week one.</p>
+        </Prose>
+
         <Subhead id="stream-one">Stream One · Follow-up visit billing</Subhead>
         <Prose>
           <p>When a referral closes and the specialist sends back a consult note, the PCP typically schedules a follow-up visit to review findings. This is a billable established-patient encounter. CMS 2024 reimbursement: 99213 (~$92) for low complexity, 99214 (~$130) for moderate complexity, 99215 (~$184) for high complexity. Blended with concierge and commercial multipliers, the average is approximately $150 to $200 per visit.</p>
           <p>At a 75% follow-up conversion rate on recovered loops, that is 4 to 6 additional billable established-patient visits per month at a blended $150-$200: approximately <span className="font-semibold">$700 to $1,200 per month</span>.</p>
         </Prose>
 
-        <Subhead>Stream Zero · Staff labor recovered</Subhead>
-        <Prose>
-          <p>Tether reduces coordination time from approximately 25 minutes to approximately 7 minutes per referral. At 40 referrals per month that is roughly 12 staff hours returned, worth <span className="font-semibold">$300 to $400 per month</span> at loaded MA cost, and worth more than that in a concierge practice where the MA's time is the member-experience budget. This stream is independent of CMS policy and is the first value the customer observes, in week one.</p>
-        </Prose>
-
         <Subhead>Stream Two · Transitional Care Management codes</Subhead>
         <Prose>
           <p>CMS pays separately for Transitional Care Management (CPT 99495 at approximately $185, CPT 99496 at approximately $249) when the PCP coordinates care within defined windows after a qualifying post-acute event: hospital discharge, observation stay, SNF discharge, or ER visit. The American Academy of Family Physicians estimates PCPs capture only 20-30% of the TCM revenue they are eligible for, because the documentation burden defeats the billing workflow even when the clinical work happens.</p>
           <p>Tether's contribution is the documentation trail: when a referral loop involves a qualifying transition of care, Tether's tracked workflow and returned consult note supply the documentation TCM billing requires. This applies to the subset of referrals that involve actual care transitions, not to routine outpatient referrals. For a concierge panel, that subset is small but high-value. We are quantifying the per-practice TCM impact through the Lefevre baseline study rather than asserting a rate here.</p>
-          <p>Do not attach a dollar figure to Stream Two unless Sach validates a defensible qualifying-event rate for a 400-600 member concierge panel. [PENDING SACH]</p>
         </Prose>
 
         <Subhead>Stream Three · CCM/PCM documentation support</Subhead>
@@ -216,12 +215,12 @@ export function InvestmentMemoBody() {
 
         <Subhead>How the math scales</Subhead>
         <Prose>
-          <p>A 3-10 provider group pays $125 per provider per month while each provider carries a fuller panel and proportionally higher referral volume than a concierge physician, so per-provider recovered value meets or exceeds the concierge case while the per-provider price is one-fifth of it; ROI strengthens with size. A network contract at $100-$125 per provider applies the same per-provider math across 50-1,000+ providers and adds portfolio-level quality and analytics value we price separately. We deliberately publish the full arithmetic only for the segment where we have a production design partner generating baseline data, and present the larger segments as the same mechanics at scale. [PENDING BASELINE]: replace the assumed 30-40% recovery rate and 75% follow-up conversion with measured Lefevre figures when the baseline study reports.</p>
+          <p>A 3-10 provider group pays $125 per provider per month while each provider carries a fuller panel and proportionally higher referral volume than a concierge physician, so per-provider recovered value meets or exceeds the concierge case while the per-provider price is one-fifth of it; ROI strengthens with size. A network contract at $100-$125 per provider applies the same per-provider math across 50-1,000+ providers and adds portfolio-level quality and analytics value we price separately. We deliberately publish the full arithmetic only for the segment where we have a production design partner generating baseline data, and present the larger segments as the same mechanics at scale. The assumed recovery and conversion rates will be replaced with measured figures from the Lefevre baseline study when it reports.</p>
         </Prose>
 
         <Subhead>Why this matters for unit economics</Subhead>
         <Prose>
-          <p>The customer is not just net-positive on the subscription. The customer is net-positive by an order of magnitude. This creates three things we need for a venture-scale business:</p>
+          <p>The customer is not just net-positive on the subscription. The customer is net-positive by a multiple of the subscription on directly measurable value alone, before counting the indirect streams. This creates three things we need for a venture-scale business:</p>
           <ol className="m-0 list-decimal space-y-2 pl-5">
             <li><span className="font-semibold">Low price sensitivity.</span> A customer recovering measurable billing and labor value well above a $600 subscription does not negotiate hard at renewal.</li>
             <li><span className="font-semibold">High retention.</span> Our model targets 5-8% annual churn post-launch. This is a best-in-class figure, not a conservative one, and we hold ourselves to it because the ROI mechanics support it: a customer recovering a multiple of the subscription in measurable billing does not churn at the 12-18% healthcare SaaS average. The Lefevre baseline study is how we verify the mechanics before the model depends on them.</li>
@@ -259,6 +258,7 @@ export function InvestmentMemoBody() {
           ]}
         />
         <Prose>
+          <p>Gross margin shown reflects the launch product. Full-platform margin lands at approximately 75-90% once Eligibility and Voice transaction costs are in COGS, still comfortably above SaaS benchmarks.</p>
           <p>The unit economics work at every stage. The reason this is true is the customer's recovered-revenue ROI: customers who are net-positive approximately 2-3x on directly measurable value alone do not churn at venture-SaaS rates and do not require expensive customer success investment.</p>
         </Prose>
       </section>
@@ -312,7 +312,7 @@ export function InvestmentMemoBody() {
         <Subhead>The friends and family round ($75K-$100K at $3M post-money cap)</Subhead>
         <Prose>
           <p>Bridges to first paid customer revenue and pre-seed conversion. Funds five months of operations: HIPAA-compliant infrastructure, below-market founder draws for Ravi and Sid, legal templates for first customer contracts, cyber insurance, and contingency.</p>
-          <p>This is the round currently active. Phase 1a is founder co-investment by early June 2026. Phase 1b is family and closest network late June through July 2026. Phase 1c is outside friends and family August through October 2026, gated on the first paid customer signing.</p>
+          <p>This is the round currently active. Phase 1 is family and closest network, June through July 2026. Phase 2 is outside friends and family, August through October 2026, gated on the first paid customer signing.</p>
         </Prose>
 
         <Subhead>The pre-seed round ($400K-$750K at $8M-$12M cap, target Month 8-14)</Subhead>
