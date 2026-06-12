@@ -52,16 +52,16 @@ export function InvestmentMemoBody() {
         <Subhead>The broken loop in primary care</Subhead>
         <Prose>
           <p>Approximately 50% of specialist referrals from U.S. primary care never close the loop. The patient does not see the specialist, or sees them but the consult note never returns to the PCP. This has been the same broken workflow for thirty years and it costs the system meaningful money. Patients fall through the cracks, conditions go unmanaged, and the primary care practice that initiated the referral loses three things: the follow-up visit revenue, the documentation needed for higher-value billing codes, and the patient relationship.</p>
-          <p>The mechanical reason this happens is that referral coordination is manual, fragmented, and not integrated into the PCP's EHR workflow. Staff spend approximately 25 minutes per referral on coordination work: pulling clinical context from the chart, drafting the referral, identifying the right specialist, verifying insurance acceptance, sending the referral, tracking acknowledgment, tracking the appointment, tracking the visit, waiting for the consult note, and updating the chart. Half of those loops break somewhere in that chain.</p>
+          <p>The mechanical reason this happens is that referral coordination is manual, fragmented, and not integrated into the PCP's EHR workflow. Staff spend approximately 25 minutes per referral on coordination work. That work means pulling clinical context from the chart, drafting the referral, identifying the right specialist, verifying insurance acceptance, sending the referral, tracking acknowledgment, tracking the appointment, tracking the visit, waiting for the consult note, and updating the chart. Half of those loops break somewhere in that chain.</p>
         </Prose>
         <Subhead>Why Tether exists</Subhead>
         <Prose>
           <p>Tether is the EHR-native software platform that closes the loop. We sit inside the primary care practice's electronic health record (athenaOne, our launch partner), generate the complete clinical referral narrative from chart context, verify the patient's insurance against the specialist's accepted plans, route the referral to the specialist's office, track every stage of the workflow automatically, and write the consult note back into the chart when it returns.</p>
-          <p>Staff time per referral drops from approximately 25 minutes to approximately 7 minutes. More loops close. The practice captures revenue that was previously being left on the table. This is the wedge.</p>
+          <p>Staff time per referral drops from approximately 25 minutes to approximately 7 minutes. More loops close. The practice captures revenue that was previously being left on the table.</p>
         </Prose>
         <Subhead>Market sizing</Subhead>
         <Prose>
-          <p>The U.S. specialty services market triggered by primary care referrals is approximately $981 billion annually. This is not Tether's addressable revenue; it is the size of the broken system within which Tether operates. Bottom-up: approximately 315 million PCP-initiated referrals per year (FAIR Health 2022 data, adjusted to 2026) multiplied by approximately $3,114 average downstream specialty episode value (CMS Medicare Physician Fee Schedule 2024, commercial composite).</p>
+          <p>The U.S. specialty services market triggered by primary care referrals is approximately $981 billion annually. This is not Tether's addressable revenue; it is the size of the broken system Tether plugs into. Bottom-up: approximately 315 million PCP-initiated referrals per year (FAIR Health 2022 data, adjusted to 2026) multiplied by approximately $3,114 average downstream specialty episode value (CMS Medicare Physician Fee Schedule 2024, commercial composite).</p>
         </Prose>
         <div className="grid gap-3 sm:grid-cols-2">
           <StatCard label="Addressable subscription market" value="$1.0 to $1.5B" hint="150,000 community-based U.S. primary care practices at $15K to $30K blended ACV" />
@@ -80,9 +80,9 @@ export function InvestmentMemoBody() {
         </Prose>
         <Subhead>Why concierge is the wedge</Subhead>
         <Prose>
-          <p>Three reasons concierge is our beachhead, not a final state.</p>
+          <p>Concierge is our beachhead, not our final state.</p>
           <p>First, concierge practices are unusually willing to pay for software that improves the member experience because their entire business model is premium-priced member experience. Second, concierge practices are small enough that a single physician decision-maker can sign. Third, MDVIP, SignatureMD, and Castle Connolly affiliations create natural peer-to-peer referral networks for software adoption. Sach has direct introductions into these networks.</p>
-          <p>After we have 10-20 concierge customers with documented results, the path opens to small groups (where we sell on labor plus revenue capture math) and then to networks (where we sell on portfolio-level revenue impact and care coordination outcomes).</p>
+          <p>After we have 10-20 concierge customers with documented results, the path opens to small groups. We sell there on labor plus revenue capture math. Then comes networks, where we sell on portfolio-level revenue impact and care coordination outcomes.</p>
         </Prose>
       </section>
 
@@ -90,7 +90,7 @@ export function InvestmentMemoBody() {
         <SectionTitle kicker="03" title="The platform" />
         <Subhead>One platform, four releases</Subhead>
         <Prose>
-          <p>Tether is a platform with four named releases over the next eighteen months. Each release ships a defined agentic capability, addresses a defined customer outcome, unlocks a defined pricing tier, and depends on a defined capital trigger. We have shipped the first release. The next three are funded sequentially from the friends and family round and the pre-seed round that follows.</p>
+          <p>Tether is a platform with four named releases over the next eighteen months. Each release ships one agentic capability, ties to a customer outcome, unlocks a pricing tier, and has a capital trigger behind it. We have shipped the first release. The next three are funded sequentially from the friends and family round and the pre-seed round that follows.</p>
         </Prose>
 
         <CalloutPanel className="mt-6">
@@ -98,7 +98,7 @@ export function InvestmentMemoBody() {
         </CalloutPanel>
         <Prose>
           <p>The AI-generated clinical referral and lifecycle agent. The platform pulls patient context from athenaOne, generates a complete clinical referral narrative ready for physician review, routes the referral to the specialist, tracks acknowledgment / scheduling / visit / consult-note return automatically, and writes the consult note back into athenaOne when it arrives. Practice-level analytics surface stalled referrals before they fall through.</p>
-          <p>This is the wedge product. It is what is shipped today and what the first paying customers sign for.</p>
+          <p>This is the wedge: what ships today and what the first paying customers sign for.</p>
           <p><span className="font-semibold">Pricing tier:</span> Launch: $600 / practice / month (solo concierge), $125 / provider / month (small group), $100-$125 / provider volume-tiered (network).</p>
           <p><span className="font-semibold">Status:</span> Live in production with two design partners. Athena write-back deploying this quarter. Athena Marketplace listing target Q3 2026.</p>
         </Prose>
@@ -108,7 +108,7 @@ export function InvestmentMemoBody() {
         </CalloutPanel>
         <Prose>
           <p>Stedi-backed insurance eligibility verification agent. Before the referral goes out, Tether automatically verifies that the specialist accepts the patient's insurance plan. Eliminates the single largest cause of referral rejection.</p>
-          <p>This is the first capability that triggers the price increase from launch to full platform, because it removes a meaningful additional 5-8 minutes of MA work per patient encounter (not just per referral) and unlocks Stedi-grade eligibility data the customer cannot get from athenaOne natively.</p>
+          <p>This is the first capability that triggers the price increase from launch to full platform, because it removes a meaningful additional 5-8 minutes of MA work per patient encounter. That is per encounter, not just per referral. It also unlocks Stedi-grade eligibility data the customer cannot get from athenaOne natively.</p>
           <p><span className="font-semibold">Pricing tier:</span> Full platform: $1,200 / practice (solo), $225 / provider (small group), $150-$200 / provider (network).</p>
           <p><span className="font-semibold">Capital dependency:</span> Stedi paid integration plus engineering time, approximately $15K to $25K all-in. Funded from the pre-seed round.</p>
         </Prose>
@@ -127,7 +127,7 @@ export function InvestmentMemoBody() {
         </CalloutPanel>
         <Prose>
           <p>Multi-EHR support (athenaOne plus ModMed plus others) and practice-network analytics. This is the release that makes large PE-backed network deals possible, because few networks are single-EHR.</p>
-          <p>The network analytics layer is the second-order monetization: aggregated referral pattern intelligence sold to the MSO or network leadership team. Which specialists deliver, which ones don't, which payer mixes generate the best outcomes. This is what crosses ACV above $100K per network.</p>
+          <p>The network analytics layer is the second way this makes money: aggregated referral pattern intelligence sold to the MSO or network leadership team. Which specialists deliver, which ones don't, which payer mixes generate the best outcomes. This is what crosses ACV above $100K per network.</p>
           <p><span className="font-semibold">Pricing tier:</span> Per-seat at scale, custom volume-tiered. ACV crosses $100K on 50+ provider contracts. Network analytics layer adds $25K to $100K to ACV depending on size.</p>
           <p><span className="font-semibold">Capital dependency:</span> Multi-EHR engineering (second engineer plus integration work) and enterprise sales motion (Head of Growth). Funded from pre-seed plus early Series A.</p>
         </Prose>
@@ -138,7 +138,7 @@ export function InvestmentMemoBody() {
           <p><span className="font-semibold">Today: standalone, integrated.</span> Tether runs as a standalone web app with full bidirectional Platform Services integration to athenaOne. This is deliberate at pilot stage: fastest to production, full UX control while the workflow is still being shaped, and EHR-portable by design.</p>
           <p><span className="font-semibold">Q3 2026: one-click launch from the chart (outbound SSO).</span> SAML 2.0 single sign-on with deep launch points. The MA clicks Tether from inside athenaOne and lands in the app already authenticated, with the patient context passed. No second login, no patient re-selection. This is approximately two weeks of engineering on our side with no additional Athena approval gate, and it removes the day-to-day friction objection for every customer pitch from Q3 onward.</p>
           <p><span className="font-semibold">Pre-seed window (targeting H1 2027): embedded inside athenaClinicals.</span> Tether renders as a panel inside the chart itself via Athena's Embedded Apps mechanism. The MA never leaves athenaOne. This requires Athena's additional Solution Validation (a patient-safety review adding 4-6 weeks beyond standard Marketplace go-live), and the codebase is being kept iframe-ready now (SSO that survives third-party cookie restrictions, patient context via URL parameters and OIDC claims, UI that renders at panel widths) so the transition is configuration and validation, not a rewrite. We are building the embedded surface to the SMART on FHIR standard rather than to Athena-specific patterns, so the same surface ports to ModMed and Epic with adapter work instead of a rebuild.</p>
-          <p><span className="font-semibold">The destination: headless.</span> The MA creates a referral in athenaOne the way they always have; Tether's agents pick up the chart event, run the entire downstream workflow autonomously, and write the result back. Nothing to open, nothing to learn. Each stage before this one is a shipped product milestone on its own; this one is the architectural endpoint the runtime substrate was built for.</p>
+          <p><span className="font-semibold">The destination: headless.</span> The MA creates a referral in athenaOne the way they always have; Tether's agents pick up the chart event, run the entire downstream workflow autonomously, and write the result back. Nothing to open, nothing to learn. Each stage before this one is a shipped product milestone on its own; this is what the system was built to do from the start.</p>
         </Prose>
       </section>
 
@@ -162,28 +162,27 @@ export function InvestmentMemoBody() {
 
         <Subhead>Why this pricing, not other pricing</Subhead>
         <Prose>
-          <p>Investors and customers will both ask why these tiers, not higher or lower. Three answers.</p>
+          <p>Investors and customers will both ask why these tiers, not higher or lower.</p>
           <p><span className="font-semibold">Why not $300/month for the launch tier?</span> Because at $300, the unit economics of the sales motion don't work. Founder-led concierge sales costs founder time (essentially free) but the customer success and onboarding cost we will eventually carry is real. $600 covers it. $300 forces us to choose between bad gross margins and bad customer experience.</p>
-          <p><span className="font-semibold">Why not $1,500 for the launch tier?</span> Because the launch product is genuinely narrower than what ships in Q1 2027. We are anchoring at a price the recovered revenue clearly justifies (approximately 2-3x net positive on directly measurable value alone; 3-7x including indirect billing streams, see below) so the buying decision is unambiguous. The price will rise when the value rises.</p>
+          <p><span className="font-semibold">Why not $1,500 for the launch tier?</span> The launch product is genuinely narrower than what ships in Q1 2027. We are anchoring at a price the recovered revenue clearly justifies (approximately 2-3x net positive on directly measurable value alone; 3-7x including indirect billing streams, see below) so the buying decision is unambiguous. The price will rise when the value rises.</p>
           <p><span className="font-semibold">Why per-practice flat for solo and per-provider for groups?</span> Because the cost-to-serve math is different. A solo concierge practice with one MA and one physician has roughly fixed referral volume regardless of provider count. A 5-physician group has 5x the referral volume and 5x the recovered revenue, so per-provider pricing aligns price with value capture. The crossover happens at 3 providers, which is why our pricing matrix transitions there.</p>
-          <p><span className="font-semibold">Why volume tiering for networks?</span> Because network procurement teams expect it, and because at scale our marginal cost per provider drops materially. A 100-provider network using Tether costs us approximately the same engineering and support as a 25-provider network, so we can offer the volume tier without margin erosion.</p>
+          <p><span className="font-semibold">Why volume tiering for networks?</span> Network procurement teams expect it, and at scale our marginal cost per provider drops materially. A 100-provider network using Tether costs us approximately the same engineering and support as a 25-provider network, so we can offer the volume tier without margin erosion.</p>
         </Prose>
 
         <Subhead>How Tether makes the customer money</Subhead>
         <Prose>
-          <p>This is the load-bearing claim of the entire revenue thesis. We can defend it with real CMS data.</p>
           <p>The mechanism is loop closure. When Tether closes a referral that would otherwise have been lost, the practice captures five value streams: one operational (Stream Zero, recovered staff labor) and four billable under current CMS and commercial payer rules (Streams One through Four). Streams Zero and One are directly attributable to Tether and form the ROI floor we quote. Streams Two through Four are real but indirect or subset-dependent, so we present them as upside rather than counting them in the floor.</p>
-          <p><span className="font-semibold">How we know, not just what we claim.</span> Every recovery-rate figure in this section is an assumption until measured, and we are measuring it. Dr. Lefevre's historical referral audit runs against his real athenaOne tenant and establishes the pre-Tether baseline: closure rate, follow-up visit volume, TCM capture, and staff time per referral. Post-Tether deltas against that baseline, not modeled rates, become the case study that anchors customer and investor conversations from Q3 2026 onward. Where this section states a range, the range is the hypothesis; the baseline study is the measurement design.</p>
+          <p><span className="font-semibold">How we know, not just what we claim.</span> Every recovery-rate figure in this section is an assumption until measured, and we are measuring it. Dr. Lefevre's historical referral audit runs against his real athenaOne tenant and establishes the pre-Tether baseline: closure rate, follow-up visit volume, TCM capture, and staff time per referral. Post-Tether deltas against that baseline, not modeled rates, become the case study that anchors customer and investor conversations from Q3 2026 onward. Every range in this section is a hypothesis, and the baseline study is how we test it.</p>
         </Prose>
 
         <Subhead>The concierge unit, fully transparent</Subhead>
         <Prose>
-          <p>A solo concierge practice with a 400-600 member panel generates approximately 40 specialist referrals per month (panel-adjusted from FAIR Health per-patient referral rates; a full 2,000-patient panel generates roughly 2-3x this volume). At the documented ~50% closure failure rate, approximately 20 loops per month break. Our working assumption, measured against the Lefevre baseline, is that Tether recovers 30-40% of broken loops: 6 to 8 additional closed loops per month.</p>
+          <p>A solo concierge practice with a 400-600 member panel generates 40 specialist referrals per month (panel-adjusted from FAIR Health per-patient referral rates; a full 2,000-patient panel generates roughly 2-3x this volume). At the documented ~50% closure failure rate, 20 loops per month break. Our working assumption, measured against the Lefevre baseline, is that Tether recovers 30-40% of broken loops: 6 to 8 additional closed loops per month.</p>
         </Prose>
 
         <Subhead>Stream Zero · Staff labor recovered</Subhead>
         <Prose>
-          <p>Tether reduces coordination time from approximately 25 minutes to approximately 7 minutes per referral. At 40 referrals per month that is roughly 12 staff hours returned, worth <span className="font-semibold">$300 to $400 per month</span> at loaded MA cost, and worth more than that in a concierge practice where the MA's time is the member-experience budget. This stream is independent of CMS policy and is the first value the customer observes, in week one.</p>
+          <p>Tether reduces coordination time from 25 minutes to approximately 7 minutes per referral. At 40 referrals per month that is roughly 12 staff hours returned, worth <span className="font-semibold">$300 to $400 per month</span> at loaded MA cost, and worth more than that in a concierge practice where the MA's time is the member-experience budget. This stream is independent of CMS policy and is the first value the customer observes, in week one.</p>
         </Prose>
 
         <Subhead id="stream-one">Stream One · Follow-up visit billing</Subhead>
@@ -194,18 +193,18 @@ export function InvestmentMemoBody() {
 
         <Subhead>Stream Two · Transitional Care Management codes</Subhead>
         <Prose>
-          <p>CMS pays separately for Transitional Care Management (CPT 99495 at approximately $185, CPT 99496 at approximately $249) when the PCP coordinates care within defined windows after a qualifying post-acute event: hospital discharge, observation stay, SNF discharge, or emergency department visit. The American Academy of Family Physicians estimates PCPs capture only 20-30% of the TCM revenue they are eligible for, because the documentation burden defeats the billing workflow even when the clinical work happens.</p>
+          <p>Billable care-transition codes when a referral involves a post-acute handoff. CMS pays separately for Transitional Care Management (CPT 99495 at approximately $185, CPT 99496 at approximately $249) when the PCP coordinates care within defined windows after a qualifying post-acute event: hospital discharge, observation stay, SNF discharge, or emergency department visit. The American Academy of Family Physicians estimates PCPs capture only 20-30% of the TCM revenue they are eligible for, because the documentation burden defeats the billing workflow even when the clinical work happens.</p>
           <p>Tether's contribution is the documentation trail: when a referral loop involves a qualifying transition of care, Tether's tracked workflow and returned consult note supply the documentation TCM billing requires. This applies to the subset of referrals that involve actual care transitions, not to routine outpatient referrals. For a concierge panel, that subset is small but high-value. We are quantifying the per-practice TCM impact through the Lefevre baseline study rather than asserting a rate here.</p>
         </Prose>
 
         <Subhead>Stream Three · CCM/PCM documentation support</Subhead>
         <Prose>
-          <p>Indirect. CMS pays separately for CCM (CPT 99490 at ~$63/month per patient for 20 minutes of non-face-to-face coordination work; CPT 99491 at ~$83 for complex CCM) and PCM (CPT 99424 and 99425, separate fee schedule for single high-risk conditions). These codes depend on patient cohort enrollment, not on referral closure. $500 to $2,000 per month for practices with meaningful Medicare panels; near zero for some concierge panels. Not included in the ROI floor.</p>
+          <p>Ongoing care-management documentation support (indirect). CMS pays separately for CCM (CPT 99490 at ~$63/month per patient for 20 minutes of non-face-to-face coordination work; CPT 99491 at ~$83 for complex CCM) and PCM (CPT 99424 and 99425, separate fee schedule for single high-risk conditions). These codes depend on patient cohort enrollment, not on referral closure. $500 to $2,000 per month for practices with meaningful Medicare panels; near zero for some concierge panels. Not included in the ROI floor.</p>
         </Prose>
 
         <Subhead>Stream Four · Quality bonus payments</Subhead>
         <Prose>
-          <p>Indirect. HEDIS measures, MIPS, and Medicare Star Ratings reward closed-loop care coordination. Approximately $170 to $850 per provider per month where MIPS/Star participation applies. Not included in the ROI floor.</p>
+          <p>Quality bonus payments from closed-loop coordination (indirect). HEDIS measures, MIPS, and Medicare Star Ratings reward closed-loop care coordination. Approximately $170 to $850 per provider per month where MIPS/Star participation applies. Not included in the ROI floor.</p>
         </Prose>
 
         <Subhead>The ROI floor and ceiling</Subhead>
@@ -223,7 +222,7 @@ export function InvestmentMemoBody() {
           <p>The customer is not just net-positive on the subscription. The customer is net-positive by a multiple of the subscription on directly measurable value alone, before counting the indirect streams. This creates three things we need for a venture-scale business:</p>
           <ol className="m-0 list-decimal space-y-2 pl-5">
             <li><span className="font-semibold">Low price sensitivity.</span> A customer recovering measurable billing and labor value well above a $600 subscription does not negotiate hard at renewal.</li>
-            <li><span className="font-semibold">High retention.</span> Our model targets 5-8% annual churn post-launch. This is a best-in-class figure, not a conservative one, and we hold ourselves to it because the ROI mechanics support it: a customer recovering a multiple of the subscription in measurable billing does not churn at the 12-18% healthcare SaaS average. The Lefevre baseline study is how we verify the mechanics before the model depends on them.</li>
+            <li><span className="font-semibold">High retention.</span> Our model targets 5-8% annual churn post-launch. That is best-in-class, not conservative: a customer recovering a multiple of the subscription in measurable billing does not churn at the 12-18% healthcare SaaS average. The Lefevre baseline study is how we verify the mechanics before the model depends on them.</li>
             <li><span className="font-semibold">Expansion revenue.</span> The customer who experiences approximately 2-3x ROI on directly measurable value alone (3-7x including indirect billing streams) on the launch tier is highly likely to upgrade to the full platform at 2x price when Tether Eligibility and Tether Voice ship, because the same ROI math holds at the higher price.</li>
           </ol>
         </Prose>
@@ -233,17 +232,20 @@ export function InvestmentMemoBody() {
         <SectionTitle kicker="05" title="The next 12 months, and the path beyond" />
         <Subhead>The next 12 months (June 2026 - June 2027)</Subhead>
         <Prose>
-          <p><span className="font-semibold">Q3 2026.</span> Athena ISC kickoff cleared and write-back live in production for Dr. Lefevre. Outbound SSO shipped: Tether launches with one click from the patient chart inside athenaOne, authenticated, with patient context passed (see Section 03, Where Tether lives). Athena Marketplace listing submitted, go-live targeted within the quarter. Pre-Tether vs post-Tether billing and time baseline completed at Lefevre's practice; this becomes the anchor case study. First paid customer signed (August through October window) via concierge outreach and Marketplace inbound, on a 30-60 day trial converting to launch pricing.</p>
+          <p><span className="font-semibold">Q3 2026.</span> Athena ISC kickoff cleared and write-back live in production for Dr. Lefevre. Outbound SSO shipped: Tether launches with one click from the patient chart inside athenaOne, authenticated, with patient context passed (see Section 03, Where Tether lives). Athena Marketplace listing submitted. Go-live targeted within the quarter. Pre-Tether vs post-Tether billing and time baseline completed at Lefevre's practice; this becomes the anchor case study. First paid customer signed (August through October window) via concierge outreach and Marketplace inbound, on a 30-60 day trial converting to launch pricing.</p>
           <p><span className="font-semibold">Q4 2026.</span> 3 to 5 paid customers, concierge and small practice. Tether Eligibility alpha live with design partners. Design partner conversion conversations (Lefevre, Davis) on founder pricing. Pre-seed conversations open, anchored on the paid-customer proof and the baseline case study.</p>
           <p>Stedi sandbox build begins immediately (no cost); Eligibility alpha live with design partners in the fall on Stedi's production tier. A stripped-down voice pilot also begins: outbound calls to specialist offices for consult-note chasing and schedule confirmation, deliberately not patient-facing, ahead of the full Tether Voice release. Write-back, SSO, and the Marketplace listing remain the critical path; integration work is sequenced behind them.</p>
           <p><span className="font-semibold">Q1 2027.</span> Tether Eligibility GA. New customers sign at full-platform pricing. Embedded App Solution Validation submitted to Athena (see Section 03).</p>
           <p><span className="font-semibold">Q2 2027.</span> 8 to 15 paid customers at $15K-$20K average ACV. Ending ARR run-rate $150K to $300K. Pre-seed closed (target Month 8-14), funding the Head of Growth and the second engineer.</p>
-          <p>Customer acquisition in this window is founder-led: Sach's concierge physician network from Georgetown and MedStar, MDVIP and Castle Connolly introductions through Lefevre and Ravi's aunt, and Marketplace inbound once the listing is live. Conference GTM is tiered. We exhibit at exactly one event this year: the Concierge Medicine Forum (October 15-17, Atlanta), roughly $3,500 all-in with one founder staffing (table quote pending), a sub-30-exhibitor room of 225-325 concierge and membership-medicine decision-makers, timed to the first-paid-customer window. Below that we attend without exhibiting: one to two membership-medicine and regional physician events as registrants. We deliberately skip the DPC circuit (those practices skew off athenaOne and off insurance billing, weakening both integration and ROI fit), and MDVIP access runs through Dr. Lefevre rather than sponsorship, since its national meeting is biennial and restricted to affiliated physicians. Large halls like AAFP FMX defer to pre-seed scale. Cost per customer is founder time for direct outreach; exhibit spend is funded from the friends and family round. The honest constraint: founder-led sales does not scale past roughly 20 customers, and Sach is residency-constrained from July 2026. The pre-seed Head of Growth hire is the designed answer, not an afterthought.</p>
+          <p>Customer acquisition in this window is founder-led: Sach's concierge physician network from Georgetown and MedStar, MDVIP and Castle Connolly introductions through Lefevre and Ravi's aunt, and Marketplace inbound once the listing is live.</p>
+          <p>Conference GTM is tiered. We exhibit at exactly one event this year: the Concierge Medicine Forum (October 15-17, Atlanta), roughly $3,500 all-in with one founder staffing (table quote pending), a sub-30-exhibitor room of 225-325 concierge and membership-medicine decision-makers, timed to the first-paid-customer window.</p>
+          <p>Below that we attend without exhibiting: one to two membership-medicine and regional physician events as registrants. We deliberately skip the DPC circuit (those practices skew off athenaOne and off insurance billing, weakening both integration and ROI fit), and MDVIP access runs through Dr. Lefevre rather than sponsorship, since its national meeting is biennial and restricted to affiliated physicians. Large halls like AAFP FMX defer to pre-seed scale. Cost per customer is founder time for direct outreach; exhibit spend is funded from the friends and family round.</p>
+          <p>The honest constraint: founder-led sales does not scale past roughly 20 customers, and Sach is residency-constrained from July 2026. The pre-seed Head of Growth hire is the designed answer, not an afterthought.</p>
         </Prose>
 
         <Subhead>The path beyond (directional)</Subhead>
         <Prose>
-          <p>Year 2 ships Tether Voice, lands the Head of Growth, and targets the first network deal; the motion shifts from founder-led to network-led distribution at a modeled $3K-$5K CAC for individual practices and $30K-$50K per network deal with sub-6-month payback. Year 3 brings multi-EHR (ModMed alongside athenaOne) and the network analytics layer that pushes ACV past $100K on 50+ provider contracts. The five-year ambition is a $50M+ ARR primary care platform built from this wedge; we treat that as the direction we are operating toward, not a projection we ask anyone to underwrite today. Every number in this document inside the 12-month window is a commitment with a named owner; everything beyond it is sequenced intent.</p>
+          <p>Year 2 ships Tether Voice, lands the Head of Growth, and targets the first network deal. The motion shifts from founder-led to network-led distribution at a modeled $3K-$5K CAC for individual practices and $30K-$50K per network deal with sub-6-month payback. Year 3 brings multi-EHR (ModMed alongside athenaOne) and the network analytics layer that pushes ACV past $100K on 50+ provider contracts. The five-year ambition is a $50M+ ARR primary care platform built from this wedge. We treat that as the direction we are operating toward, not a projection we ask anyone to underwrite today. Every number in this document inside the 12-month window is a commitment with a named owner; everything beyond it is sequenced intent.</p>
         </Prose>
 
         <Subhead>Unit economics by segment</Subhead>
@@ -313,7 +315,7 @@ export function InvestmentMemoBody() {
         <SectionTitle kicker="07" title="What capital unlocks" />
         <Subhead>The friends and family round ($75K-$100K at $3M post-money cap)</Subhead>
         <Prose>
-          <p>Bridges to first paid customer revenue and pre-seed conversion. The base case carries operations from June into the fourth quarter of 2026: minimum founder draws (Ravi from June, Sid from August, Sach none), HIPAA-compliant infrastructure, legal templates and BAAs, Athena Platform Services fees from go-live, cyber insurance, a tiered conference presence anchored on the Concierge Medicine Forum in October, and the Stedi and Vapi integration usage pulled forward to design-partner alpha. A full $100K close extends runway into Q1 2027 and absorbs the HITRUST self-assessment that follows the Marketplace go-live.</p>
+          <p>Bridges to first paid customer revenue and pre-seed conversion. The base case carries operations from June into the fourth quarter of 2026 with minimum founder draws (Ravi from June, Sid from August, Sach none) and HIPAA-compliant infrastructure. It also covers legal templates and BAAs, Athena Platform Services fees from go-live, cyber insurance, a tiered conference presence anchored on the Concierge Medicine Forum in October, and Stedi and Vapi integration usage pulled forward to design-partner alpha. A full $100K close extends runway into Q1 2027 and absorbs the HITRUST self-assessment that follows the Marketplace go-live.</p>
           <p>This is the round currently active. The first $10K is committed: Sid and Sach are each investing $5,000 on the same SAFE at the same $3M cap, funding June 2026, as the first capital into the round. Phase 1 is family and closest network, June through July 2026. Phase 2 is outside friends and family, August through October 2026, gated on the first paid customer signing.</p>
         </Prose>
 
